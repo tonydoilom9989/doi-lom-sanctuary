@@ -3,7 +3,7 @@ import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
-  site: "https://doi-lom-sanctuary-red.vercel.app",
+  site: "https://doilomelephant.com",
   integrations: [
     sitemap({
       filter: (page) => !page.includes("/style-guide"),

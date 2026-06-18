@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /style-guide
 
-Sitemap: https://doi-lom-sanctuary-red.vercel.app/sitemap-index.xml
+Sitemap: https://doilomelephant.com/sitemap-index.xml
