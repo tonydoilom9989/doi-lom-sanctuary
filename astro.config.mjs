@@ -3,7 +3,7 @@ import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
-  site: "https://doilomelephant.com",
+  site: "https://www.doilomelephant.com",
   integrations: [
     sitemap({
       filter: (page) => !page.includes("/style-guide"),

@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /style-guide
 
-Sitemap: https://doilomelephant.com/sitemap-index.xml
+Sitemap: https://www.doilomelephant.com/sitemap-index.xml

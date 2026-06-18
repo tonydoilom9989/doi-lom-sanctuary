@@ -4,7 +4,7 @@ export const site = {
   name: "Doi Lom Elephant Rescue Sanctuary",
   shortName: "Doi Lom",
   tagline: "No riding. No chains. Just three elephants, living free.",
-  url: "https://doilomelephant.com",
+  url: "https://www.doilomelephant.com",
   locale: "en_US",
   founder: "Tony",
   founderFull: "Tony Suriya",
