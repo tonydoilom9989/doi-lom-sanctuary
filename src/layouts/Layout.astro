@@ -32,7 +32,8 @@ const absoluteOgImage = ogImage.startsWith("http")
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "TouristAttraction",
+  "@type": ["LodgingBusiness", "TouristAttraction"],
+  "@id": `${site.url}/#business`,
   name: site.name,
   description: site.tagline,
   url: site.url,
@@ -40,30 +41,39 @@ const jsonLd = {
   image: absoluteOgImage,
   telephone: `+${site.whatsapp.raw}`,
   email: site.email,
+  priceRange: "฿฿",
+  currenciesAccepted: "THB",
+  paymentAccepted: "Cash, Bank transfer",
   address: {
     "@type": "PostalAddress",
     streetAddress: site.location.address,
     addressLocality: site.location.district,
     addressRegion: site.location.province,
     postalCode: site.location.postalCode,
-    addressCountry: site.location.country,
+    addressCountry: "TH",
   },
   geo: {
     "@type": "GeoCoordinates",
     latitude: site.location.coords.lat,
     longitude: site.location.coords.lng,
   },
-  openingHours: "Mo-Su 08:00-16:00",
+  openingHoursSpecification: {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    opens: "08:00",
+    closes: "16:00",
+  },
   aggregateRating: {
     "@type": "AggregateRating",
-    ratingValue: site.rating.score,
-    reviewCount: site.rating.reviewCount,
-    bestRating: 5,
-    worstRating: 1,
+    ratingValue: String(site.rating.score),
+    reviewCount: String(site.rating.reviewCount),
+    bestRating: "5",
+    worstRating: "1",
   },
   sameAs: [site.social.instagram, site.social.facebook],
   foundingDate: String(site.founded),
   founder: { "@type": "Person", name: site.founderFull },
+  hasMap: site.location.googleMapsLink,
 };
 ---
 
