@@ -1,0 +1,50 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  intro?: string;
+  image: string;
+  imageAlt: string;
+  align?: "wide" | "split";
+}
+const { eyebrow, title, intro, image, imageAlt, align = "split" } = Astro.props;
+---
+
+<section class="relative overflow-hidden pt-14 lg:pt-20 pb-12 lg:pb-20">
+  <div aria-hidden="true" class="organic-blob bg-[var(--color-terracotta)]" style="width:560px;height:560px;top:-200px;left:-180px;opacity:0.28"></div>
+  <div aria-hidden="true" class="organic-blob bg-[var(--color-olive)]" style="width:480px;height:480px;bottom:-220px;right:-160px;opacity:0.22"></div>
+
+  <div class="wrap relative">
+    {align === "split" ? (
+      <div class="grid lg:grid-cols-[1.05fr_1fr] gap-10 lg:gap-16 items-center">
+        <div class="reveal">
+          <p class="eyebrow">{eyebrow}</p>
+          <h1 class="mt-5">{title}</h1>
+          {intro && (
+            <p class="mt-7 text-lg text-[var(--color-mute)] leading-relaxed max-w-xl">{intro}</p>
+          )}
+          <slot name="actions" />
+        </div>
+        <div class="reveal">
+          <div class="frame frame-tall lg:frame-square">
+            <img
+              src={image}
+              alt={imageAlt}
+              loading="eager"
+              class="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      </div>
+    ) : (
+      <div class="text-center max-w-3xl mx-auto reveal">
+        <p class="eyebrow justify-center">{eyebrow}</p>
+        <h1 class="mt-5">{title}</h1>
+        {intro && (
+          <p class="mt-7 text-lg text-[var(--color-mute)] leading-relaxed mx-auto">{intro}</p>
+        )}
+        <slot name="actions" />
+      </div>
+    )}
+  </div>
+</section>

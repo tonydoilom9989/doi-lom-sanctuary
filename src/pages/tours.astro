@@ -1,0 +1,111 @@
+---
+import Layout from "../layouts/Layout.astro";
+import TourCard from "../components/TourCard.astro";
+import ReviewCard from "../components/ReviewCard.astro";
+import TrustStrip from "../components/TrustStrip.astro";
+import Icon from "../components/icons/Icon.astro";
+import { tours } from "../data/tours";
+import { recommendedActivities } from "../data/recommendedActivities";
+import { faqGroups } from "../data/faq";
+import { testimonials } from "../data/testimonials";
+import { site } from "../data/site";
+
+const inlineFAQ = faqGroups[0].items.slice(0, 3);
+const inlineReviews = testimonials.slice(0, 2);
+---
+
+<Layout
+  title="Elephant Tours in Chiang Mai"
+  description={`${site.counts.tours} ethical elephant tours in Mae Taeng, Chiang Mai — half-day care, full-day, overnight trekking and combos. From ฿1,700. No riding. No chains. 4.9★ on Google.`}
+  ogImage="/img/hero/elephants.png"
+>
+  {/* ============ PAGE HEADER ============ */}
+  <section>
+    <div class="wrap pt-10 pb-8 lg:pt-14 lg:pb-10">
+      <div class="flex items-end justify-between flex-wrap gap-6">
+        <div class="reveal">
+          <p class="eyebrow eyebrow-green">Tours</p>
+          <h1 class="mt-3">Choose your experience</h1>
+          <p class="mt-3 text-[var(--color-mute)]">{site.counts.tours} tours · all ethical · all intimate.</p>
+        </div>
+        <div class="flex items-baseline gap-2 reveal">
+          <div class="flex gap-0.5 text-[var(--color-amber)]">
+            {Array.from({ length: 5 }).map(() => <Icon name="star" size={13} />)}
+          </div>
+          <p class="text-[0.88rem] text-[var(--color-soil)]">
+            <span class="font-medium">{site.rating.score}</span>
+            <span class="text-[var(--color-mute)]"> · {site.rating.reviewCount} reviews</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ TRUST STRIP — cream variant, small ============ */}
+  <TrustStrip bg="cream" size="small" />
+
+  {/* ============ TOUR CARDS GRID ============ */}
+  <section class="py-10 lg:py-14">
+    <div class="wrap">
+      <div id="tour-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {tours.map((t, i) => (
+          <div data-category={t.category} class="tour-grid-item reveal" style={`transition-delay:${(i % 6) * 50}ms`}>
+            <TourCard tour={t} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ============ TONY'S RECOMMENDED ACTIVITIES ============ */}
+  <section class="py-12 lg:py-16 bg-[var(--color-cream)] border-y border-[var(--color-line)]">
+    <div class="wrap">
+      <div class="max-w-2xl reveal">
+        <p class="eyebrow eyebrow-green">More from Tony</p>
+        <h2 class="mt-3">Recommended Activities</h2>
+        <p class="mt-3 text-[var(--color-soil)] leading-relaxed">Other experiences in Chiang Mai</p>
+      </div>
+
+      <div class="mt-10 lg:mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {recommendedActivities.map((a, i) => (
+          <div class="reveal" style={`transition-delay:${(i % 6) * 50}ms`}>
+            <TourCard tour={a} isRecommended={true} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ============ INLINE FAQ + REVIEWS ============ */}
+  <section class="py-12 lg:py-14 border-t border-[var(--color-line)]">
+    <div class="wrap grid lg:grid-cols-2 gap-10 lg:gap-16">
+      <div class="reveal">
+        <p class="eyebrow">FAQ</p>
+        <div class="mt-4 grid gap-2">
+          {inlineFAQ.map((f) => (
+            <details class="group bg-[var(--color-paper)] border border-[var(--color-line)] rounded-md">
+              <summary class="flex items-center justify-between gap-3 px-4 py-3 cursor-pointer text-[0.92rem] text-[var(--color-ink)]">
+                <span>{f.q}</span>
+                <Icon name="chevron-down" size={14} class="text-[var(--color-mute)] transition-transform duration-200 group-open:rotate-180" />
+              </summary>
+              <p class="px-4 pb-4 text-[0.88rem] text-[var(--color-soil)] leading-relaxed">{f.a}</p>
+            </details>
+          ))}
+        </div>
+        <a href="/faq" class="ulink mt-5 inline-flex items-center gap-1.5 text-[0.92rem]">
+          See all FAQs
+          <Icon name="arrow" size={14} />
+        </a>
+      </div>
+
+      <div class="reveal grid gap-3">
+        {inlineReviews.map((r) => <ReviewCard review={r} />)}
+        <a href={site.location.googleReviewsLink} target="_blank" rel="noreferrer noopener" class="ulink text-[0.92rem] inline-flex items-center gap-1.5 mt-2">
+          See all {site.rating.reviewCount} reviews on Google
+          <Icon name="arrow" size={14} />
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
+

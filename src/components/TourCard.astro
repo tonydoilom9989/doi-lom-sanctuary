@@ -1,0 +1,43 @@
+---
+import type { Tour } from "../data/tours";
+import Icon from "./icons/Icon.astro";
+
+interface Props { tour: Tour; popular?: boolean; isRecommended?: boolean; }
+const { tour, popular = tour.popular, isRecommended = false } = Astro.props;
+
+const diffClass = tour.difficulty === "Easy" ? "chip-easy" : tour.difficulty === "Moderate" ? "chip-moderate" : "chip";
+---
+
+<article class="card card-lift relative flex flex-col">
+  <a href={`/tours/${tour.slug}`} class="block aspect-[16/9] overflow-hidden bg-[var(--color-leaf-100)]" style={`background-color:${tour.tint}`}>
+    <img src={tour.photo} alt={tour.name} loading="lazy" class="w-full h-full object-cover transition-transform duration-[900ms] hover:scale-105"/>
+  </a>
+  <div class="p-4 flex-1 flex flex-col">
+    <div class="flex flex-wrap gap-1.5 mb-3">
+      <span class="chip">{tour.duration}</span>
+      <span class={`chip ${diffClass}`}>{tour.difficulty}</span>
+      {tour.groupSize && <span class="chip">{tour.groupSize}</span>}
+    </div>
+    <h3 class="font-display text-[1.15rem] text-[var(--color-ink)] leading-tight line-clamp-1">
+      <a href={`/tours/${tour.slug}`} class="hover:text-[var(--color-forest)] transition-colors" title={tour.name}>{tour.name}</a>
+    </h3>
+    <p class="mt-2 text-[0.88rem] text-[var(--color-soil)] leading-snug line-clamp-2">{tour.shortDesc}</p>
+
+    <div class="flex gap-1 mt-3 pb-4 flex-wrap">
+      {!isRecommended && <span class="inline-flex items-center gap-1 chip text-[0.7rem]"><Icon name="paw" size={11} /> Elephant</span>}
+      <span class="inline-flex items-center gap-1 chip text-[0.7rem]"><Icon name="fork" size={11} /> Meals</span>
+      <span class="inline-flex items-center gap-1 chip text-[0.7rem]"><Icon name="car" size={11} /> Transport</span>
+    </div>
+
+    <div class="mt-auto pt-4 border-t border-[var(--color-line)] flex items-end justify-between gap-3">
+      <div>
+        <p class="font-display text-[1.3rem] text-[var(--color-ink)] leading-none">฿{tour.price.toLocaleString()}</p>
+        <p class="text-[0.7rem] text-[var(--color-mute)] mt-1">{tour.priceUnit}</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <a href={`/tours/${tour.slug}`} class="btn-outline h-9 px-3 text-[0.78rem]">Read more</a>
+        <button type="button" data-book-now data-book-type="tour" data-tour-slug={tour.slug} data-include-recommended={isRecommended ? "true" : undefined} class="btn-primary h-9 px-3 text-[0.78rem]">Book now</button>
+      </div>
+    </div>
+  </div>
+</article>

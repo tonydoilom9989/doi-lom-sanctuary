@@ -1,0 +1,17 @@
+---
+interface Props {
+  q: string;
+  a: string;
+}
+const { q, a } = Astro.props;
+---
+
+<details class="group border-b border-[var(--color-line)] py-6 reveal">
+  <summary class="flex items-start gap-5 cursor-pointer list-none">
+    <span class="font-display text-[1.05rem] md:text-[1.2rem] text-[var(--color-bark)] leading-snug flex-1">{q}</span>
+    <span aria-hidden="true" class="mt-1 grid place-items-center w-8 h-8 rounded-full border border-[var(--color-line)] text-[var(--color-clay)] transition-all duration-300 group-open:rotate-45 group-open:bg-[var(--color-clay)] group-open:text-[var(--color-paper)] group-open:border-[var(--color-clay)]">
+      <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" class="w-4 h-4"><path d="M7 1v12M1 7h12"/></svg>
+    </span>
+  </summary>
+  <p class="mt-5 text-[var(--color-soil)] leading-relaxed text-[0.98rem] pr-12">{a}</p>
+</details>

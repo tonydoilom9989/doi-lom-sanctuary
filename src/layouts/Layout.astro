@@ -1,0 +1,145 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import WhatsAppFloat from "../components/WhatsAppFloat.astro";
+import BookNowModal from "../components/BookNowModal.astro";
+import { site } from "../data/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description = `${site.tagline} An ethical elephant sanctuary in ${site.location.district}, ${site.location.province}. Founded by ${site.founder} in ${site.founded}. TAT Licensed No. ${site.tatLicense}.`,
+  ogImage = "/img/hero/home.png",
+  noindex = false,
+} = Astro.props;
+
+const fullTitle = title
+  ? `${title} — ${site.shortName} Elephant Sanctuary`
+  : `${site.name} · ${site.location.district}, ${site.location.province}`;
+
+const baseUrl = Astro.site ?? new URL(site.url);
+const canonicalURL = new URL(Astro.url.pathname, baseUrl).href;
+const absoluteOgImage = ogImage.startsWith("http")
+  ? ogImage
+  : new URL(ogImage, baseUrl).href;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "TouristAttraction",
+  name: site.name,
+  description: site.tagline,
+  url: site.url,
+  logo: new URL("/img/logo.png", baseUrl).href,
+  image: absoluteOgImage,
+  telephone: `+${site.whatsapp.raw}`,
+  email: site.email,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: site.location.address,
+    addressLocality: site.location.district,
+    addressRegion: site.location.province,
+    postalCode: site.location.postalCode,
+    addressCountry: site.location.country,
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: site.location.coords.lat,
+    longitude: site.location.coords.lng,
+  },
+  openingHours: "Mo-Su 08:00-16:00",
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: site.rating.score,
+    reviewCount: site.rating.reviewCount,
+    bestRating: 5,
+    worstRating: 1,
+  },
+  sameAs: [site.social.instagram, site.social.facebook],
+  foundingDate: String(site.founded),
+  founder: { "@type": "Person", name: site.founderFull },
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex,nofollow" />}
+    <link rel="canonical" href={canonicalURL} />
+
+    {/* Open Graph */}
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={absoluteOgImage} />
+    <meta property="og:image:alt" content={`${site.name} — ${site.tagline}`} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content={site.locale} />
+
+    {/* Twitter */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={absoluteOgImage} />
+
+    {/* Theme + favicon */}
+    <meta name="theme-color" content="#fffdf9" />
+    <link rel="icon" type="image/png" href="/img/logo.png" />
+    <link rel="apple-touch-icon" href="/img/logo.png" />
+
+    {/* Fonts */}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300..700&display=swap"
+    />
+
+    {/* Structured data — TouristAttraction schema for rich Google results */}
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:bg-[var(--color-forest)] focus:text-white focus:px-4 focus:py-2 focus:rounded-md"
+    >Skip to content</a>
+
+    <Header />
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <Footer />
+    <WhatsAppFloat />
+    <BookNowModal />
+
+    <script>
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("in");
+              io.unobserve(entry.target);
+            }
+          });
+        },
+        { rootMargin: "0px 0px -60px 0px", threshold: 0.1 }
+      );
+      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>

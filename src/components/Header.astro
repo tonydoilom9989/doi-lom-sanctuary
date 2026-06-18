@@ -1,0 +1,127 @@
+---
+import { navigation, site, waLink } from "../data/site";
+import Icon from "./icons/Icon.astro";
+
+const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+---
+
+<header class="sticky top-0 z-40 bg-[var(--color-bg)]/85 backdrop-blur-md border-b border-[var(--color-line)]">
+  <div class="wrap flex items-center justify-between gap-4 h-16">
+    {/* Logo */}
+    <a href="/" class="shrink-0 flex items-center gap-2.5">
+      <img src="/img/logo.png" alt={site.name} class="block w-10 h-10 object-contain shrink-0" />
+      <span class="hidden sm:inline font-display text-[1.05rem] tracking-tight text-[var(--color-ink)] leading-tight">{site.name}</span>
+    </a>
+
+    {/* Desktop nav */}
+    <nav aria-label="Primary" class="hidden lg:flex items-center gap-1">
+      {navigation.map((item) => {
+        const active = currentPath === item.href.replace(/\/$/, "") || (item.href !== "/" && currentPath.startsWith(item.href));
+        return (
+          <a
+            href={item.href}
+            class:list={[
+              "relative px-3 py-2 rounded-md text-[0.86rem] transition-colors duration-200",
+              active
+                ? "text-[var(--color-forest)] font-semibold"
+                : "text-[var(--color-soil)] hover:text-[var(--color-ink)]",
+            ]}
+            aria-current={active ? "page" : undefined}
+          >
+            {item.label}
+            {active && <span class="absolute left-3 right-3 -bottom-px h-[1.5px] bg-[var(--color-forest)]"></span>}
+          </a>
+        );
+      })}
+    </nav>
+
+    {/* Right side: language + book now */}
+    <div class="flex items-center gap-2">
+      <button
+        type="button"
+        aria-label="Language"
+        class="hidden sm:inline-flex items-center justify-center w-9 h-9 rounded-md border border-[var(--color-line)] text-[0.78rem] font-medium text-[var(--color-soil)] hover:text-[var(--color-ink)] hover:border-[var(--color-forest)] transition-colors"
+      >
+        EN
+      </button>
+      <button
+        type="button"
+        data-book-now
+        class="btn-primary h-9 px-4 text-[0.85rem]"
+      >
+        Book now
+      </button>
+      <button
+        type="button"
+        id="menu-toggle"
+        aria-label="Open menu"
+        aria-controls="mobile-nav"
+        aria-expanded="false"
+        class="lg:hidden p-2 -mr-2 text-[var(--color-ink)]"
+      >
+        <Icon name="menu" size={22} />
+      </button>
+    </div>
+  </div>
+
+  {/* Mobile backdrop — dims page behind menu */}
+  <div id="mobile-backdrop" class="lg:hidden hidden fixed inset-x-0 top-16 bottom-0 bg-[var(--color-overlay)]/40 backdrop-blur-[1px] z-30"></div>
+
+  {/* Mobile nav — absolute so it overlays content instead of pushing header down */}
+  <div id="mobile-nav" class="lg:hidden hidden absolute top-full left-0 right-0 border-t border-[var(--color-line)] bg-[var(--color-paper)] shadow-[0_14px_30px_-10px_rgba(0,0,0,0.18)] max-h-[calc(100vh-4rem)] overflow-y-auto z-40">
+    <nav aria-label="Mobile" class="wrap py-5 grid gap-1">
+      {navigation.map((item) => {
+        const active = currentPath === item.href.replace(/\/$/, "");
+        return (
+          <a
+            href={item.href}
+            class:list={[
+              "py-2.5 text-[1rem] font-display flex items-center justify-between border-b border-[var(--color-line)]/60",
+              active ? "text-[var(--color-forest)]" : "text-[var(--color-ink)]",
+            ]}
+          >
+            {item.label}
+            <Icon name="chevron" size={14} class="text-[var(--color-stone)]" />
+          </a>
+        );
+      })}
+      <button type="button" data-book-now class="btn-primary mt-4 w-full">Book now</button>
+      <a href={waLink()} target="_blank" rel="noreferrer noopener" class="btn-whatsapp mt-2 w-full">
+        <Icon name="whatsapp" size={16} />
+        Chat with Tony
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById("menu-toggle");
+  const nav = document.getElementById("mobile-nav");
+  const backdrop = document.getElementById("mobile-backdrop");
+
+  const setMenuOpen = (open: boolean) => {
+    nav?.classList.toggle("hidden", !open);
+    backdrop?.classList.toggle("hidden", !open);
+    btn?.setAttribute("aria-expanded", String(open));
+    // Lock body scroll so the page behind doesn't move while menu is open
+    document.body.style.overflow = open ? "hidden" : "";
+  };
+
+  btn?.addEventListener("click", () => {
+    const isOpen = !nav?.classList.contains("hidden");
+    setMenuOpen(!isOpen);
+  });
+
+  // Tap backdrop to close
+  backdrop?.addEventListener("click", () => setMenuOpen(false));
+
+  // Close menu when a nav link is tapped
+  nav?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => setMenuOpen(false));
+  });
+
+  // Close on Escape
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !nav?.classList.contains("hidden")) setMenuOpen(false);
+  });
+</script>

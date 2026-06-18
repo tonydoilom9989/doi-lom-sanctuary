@@ -1,0 +1,272 @@
+{
+  "$schema": "https://schemas.tokens.studio/v1",
+  "global": {
+    "color": {
+      "bg": { "value": "#fffdf9", "type": "color", "description": "Page background — warm off-white" },
+      "paper": { "value": "#fffdf9", "type": "color", "description": "Card surface" },
+      "surface": { "value": "#faf6ec", "type": "color", "description": "Lighter tinted surface" },
+      "bone": { "value": "#f5ede3", "type": "color", "description": "Warm beige surface (chips, soft sections)" },
+      "cream": { "value": "#f2eae0", "type": "color", "description": "Saturated warm section background" },
+      "amber-surface": { "value": "#fbf5ee", "type": "color", "description": "Anti-scam / warning surface" },
+      "line": { "value": "#ead9c5", "type": "color", "description": "Default border/divider" },
+      "line-amber": { "value": "#edd9bf", "type": "color", "description": "Amber-themed borders" },
+      "line-sage": { "value": "#c8ddb8", "type": "color", "description": "Sage-themed borders" },
+      "leaf-50": { "value": "#f0f5ec", "type": "color", "description": "Lightest sage tint (callout bg)" },
+      "leaf-100": { "value": "#c8ddb8", "type": "color", "description": "Light sage (frame placeholder bg)" },
+      "leaf-200": { "value": "#b4cfa6", "type": "color", "description": "Mid-light sage" },
+      "leaf-300": { "value": "#9dc27e", "type": "color", "description": "Sage green" },
+      "leaf-400": { "value": "#7a9e6c", "type": "color", "description": "Mid forest" },
+      "forest": { "value": "#3a5c2a", "type": "color", "description": "PRIMARY brand green — CTA, links" },
+      "forest-dark": { "value": "#2c4a1e", "type": "color", "description": "Primary hover + hero overlay" },
+      "forest-darker": { "value": "#1a3010", "type": "color", "description": "Gradient overlay" },
+      "canopy": { "value": "#0d1f08", "type": "color", "description": "Tree silhouette" },
+      "overlay": { "value": "#162810", "type": "color", "description": "Modal backdrop" },
+      "clay": { "value": "#d4b48a", "type": "color", "description": "Warm earth tint (image placeholders)" },
+      "amber": { "value": "#a0674a", "type": "color", "description": "Shield/warning icon color" },
+      "warn-yellow": { "value": "#f0e4c4", "type": "color", "description": "Difficulty chip — Easy bg" },
+      "warn-orange": { "value": "#f5d5b8", "type": "color", "description": "Difficulty chip — Moderate bg" },
+      "warn-red": { "value": "#c66454", "type": "color", "description": "Destructive (errors)" },
+      "ink": { "value": "#1a1a14", "type": "color", "description": "Primary heading + body text" },
+      "soil": { "value": "#3a3024", "type": "color", "description": "Secondary body text" },
+      "mute": { "value": "#6b5f4a", "type": "color", "description": "Muted text (captions, labels)" },
+      "stone": { "value": "#8a7560", "type": "color", "description": "Lightest muted (small hints)" },
+      "footer": { "value": "#2c1f14", "type": "color", "description": "Footer background" },
+      "footer-line": { "value": "#3a2c1a", "type": "color", "description": "Footer divider" },
+      "wa": { "value": "#25d366", "type": "color", "description": "WhatsApp green (FAB, buttons)" },
+      "wa-dark": { "value": "#128c4d", "type": "color", "description": "WhatsApp hover" }
+    },
+    "fontFamilies": {
+      "display": { "value": "DM Serif Display", "type": "fontFamilies" },
+      "body": { "value": "Inter", "type": "fontFamilies" },
+      "mono": { "value": "JetBrains Mono", "type": "fontFamilies" }
+    },
+    "fontWeights": {
+      "regular": { "value": "400", "type": "fontWeights" },
+      "medium": { "value": "500", "type": "fontWeights" },
+      "semibold": { "value": "600", "type": "fontWeights" },
+      "bold": { "value": "700", "type": "fontWeights" }
+    },
+    "fontSizes": {
+      "h1": { "value": "54px", "type": "fontSizes", "description": "Hero h1 (max clamp value 3.4rem)" },
+      "h2": { "value": "38px", "type": "fontSizes", "description": "Section h2 (max 2.4rem)" },
+      "h3": { "value": "24px", "type": "fontSizes", "description": "Card h3 (max 1.5rem)" },
+      "h4": { "value": "20px", "type": "fontSizes", "description": "h4 (max 1.25rem)" },
+      "body-lg": { "value": "17px", "type": "fontSizes" },
+      "body": { "value": "16px", "type": "fontSizes", "description": "Base body" },
+      "body-sm": { "value": "15px", "type": "fontSizes" },
+      "caption": { "value": "14px", "type": "fontSizes" },
+      "tiny": { "value": "12px", "type": "fontSizes" },
+      "eyebrow": { "value": "11px", "type": "fontSizes" },
+      "button": { "value": "15px", "type": "fontSizes" }
+    },
+    "lineHeights": {
+      "tight": { "value": "1.08", "type": "lineHeights" },
+      "snug": { "value": "1.25", "type": "lineHeights" },
+      "normal": { "value": "1.5", "type": "lineHeights" },
+      "relaxed": { "value": "1.75", "type": "lineHeights" }
+    },
+    "letterSpacing": {
+      "tight": { "value": "-0.018em", "type": "letterSpacing" },
+      "normal": { "value": "0", "type": "letterSpacing" },
+      "wide": { "value": "0.05em", "type": "letterSpacing" },
+      "widest": { "value": "0.18em", "type": "letterSpacing", "description": "Eyebrow label tracking" }
+    },
+    "typography": {
+      "h1": {
+        "value": {
+          "fontFamily": "{fontFamilies.display}",
+          "fontWeight": "{fontWeights.regular}",
+          "fontSize": "{fontSizes.h1}",
+          "lineHeight": "{lineHeights.tight}",
+          "letterSpacing": "{letterSpacing.tight}"
+        },
+        "type": "typography",
+        "description": "Hero / page title"
+      },
+      "h2": {
+        "value": {
+          "fontFamily": "{fontFamilies.display}",
+          "fontWeight": "{fontWeights.regular}",
+          "fontSize": "{fontSizes.h2}",
+          "lineHeight": "{lineHeights.tight}",
+          "letterSpacing": "{letterSpacing.tight}"
+        },
+        "type": "typography",
+        "description": "Section title"
+      },
+      "h3": {
+        "value": {
+          "fontFamily": "{fontFamilies.display}",
+          "fontWeight": "{fontWeights.regular}",
+          "fontSize": "{fontSizes.h3}",
+          "lineHeight": "{lineHeights.tight}",
+          "letterSpacing": "{letterSpacing.tight}"
+        },
+        "type": "typography",
+        "description": "Card / subsection title"
+      },
+      "h4": {
+        "value": {
+          "fontFamily": "{fontFamilies.display}",
+          "fontWeight": "{fontWeights.regular}",
+          "fontSize": "{fontSizes.h4}",
+          "lineHeight": "{lineHeights.snug}",
+          "letterSpacing": "{letterSpacing.tight}"
+        },
+        "type": "typography"
+      },
+      "body": {
+        "value": {
+          "fontFamily": "{fontFamilies.body}",
+          "fontWeight": "{fontWeights.regular}",
+          "fontSize": "{fontSizes.body}",
+          "lineHeight": "{lineHeights.normal}"
+        },
+        "type": "typography",
+        "description": "Default body text"
+      },
+      "body-small": {
+        "value": {
+          "fontFamily": "{fontFamilies.body}",
+          "fontWeight": "{fontWeights.regular}",
+          "fontSize": "{fontSizes.body-sm}",
+          "lineHeight": "{lineHeights.normal}"
+        },
+        "type": "typography"
+      },
+      "caption": {
+        "value": {
+          "fontFamily": "{fontFamilies.body}",
+          "fontWeight": "{fontWeights.regular}",
+          "fontSize": "{fontSizes.caption}",
+          "lineHeight": "{lineHeights.normal}"
+        },
+        "type": "typography"
+      },
+      "eyebrow": {
+        "value": {
+          "fontFamily": "{fontFamilies.body}",
+          "fontWeight": "{fontWeights.semibold}",
+          "fontSize": "{fontSizes.eyebrow}",
+          "lineHeight": "{lineHeights.snug}",
+          "letterSpacing": "{letterSpacing.widest}",
+          "textCase": "uppercase"
+        },
+        "type": "typography",
+        "description": "Overline label above headings"
+      },
+      "button": {
+        "value": {
+          "fontFamily": "{fontFamilies.body}",
+          "fontWeight": "{fontWeights.medium}",
+          "fontSize": "{fontSizes.button}",
+          "lineHeight": "{lineHeights.snug}"
+        },
+        "type": "typography"
+      }
+    },
+    "spacing": {
+      "0": { "value": "0", "type": "spacing" },
+      "1": { "value": "4px", "type": "spacing" },
+      "2": { "value": "8px", "type": "spacing" },
+      "3": { "value": "12px", "type": "spacing" },
+      "4": { "value": "16px", "type": "spacing" },
+      "5": { "value": "20px", "type": "spacing" },
+      "6": { "value": "24px", "type": "spacing" },
+      "8": { "value": "32px", "type": "spacing" },
+      "10": { "value": "40px", "type": "spacing" },
+      "12": { "value": "48px", "type": "spacing" },
+      "16": { "value": "64px", "type": "spacing" },
+      "20": { "value": "80px", "type": "spacing" }
+    },
+    "borderRadius": {
+      "sm": { "value": "6px", "type": "borderRadius", "description": "Small chips, tags" },
+      "md": { "value": "8px", "type": "borderRadius", "description": "Buttons, inputs" },
+      "lg": { "value": "12px", "type": "borderRadius", "description": "Cards, frames" },
+      "xl": { "value": "16px", "type": "borderRadius", "description": "Large cards, modals" },
+      "2xl": { "value": "20px", "type": "borderRadius", "description": "Hero containers" },
+      "full": { "value": "9999px", "type": "borderRadius", "description": "Pills, chips" }
+    },
+    "borderWidth": {
+      "default": { "value": "1px", "type": "borderWidth" }
+    },
+    "boxShadow": {
+      "soft": {
+        "value": [
+          { "x": "0", "y": "1px", "blur": "2px", "spread": "0", "color": "rgba(26,26,20,0.04)", "type": "dropShadow" },
+          { "x": "0", "y": "4px", "blur": "12px", "spread": "-4px", "color": "rgba(26,26,20,0.08)", "type": "dropShadow" }
+        ],
+        "type": "boxShadow",
+        "description": "Subtle surface lift"
+      },
+      "card": {
+        "value": [
+          { "x": "0", "y": "2px", "blur": "4px", "spread": "0", "color": "rgba(26,26,20,0.06)", "type": "dropShadow" },
+          { "x": "0", "y": "12px", "blur": "28px", "spread": "-12px", "color": "rgba(26,26,20,0.14)", "type": "dropShadow" }
+        ],
+        "type": "boxShadow",
+        "description": "Default card shadow"
+      },
+      "lift": {
+        "value": [
+          { "x": "0", "y": "18px", "blur": "48px", "spread": "-20px", "color": "rgba(26,26,20,0.28)", "type": "dropShadow" }
+        ],
+        "type": "boxShadow",
+        "description": "Card hover lift"
+      },
+      "btn-primary-hover": {
+        "value": [
+          { "x": "0", "y": "8px", "blur": "20px", "spread": "-6px", "color": "rgba(58,92,42,0.5)", "type": "dropShadow" }
+        ],
+        "type": "boxShadow",
+        "description": "Primary button hover glow"
+      },
+      "btn-whatsapp-hover": {
+        "value": [
+          { "x": "0", "y": "8px", "blur": "20px", "spread": "-6px", "color": "rgba(37,211,102,0.55)", "type": "dropShadow" }
+        ],
+        "type": "boxShadow",
+        "description": "WhatsApp button hover glow"
+      }
+    },
+    "opacity": {
+      "muted": { "value": "0.55", "type": "opacity", "description": "Hero image opacity" },
+      "subtle": { "value": "0.65", "type": "opacity" },
+      "overlay-dark": { "value": "0.3", "type": "opacity", "description": "Black overlay on hero" },
+      "overlay-modal": { "value": "0.9", "type": "opacity", "description": "Modal backdrop" }
+    },
+    "duration": {
+      "fast": { "value": "150ms", "type": "other" },
+      "default": { "value": "200ms", "type": "other" },
+      "slow": { "value": "280ms", "type": "other" },
+      "card": { "value": "300ms", "type": "other" },
+      "reveal": { "value": "600ms", "type": "other" }
+    },
+    "easing": {
+      "out": { "value": "cubic-bezier(0.2, 0, 0.2, 1)", "type": "other", "description": "Custom ease-out" }
+    },
+    "breakpoint": {
+      "sm": { "value": "640px", "type": "sizing" },
+      "md": { "value": "768px", "type": "sizing" },
+      "lg": { "value": "1024px", "type": "sizing" },
+      "xl": { "value": "1280px", "type": "sizing" },
+      "2xl": { "value": "1536px", "type": "sizing" }
+    },
+    "size": {
+      "container-max": { "value": "1200px", "type": "sizing", "description": "Page container max-width" },
+      "btn-primary-height": { "value": "44px", "type": "sizing" },
+      "btn-outline-height": { "value": "42px", "type": "sizing" },
+      "btn-ghost-height": { "value": "40px", "type": "sizing" }
+    }
+  },
+  "$themes": [
+    {
+      "id": "light",
+      "name": "Light (default)",
+      "selectedTokenSets": { "global": "enabled" }
+    }
+  ],
+  "$metadata": {
+    "tokenSetOrder": ["global"]
+  }
+}

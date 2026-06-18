@@ -1,0 +1,283 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Icon from "../components/icons/Icon.astro";
+import { faqGroups, quickFAQ } from "../data/faq";
+import { site, waLink } from "../data/site";
+---
+
+<Layout
+  title="FAQ — Booking, Ethics & Pickup"
+  description={`${site.counts.faqs} answers about ethical elephant tours at Doi Lom Sanctuary: booking, pickup, what to bring, dietary needs, and our no-riding policy. Tony answers most questions within 30 mins on WhatsApp.`}
+  ogImage="/img/hero/about.png"
+>
+  {/* ============ PAGE HEADER + SEARCH ============ */}
+  <section class="border-b border-[var(--color-line)]">
+    <div class="wrap py-10 lg:py-14 text-center">
+      <p class="eyebrow eyebrow-green">Frequently asked questions</p>
+      <h1 class="mt-3 max-w-2xl mx-auto">Everything you need to know before you book</h1>
+      <p class="mt-4 text-[var(--color-mute)] max-w-xl mx-auto">{site.counts.faqs} questions across 5 topics. Tony replies on WhatsApp within 30 mins.</p>
+
+      {/* Search bar */}
+      <div class="mt-7 max-w-md mx-auto">
+        <div class="relative">
+          <Icon name="search" size={16} class="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--color-mute)]" />
+          <input
+            id="faq-search"
+            type="search"
+            placeholder="Search FAQs..."
+            class="form-input w-full"
+          />
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  {/* ============ 2-COLUMN LAYOUT ============ */}
+  <section class="py-12 lg:py-16">
+    <div class="wrap grid lg:grid-cols-[220px_1fr] gap-8 lg:gap-14 items-start">
+      {/* Sidebar — sticky */}
+      <aside class="hidden lg:block lg:sticky lg:top-24 self-start">
+        <p class="eyebrow">Jump to section</p>
+        <nav aria-label="FAQ sections" class="mt-4 grid gap-1">
+          {faqGroups.map((g, i) => (
+            <a
+              href={`#${g.id}`}
+              data-section-link={g.id}
+              class:list={[
+                "faq-side-link flex items-center gap-3 px-3 py-2 rounded-md text-[0.88rem] transition-colors",
+                i === 0 ? "bg-[var(--color-leaf-50)] border border-[var(--color-line-sage)] text-[var(--color-forest)]" : "border border-transparent text-[var(--color-soil)] hover:text-[var(--color-ink)]",
+              ]}
+            >
+              <Icon name={g.icon} size={14} />
+              {g.title}
+            </a>
+          ))}
+        </nav>
+        <div class="mt-5 pt-5 border-t border-[var(--color-line)]">
+          <a href={waLink()} target="_blank" rel="noreferrer noopener" class="btn-whatsapp w-full h-10 text-[0.82rem]">
+            <Icon name="whatsapp" size={14} />
+            Ask us directly
+          </a>
+        </div>
+      </aside>
+
+      {/* Right content */}
+      <div class="grid gap-14 lg:gap-16">
+        {faqGroups.map((group) => (
+          <section id={group.id} class="scroll-mt-32">
+            <header class="flex items-center gap-3 pb-3 border-b border-dashed border-[var(--color-line)] mb-5">
+              <div class="grid place-items-center w-11 h-11 rounded-md bg-[var(--color-leaf-50)] border border-[var(--color-line-sage)] text-[var(--color-forest)]">
+                <Icon name={group.icon} size={20} />
+              </div>
+              <h2 class="font-display text-[1.5rem] text-[var(--color-ink)] leading-tight flex-1">{group.title}</h2>
+              <span class="text-[0.82rem] text-[var(--color-mute)]">{group.items.length} questions</span>
+            </header>
+
+            <div class="grid gap-2">
+              {group.items.map((item) => (
+                <details class="faq-item group border border-[var(--color-line)] rounded-md bg-[var(--color-paper)] open:border-[var(--color-forest)]">
+                  <summary class="flex items-center justify-between gap-3 px-4 py-3 cursor-pointer">
+                    <div class="flex-1 flex items-center gap-2.5 flex-wrap">
+                      <span class="text-[0.92rem] text-[var(--color-ink)] font-medium">{item.q}</span>
+                      {item.tags?.includes("solo") && (
+                        <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-[var(--color-leaf-50)] border border-[var(--color-line-sage)] text-[0.66rem] font-medium text-[var(--color-forest)]">
+                          <Icon name="user-circle" size={9} />
+                          Solo
+                        </span>
+                      )}
+                      {item.tags?.includes("couples") && (
+                        <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-[var(--color-amber-surface)] border border-[var(--color-line-amber)] text-[0.66rem] font-medium text-[var(--color-amber)]">
+                          <Icon name="users" size={9} />
+                          Couples
+                        </span>
+                      )}
+                    </div>
+                    <Icon name="chevron-down" size={14} class="text-[var(--color-forest)] transition-transform duration-200 group-open:rotate-180 shrink-0" />
+                  </summary>
+                  <div class="px-4 pb-4 border-t border-[var(--color-line)]">
+                    {item.a.split("\n\n").map((para, i) => (
+                      <p class:list={["text-[0.95rem] text-[var(--color-soil)] leading-relaxed", i === 0 ? "mt-3" : "mt-3"]}>{para}</p>
+                    ))}
+
+                    {item.paymentMethods && (
+                      <div class="mt-4 grid sm:grid-cols-3 gap-2">
+                        {item.paymentMethods.map((m) => (
+                          <div class="card p-4 text-center">
+                            <Icon name={m.icon} size={18} class="text-[var(--color-forest)] mx-auto" />
+                            <p class="text-[0.88rem] font-medium text-[var(--color-ink)] mt-2">{m.name}</p>
+                            <p class="text-[0.74rem] text-[var(--color-mute)] mt-0.5">{m.desc}</p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {item.transport && (
+                      <div class="mt-4 grid gap-2.5">
+                        {item.transport.map((t) => (
+                          <div class="flex items-start gap-3 py-2.5 border-b border-dashed border-[var(--color-line)] last:border-b-0">
+                            <div class="grid place-items-center w-8 h-8 rounded-md bg-[var(--color-leaf-50)] border border-[var(--color-line-sage)] text-[var(--color-forest)] shrink-0">
+                              <Icon name={t.icon} size={14} />
+                            </div>
+                            <div>
+                              <p class="text-[0.88rem] font-medium text-[var(--color-ink)]">{t.title}</p>
+                              <p class="text-[0.8rem] text-[var(--color-mute)] mt-0.5">{t.desc}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {item.hasMap && (
+                      <div class="mt-4">
+                        <div class="aspect-[16/7] rounded-md overflow-hidden border border-[var(--color-line)]">
+                          <iframe
+                            src={site.location.googleMapsEmbed}
+                            width="100%"
+                            height="100%"
+                            style="border:0;"
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Doi Lom location"
+                            class="block w-full h-full"
+                          ></iframe>
+                        </div>
+                        <div class="mt-3 flex items-center justify-between text-[0.82rem]">
+                          <span class="text-[var(--color-mute)]">{site.location.address}</span>
+                          <a href={site.location.googleMapsLink} target="_blank" rel="noreferrer noopener" class="ulink">Open in Google Maps →</a>
+                        </div>
+                      </div>
+                    )}
+
+                    {item.hasAntiScam && (
+                      <div class="anti-scam mt-4">
+                        <Icon name="shield" size={16} />
+                        <div>
+                          <p class="font-medium text-[0.85rem] text-[var(--color-ink)]">Stay Safe</p>
+                          <p class="text-[0.82rem] text-[var(--color-soil)] mt-0.5 leading-snug">Tony only sends payment details personally via WhatsApp and never through third-party links.</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </details>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ============ STILL HAVE A QUESTION ============ */}
+  <section class="py-16 lg:py-20 border-t border-[var(--color-line)] text-center">
+    <div class="wrap">
+      <div class="mx-auto grid place-items-center w-14 h-14 rounded-full bg-[var(--color-leaf-50)] border border-[var(--color-line-sage)] text-[var(--color-wa)]">
+        <Icon name="whatsapp" size={24} />
+      </div>
+      <h2 class="mt-5 font-display text-[1.8rem] text-[var(--color-ink)]">Still have a question?</h2>
+      <p class="mt-3 text-[var(--color-soil)] max-w-md mx-auto leading-relaxed">Replies within 30 mins · When Tony wakes up</p>
+      <div class="mt-7 flex flex-wrap justify-center gap-3">
+        <a href={waLink()} target="_blank" rel="noreferrer noopener" class="btn-whatsapp">
+          <Icon name="whatsapp" size={16} />
+          Chat with Tony
+        </a>
+        <a href={`mailto:${site.email}`} class="btn-outline">
+          <Icon name="mail" size={15} />
+          Send an email
+        </a>
+      </div>
+      <p class="mt-4 text-[0.8rem] text-[var(--color-stone)]">{site.whatsapp.replyTime}</p>
+    </div>
+  </section>
+
+  {/* ============ QUICK FAQ TEASER (reusable) ============ */}
+  <section class="py-12 lg:py-14 border-t border-[var(--color-line)]">
+    <div class="wrap">
+      <p class="eyebrow">Quick answers</p>
+      <div class="mt-5 grid sm:grid-cols-3 gap-3">
+        {quickFAQ.map((q) => (
+          <div class="card p-5">
+            <Icon name={q.icon} size={18} class="text-[var(--color-forest)]" />
+            <p class="font-medium text-[0.95rem] text-[var(--color-ink)] mt-2.5">{q.title}</p>
+            <p class="text-[0.85rem] text-[var(--color-soil)] mt-1.5 leading-relaxed">{q.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  // Scrollspy — highlight sidebar item when section in view
+  const sections = document.querySelectorAll<HTMLElement>("section[id]");
+  const links = document.querySelectorAll<HTMLAnchorElement>("[data-section-link]");
+
+  const obs = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          links.forEach((l) => {
+            const active = l.dataset.sectionLink === id;
+            l.classList.toggle("bg-[var(--color-leaf-50)]", active);
+            l.classList.toggle("border-[var(--color-line-sage)]", active);
+            l.classList.toggle("text-[var(--color-forest)]", active);
+            l.classList.toggle("text-[var(--color-soil)]", !active);
+            l.classList.toggle("border-transparent", !active);
+          });
+        }
+      });
+    },
+    { rootMargin: "-30% 0px -55% 0px", threshold: 0 }
+  );
+  sections.forEach((s) => obs.observe(s));
+
+  // Search filter
+  const search = document.getElementById("faq-search") as HTMLInputElement | null;
+  const items = document.querySelectorAll<HTMLElement>(".faq-item");
+  search?.addEventListener("input", () => {
+    const q = search.value.toLowerCase().trim();
+    items.forEach((item) => {
+      const text = item.textContent?.toLowerCase() || "";
+      item.style.display = !q || text.includes(q) ? "" : "none";
+    });
+  });
+
+</script>
+
+<style is:global>
+  /* FAQ search — matches Contact form fields */
+  #faq-search {
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--color-line);
+    background-color: var(--color-paper);
+    border-radius: 14px;
+    padding: 0.95rem 1.15rem 0.95rem 3rem;
+  }
+  #faq-search:hover {
+    border-color: var(--color-stone);
+  }
+  #faq-search:focus {
+    border-color: var(--color-forest);
+  }
+
+  /* Custom black X clear button for FAQ search */
+  #faq-search::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 18px;
+    width: 18px;
+    margin-left: 4px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round'><path d='M6 6l12 12M18 6L6 18'/></svg>");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 14px 14px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 150ms;
+  }
+  #faq-search::-webkit-search-cancel-button:hover {
+    opacity: 1;
+  }
+</style>

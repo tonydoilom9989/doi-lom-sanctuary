@@ -1,0 +1,178 @@
+---
+import Layout from "../layouts/Layout.astro";
+import TrustStrip from "../components/TrustStrip.astro";
+import TourCard from "../components/TourCard.astro";
+import ReviewCard from "../components/ReviewCard.astro";
+import Icon from "../components/icons/Icon.astro";
+import { site, waLink } from "../data/site";
+import { tours } from "../data/tours";
+import { testimonials } from "../data/testimonials";
+
+const featuredTours = tours.filter((t) => t.featured).slice(0, 3);
+const featuredReviews = testimonials.slice(0, 3);
+---
+
+<Layout
+  description="Ethical elephant sanctuary in Mae Taeng, Chiang Mai. Three rescued elephants live free in 25 rai of forest — no riding, no chains. Family-run by Tony since 2002. 4.9★ on Google."
+  ogImage="/img/hero/home.png"
+>
+  {/* ============ SECTION 2 — HERO ============ */}
+  <section class="relative overflow-hidden bg-[var(--color-forest-dark)] text-white">
+    <img
+      src="/img/hero/home.png"
+      alt=""
+      class="absolute inset-0 w-full h-full object-cover opacity-65"
+      fetchpriority="high"
+    />
+    <div class="absolute inset-0 bg-black/30"></div>
+
+    <div class="wrap relative py-20 lg:py-28">
+      <div class="max-w-2xl reveal">
+        {/* Trust badges row */}
+        <div class="flex flex-wrap gap-2 mb-8">
+          <span class="trust-pill">
+            <Icon name="certificate" size={12} />
+            TAT Licensed
+          </span>
+          <span class="trust-pill">
+            <Icon name="star" size={12} />
+            4.9★ Google
+          </span>
+          <span class="trust-pill">
+            <Icon name="clock" size={12} />
+            {site.stats.yearsOperating} years
+          </span>
+          <span class="trust-pill">
+            <Icon name="users" size={12} />
+            Family owned
+          </span>
+        </div>
+
+        <h1 class="font-display italic text-white leading-[1.08] tracking-tight">
+          No riding. No chains.<br/>
+          No forcing.<br/>
+          Just elephants living freely.
+        </h1>
+
+        <p class="mt-7 text-[1.08rem] text-white/85 leading-relaxed max-w-xl">
+          An ethical animal sanctuary located on the hills above Mae Taeng, home to rescued elephants saved by Tony and family-run since 2002.
+        </p>
+
+        <div class="mt-9 flex flex-wrap items-center gap-3">
+          <button type="button" data-book-now class="btn-primary text-[0.95rem]">
+            Book an experience
+          </button>
+          <a href="/our-elephants" class="btn-outline-white">
+            Meet our elephants
+            <Icon name="arrow" size={14} />
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  {/* ============ SECTION 3 — TRUST STRIP ============ */}
+  <TrustStrip />
+
+  {/* ============ SECTION 5 — FEATURED TOURS ============ */}
+  <section class="py-16 lg:py-20">
+    <div class="wrap">
+      <div class="flex items-end justify-between flex-wrap gap-4 mb-10 reveal">
+        <div>
+          <p class="eyebrow eyebrow-green">Choose your day</p>
+          <h2 class="mt-3">Featured experiences</h2>
+        </div>
+        <a href="/tours" class="ulink text-[0.92rem] inline-flex items-center gap-1.5">
+          All {site.counts.tours} tours
+          <Icon name="arrow" size={14} />
+        </a>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-5">
+        {featuredTours.map((t, i) => (
+          <div class="reveal" style={`transition-delay:${i * 80}ms`}>
+            <TourCard tour={t} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ============ SECTION 6 — WHY DOI LOM ============ */}
+  <section class="py-16 lg:py-20 border-t border-[var(--color-line)]">
+    <div class="wrap">
+      <div class="max-w-2xl reveal">
+        <p class="eyebrow eyebrow-green">Why Doi Lom</p>
+        <h2 class="mt-3">A different kind of sanctuary.</h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-4 mt-10 auto-rows-fr">
+        {[
+          { icon: "users", title: "Family owned", desc: "Run by Tony & local team — every guest is hosted personally." },
+          { icon: "shield", title: "Genuinely ethical", desc: "No riding. No chains. No forcing. TAT-audited annually since 2002." },
+          { icon: "home", title: "Local family-run", desc: "Founded by Tony in 2002. The whole team lives within walking distance of Mae Taeng village." },
+          { icon: "trees", title: "Off the beaten path", desc: "60 minutes north of Chiang Mai, at the end of a quiet mountain road. The valley is yours." },
+        ].map((item, i) => (
+          <div class="bg-[var(--color-bone)] rounded-xl p-5 reveal flex items-center gap-4 h-full" style={`transition-delay:${i * 60}ms`}>
+            <div class="grid place-items-center w-11 h-11 rounded-md bg-[var(--color-leaf-50)] border border-[var(--color-line-sage)] text-[var(--color-forest)] shrink-0">
+              <Icon name={item.icon} size={20} />
+            </div>
+            <div>
+              <h3 class="font-display text-[1.2rem] text-[var(--color-ink)]">{item.title}</h3>
+              <p class="mt-2 text-[0.92rem] text-[var(--color-soil)] leading-relaxed">{item.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ============ SECTION 7 — REVIEWS ============ */}
+  <section class="py-16 lg:py-20 border-t border-[var(--color-line)]">
+    <div class="wrap">
+      <div class="flex items-end justify-between flex-wrap gap-4 mb-10 reveal">
+        <div class="flex items-baseline gap-4">
+          <p class="font-display text-[2.4rem] text-[var(--color-ink)] leading-none">{site.rating.score}</p>
+          <div>
+            <div class="flex gap-0.5 text-[var(--color-amber)]">
+              {Array.from({ length: 5 }).map(() => <Icon name="star" size={14} />)}
+            </div>
+            <p class="text-[0.8rem] text-[var(--color-mute)] mt-1">From {site.rating.reviewCount} Google reviews</p>
+          </div>
+        </div>
+        <a href={site.location.googleReviewsLink} target="_blank" rel="noreferrer noopener" class="ulink text-[0.92rem] inline-flex items-center gap-1.5">
+          See all {site.rating.reviewCount} reviews on Google
+          <Icon name="arrow" size={14} />
+        </a>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-5">
+        {featuredReviews.map((r, i) => (
+          <div class="reveal" style={`transition-delay:${i * 80}ms`}>
+            <ReviewCard review={r} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ============ SECTION 8 — CTA BANNER ============ */}
+  <section class="relative overflow-hidden bg-[var(--color-forest-dark)] text-white py-20 lg:py-24 text-center">
+    <div class="wrap relative">
+      <h2 class="text-white font-display italic max-w-3xl mx-auto reveal">
+        Come spend a slow morning with us.
+      </h2>
+      <p class="mt-5 text-white/80 max-w-xl mx-auto leading-relaxed text-[1.02rem] reveal">
+        Eight guests a day. One forest. Three elephants who have, at last, been allowed to be elephants.
+      </p>
+      <div class="mt-9 flex flex-wrap items-center justify-center gap-3 reveal">
+        <a href="/tours" class="btn-ghost-light w-44 justify-center">View all tours</a>
+        <a href={waLink()} target="_blank" rel="noreferrer noopener" class="btn-whatsapp w-44 justify-center">
+          <Icon name="whatsapp" size={16} />
+          Chat with Tony
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,55 @@
+---
+import { trustBadges } from "../data/site";
+import Icon from "./icons/Icon.astro";
+
+interface Props {
+  bg?: "sage" | "cream";
+  size?: "default" | "small";
+}
+const { bg = "sage", size = "default" } = Astro.props;
+
+const isCream = bg === "cream";
+
+const sectionClass = isCream
+  ? "bg-[var(--color-cream)] border-y border-[var(--color-line)]"
+  : "bg-[var(--color-leaf-50)] border-y border-[var(--color-line-sage)]";
+
+// Cream variant: charcoal title + border, medium-gray icon, no shadow
+const circleBorder = isCream ? "border-[var(--color-mute)]" : "border-[var(--color-line-sage)]";
+const iconColor = isCream ? "text-[var(--color-mute)]" : "text-[var(--color-forest)]";
+const titleColor = isCream ? "text-[var(--color-mute)]" : "text-[var(--color-forest)]";
+const shadow = isCream ? "" : "shadow-[0_2px_8px_-2px_rgba(58,92,42,0.15)]";
+
+const padding = size === "small" ? "py-6 lg:py-7" : "py-8 lg:py-10";
+const circleSize =
+  size === "small"
+    ? "w-7 h-7 lg:w-8 lg:h-8"
+    : "w-12 h-12 lg:w-14 lg:h-14";
+const iconSize = size === "small" ? 13 : 22;
+const titleSize = size === "small" ? "text-[0.95rem]" : "text-[1.05rem]";
+const mtTop = size === "small" ? "mt-3" : "mt-3.5";
+---
+
+<section class={sectionClass}>
+  <div class:list={["wrap", padding]}>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
+      {trustBadges.map((b) => (
+        <div class="text-center">
+          <div
+            class:list={[
+              "mx-auto grid place-items-center rounded-full bg-white border",
+              circleSize,
+              circleBorder,
+              iconColor,
+              shadow,
+            ]}
+          >
+            <Icon name={b.icon} size={iconSize} />
+          </div>
+          <p class:list={["font-display leading-tight", titleSize, mtTop, titleColor]}>{b.value}</p>
+          <p class="text-[0.74rem] text-[var(--color-soil)] mt-1 tracking-wide">{b.label}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,712 @@
+---
+// Book Now modal — 4 states:
+//   step-1: Choose type (Tours or Stays)
+//   step-2-tour: Tour booking form
+//   step-2-stay: Stays booking form
+//   step-3-success: Confirmation
+//
+// Triggered by any element with [data-book-now] attribute.
+// Optional: data-book-type="tour|stay", data-tour-slug="...", data-stay-slug="..."
+// to skip step 1 or pre-fill the form.
+
+import { tours } from "../data/tours";
+import { recommendedActivities } from "../data/recommendedActivities";
+import { stays } from "../data/stays";
+import { site, waLink } from "../data/site";
+import Icon from "./icons/Icon.astro";
+
+const cheapestTourPrice = Math.min(...tours.map((t) => t.price));
+const cheapestStayPrice = Math.min(...stays.map((s) => s.pricePerNight));
+---
+
+<div
+  id="book-modal"
+  class="fixed inset-0 z-[100] hidden items-center justify-center p-4"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="book-modal-title"
+  data-wa-number={site.whatsapp.raw}
+>
+  {/* Overlay */}
+  <div class="absolute inset-0 bg-[var(--color-overlay)]/80 backdrop-blur-sm" data-modal-close></div>
+
+  {/* Modal card */}
+  <div class="relative w-full max-w-[460px] max-h-[92vh] overflow-y-auto bg-[var(--color-paper)] rounded-2xl border border-[var(--color-line)] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.5)] animate-[fadeUp_280ms_cubic-bezier(0.2,0,0.2,1)]">
+    {/* ============ STEP 1 — CHOOSE TYPE ============ */}
+    <section data-step="1" class="modal-step">
+      <div class="flex items-start justify-between gap-4 px-5 py-4 border-b border-[var(--color-line)]">
+        <div>
+          <h2 id="book-modal-title" class="font-display text-[1.15rem] text-[var(--color-ink)] leading-tight">What would you like to book?</h2>
+          <p class="text-[0.8rem] text-[var(--color-mute)] mt-1">Choose an experience to get started.</p>
+        </div>
+        <button type="button" data-modal-close aria-label="Close modal" class="grid place-items-center w-8 h-8 rounded-full bg-[var(--color-bone)] border border-[var(--color-line)] text-[var(--color-soil)] hover:bg-[var(--color-line)] transition">
+          <Icon name="x" size={14} />
+        </button>
+      </div>
+
+      {/* Progress bar */}
+      <div class="relative h-[3px] bg-[var(--color-line)]">
+        <div class="absolute inset-y-0 left-0 w-1/2 bg-[var(--color-forest)]"></div>
+      </div>
+      <div class="flex items-center gap-2 px-5 py-2 bg-[var(--color-bone)] border-b border-[var(--color-line)] text-[0.7rem]">
+        <span class="grid place-items-center w-[18px] h-[18px] rounded-full bg-[var(--color-forest)] text-white font-semibold">1</span>
+        <span class="text-[var(--color-forest)] font-medium">Choose type</span>
+        <span class="flex-1 h-px bg-[var(--color-line)]"></span>
+        <span class="grid place-items-center w-[18px] h-[18px] rounded-full bg-[var(--color-line)] text-[var(--color-mute)] font-semibold">2</span>
+        <span class="text-[var(--color-stone)]">Fill details</span>
+      </div>
+
+      <div class="p-5">
+        <div class="grid grid-cols-2 gap-3">
+          <button type="button" data-pick-type="tour" class="type-card group block text-left overflow-hidden rounded-xl border border-[var(--color-line)] hover:border-[var(--color-forest)] transition-all bg-[var(--color-paper)]">
+            <div class="aspect-[4/3] bg-[var(--color-leaf-300)] overflow-hidden">
+              <img src="/img/tours/morning-elephant-care.png" alt="" class="w-full h-full object-cover" loading="lazy"/>
+            </div>
+            <div class="p-3">
+              <p class="font-display text-[1rem] text-[var(--color-ink)]">Book a tour</p>
+              <p class="text-[0.78rem] text-[var(--color-mute)] mt-1 leading-snug">Half day to 7 days · ethical elephant experiences</p>
+              <div class="flex gap-1.5 mt-2.5">
+                <span class="chip text-[0.65rem] px-1.5 py-0.5">{site.counts.tours} tours</span>
+                <span class="chip text-[0.65rem] px-1.5 py-0.5">From ฿{cheapestTourPrice.toLocaleString()}</span>
+              </div>
+            </div>
+          </button>
+
+          <button type="button" data-pick-type="stay" class="type-card group block text-left overflow-hidden rounded-xl border border-[var(--color-line)] hover:border-[var(--color-forest)] transition-all bg-[var(--color-paper)]">
+            <div class="aspect-[4/3] bg-[var(--color-leaf-100)] overflow-hidden">
+              <img src="/img/stays/bungalow-with-mini-pool/main.png" alt="" class="w-full h-full object-cover" loading="lazy"/>
+            </div>
+            <div class="p-3">
+              <p class="font-display text-[1rem] text-[var(--color-ink)]">Stay overnight</p>
+              <p class="text-[0.78rem] text-[var(--color-mute)] mt-1 leading-snug">{site.counts.rooms} room types · sleep in the forest</p>
+              <div class="flex gap-1.5 mt-2.5">
+                <span class="chip text-[0.65rem] px-1.5 py-0.5">{site.counts.rooms} rooms</span>
+                <span class="chip text-[0.65rem] px-1.5 py-0.5">From ฿{cheapestStayPrice.toLocaleString()}</span>
+              </div>
+            </div>
+          </button>
+        </div>
+
+        {/* WhatsApp escape */}
+        <div class="mt-4 flex items-center justify-between gap-3 bg-[var(--color-bone)] border border-[var(--color-line)] rounded-lg p-3">
+          <div>
+            <p class="text-[0.8rem] text-[var(--color-ink)] font-medium">Not sure what to book?</p>
+            <p class="text-[0.72rem] text-[var(--color-mute)]">Tony can suggest the right experience.</p>
+          </div>
+          <a href={waLink("Hi Tony, I'm not sure which experience suits us. Could you help?")} target="_blank" rel="noreferrer noopener" class="btn-whatsapp h-8 px-3 text-[0.78rem]">
+            <Icon name="whatsapp" size={13} />
+            Ask us
+          </a>
+        </div>
+
+        <p class="mt-4 text-center text-[0.74rem] text-[var(--color-stone)]">
+          <a href="/tours" class="ulink">Browse all tours first instead</a>
+        </p>
+      </div>
+    </section>
+
+    {/* ============ STEP 2 — TOUR FORM ============ */}
+    <section data-step="2-tour" class="modal-step hidden">
+      <div class="flex items-start justify-between gap-4 px-5 py-4 border-b border-[var(--color-line)]">
+        <div>
+          <h2 class="font-display text-[1.15rem] text-[var(--color-ink)] leading-tight">Book a tour</h2>
+          <p class="text-[0.8rem] text-[var(--color-mute)] mt-1">Fill in your details — Tony confirms within 30 mins.</p>
+        </div>
+        <button type="button" data-modal-close aria-label="Close" class="grid place-items-center w-8 h-8 rounded-full bg-[var(--color-bone)] border border-[var(--color-line)] text-[var(--color-soil)] hover:bg-[var(--color-line)] transition">
+          <Icon name="x" size={14} />
+        </button>
+      </div>
+
+      <div class="h-[3px] bg-[var(--color-forest)]"></div>
+      <div class="flex items-center gap-2 px-5 py-2 bg-[var(--color-bone)] border-b border-[var(--color-line)] text-[0.7rem]">
+        <span class="grid place-items-center w-[18px] h-[18px] rounded-full bg-[var(--color-forest)] text-white">
+          <Icon name="check" size={10} />
+        </span>
+        <span class="text-[var(--color-stone)]">Choose type</span>
+        <span class="flex-1 h-px bg-[var(--color-line-sage)]"></span>
+        <span class="grid place-items-center w-[18px] h-[18px] rounded-full bg-[var(--color-forest)] text-white font-semibold">2</span>
+        <span class="text-[var(--color-forest)] font-medium">Fill details</span>
+      </div>
+
+      <form data-form="tour" class="p-5 grid gap-3">
+        <button type="button" data-back-to="1" class="self-start inline-flex items-center gap-1.5 text-[0.85rem] text-[var(--color-soil)] hover:text-[var(--color-forest)] transition">
+          <Icon name="arrow-left" size={14} />
+          Back
+        </button>
+
+        <label class="grid gap-1.5">
+          <span class="eyebrow">Tour</span>
+          <select name="tour" required class="form-input">
+            {tours.map((t) => (
+              <option class="main-option" value={t.slug} data-price={t.price} data-name={t.name} data-has-timeslots={t.timeSlots && t.timeSlots.length >= 2 ? "1" : undefined}>{t.name} · ฿{t.price.toLocaleString()}</option>
+            ))}
+            {recommendedActivities.map((t) => (
+              <option class="recommended-option" hidden value={t.slug} data-price={t.price} data-name={t.name} data-has-timeslots={t.timeSlots && t.timeSlots.length >= 2 ? "1" : undefined}>{t.name} · ฿{t.price.toLocaleString()}</option>
+            ))}
+          </select>
+        </label>
+
+        {/* Time slot — shown only when selected tour has multiple pickup times (Half Day) */}
+        <div class="grid gap-1.5 hidden" data-time-slot-field>
+          <span class="eyebrow">Time slot</span>
+          <div class="grid grid-cols-2 gap-2">
+            <label class="flex items-center gap-2.5 p-3 rounded-md border border-[var(--color-line)] cursor-pointer hover:border-[var(--color-forest)] transition has-[:checked]:border-[var(--color-forest)] has-[:checked]:bg-[var(--color-leaf-50)]">
+              <input type="radio" name="timeSlot" value="Morning" class="accent-[var(--color-forest)]" checked />
+              <div>
+                <p class="text-[0.88rem] font-medium text-[var(--color-ink)]">Morning</p>
+                <p class="text-[0.72rem] text-[var(--color-mute)]">8:00–8:30 am pickup</p>
+              </div>
+            </label>
+            <label class="flex items-center gap-2.5 p-3 rounded-md border border-[var(--color-line)] cursor-pointer hover:border-[var(--color-forest)] transition has-[:checked]:border-[var(--color-forest)] has-[:checked]:bg-[var(--color-leaf-50)]">
+              <input type="radio" name="timeSlot" value="Afternoon" class="accent-[var(--color-forest)]" />
+              <div>
+                <p class="text-[0.88rem] font-medium text-[var(--color-ink)]">Afternoon</p>
+                <p class="text-[0.72rem] text-[var(--color-mute)]">12:00–12:30 pm pickup</p>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <label class="grid gap-1.5">
+            <span class="eyebrow">Date</span>
+            <span class="date-field" data-placeholder="Select a date">
+              <input type="date" name="date" required class="form-input" />
+            </span>
+          </label>
+          <label class="grid gap-1.5">
+            <span class="eyebrow">Guests <span class="text-[var(--color-stone)] normal-case tracking-normal ml-1 text-[0.72rem]">(max 20)</span></span>
+            <input type="number" name="guests" required min="1" max="20" value="2" class="form-input" />
+          </label>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <label class="grid gap-1.5">
+            <span class="eyebrow">Hotel name <span class="text-[var(--color-stone)] normal-case tracking-normal ml-1 text-[0.72rem]">(for pickup)</span></span>
+            <input type="text" name="hotel" required placeholder="e.g. Le Meridien Chiang Mai" class="form-input" />
+          </label>
+          <label class="grid gap-1.5">
+            <span class="eyebrow">Room number</span>
+            <input type="text" name="room" required placeholder="e.g. 304" class="form-input" />
+          </label>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <label class="grid gap-1.5">
+            <span class="eyebrow">Your name</span>
+            <input type="text" name="name" required placeholder="Full name" class="form-input" />
+          </label>
+          <label class="grid gap-1.5">
+            <span class="eyebrow">Nationality</span>
+            <input type="text" name="nationality" placeholder="e.g. Australian" class="form-input" />
+          </label>
+        </div>
+
+        <label class="grid gap-1.5">
+          <span class="eyebrow">Special requests <span class="text-[var(--color-stone)] normal-case tracking-normal ml-1 text-[0.72rem]">(optional)</span></span>
+          <textarea name="requests" rows="2" class="form-input resize-none" placeholder="Dietary needs, mobility, children's ages..."></textarea>
+        </label>
+
+        {/* Price breakdown */}
+        <div class="bg-[var(--color-bone)] rounded-lg p-3 grid gap-1.5 text-[0.83rem]" data-price-summary>
+          <div class="flex justify-between"><span class="text-[var(--color-soil)]" data-line>฿2,800 × 2 guests</span><span class="font-medium" data-total>฿5,600</span></div>
+          <div class="flex justify-between text-[var(--color-mute)]"><span>Deposit (50%)</span><span data-deposit>฿1,680</span></div>
+          <div class="h-px bg-[var(--color-line)] my-1"></div>
+          <div class="flex justify-between font-semibold text-[0.92rem]"><span>Total</span><span data-grand>฿5,600</span></div>
+        </div>
+
+        <button type="submit" class="btn-whatsapp w-full mt-1">
+          <Icon name="whatsapp" size={16} />
+          Send booking via WhatsApp
+        </button>
+        <p class="text-center text-[0.74rem] text-[var(--color-stone)]">Sends pre-filled message to Tony · {site.whatsapp.replyTime}</p>
+        <p class="text-center text-[0.74rem] text-[var(--color-stone)] mt-1"><a href="/tours" class="ulink">Not ready? Browse all tours first</a></p>
+      </form>
+    </section>
+
+    {/* ============ STEP 2 — STAY FORM ============ */}
+    <section data-step="2-stay" class="modal-step hidden">
+      <div class="flex items-start justify-between gap-4 px-5 py-4 border-b border-[var(--color-line)]">
+        <div>
+          <h2 class="font-display text-[1.15rem] text-[var(--color-ink)] leading-tight">Book a room</h2>
+          <p class="text-[0.8rem] text-[var(--color-mute)] mt-1">Sleep in the forest — Tony confirms within 30 mins.</p>
+        </div>
+        <button type="button" data-modal-close aria-label="Close" class="grid place-items-center w-8 h-8 rounded-full bg-[var(--color-bone)] border border-[var(--color-line)] text-[var(--color-soil)] hover:bg-[var(--color-line)] transition">
+          <Icon name="x" size={14} />
+        </button>
+      </div>
+
+      <div class="h-[3px] bg-[var(--color-forest)]"></div>
+      <div class="flex items-center gap-2 px-5 py-2 bg-[var(--color-bone)] border-b border-[var(--color-line)] text-[0.7rem]">
+        <span class="grid place-items-center w-[18px] h-[18px] rounded-full bg-[var(--color-forest)] text-white">
+          <Icon name="check" size={10} />
+        </span>
+        <span class="text-[var(--color-stone)]">Choose type</span>
+        <span class="flex-1 h-px bg-[var(--color-line-sage)]"></span>
+        <span class="grid place-items-center w-[18px] h-[18px] rounded-full bg-[var(--color-forest)] text-white font-semibold">2</span>
+        <span class="text-[var(--color-forest)] font-medium">Fill details</span>
+      </div>
+
+      <form data-form="stay" class="p-5 grid gap-3">
+        <button type="button" data-back-to="1" class="self-start inline-flex items-center gap-1.5 text-[0.85rem] text-[var(--color-soil)] hover:text-[var(--color-forest)] transition">
+          <Icon name="arrow-left" size={14} />
+          Back
+        </button>
+
+        <label class="grid gap-1.5">
+          <span class="eyebrow">Room type</span>
+          <select name="room" required class="form-input">
+            {stays.map((s) => (
+              <option value={s.slug} data-price={s.pricePerNight} data-name={s.name} data-max={s.sleepsMax}>{s.name} · ฿{s.pricePerNight.toLocaleString()}/night</option>
+            ))}
+          </select>
+        </label>
+
+        <div class="grid grid-cols-2 gap-2">
+          <label class="grid gap-1.5">
+            <span class="eyebrow">Check-in</span>
+            <span class="date-field" data-placeholder="Check-in date">
+              <input type="date" name="checkin" required class="form-input" />
+            </span>
+          </label>
+          <label class="grid gap-1.5">
+            <span class="eyebrow">Check-out</span>
+            <span class="date-field" data-placeholder="Check-out date">
+              <input type="date" name="checkout" required class="form-input" />
+            </span>
+          </label>
+        </div>
+        <p data-validation-error class="hidden text-[0.74rem] text-[var(--color-warn-red)]">Check-out must be after check-in date.</p>
+
+        <div class="grid grid-cols-2 gap-2">
+          <label class="grid gap-1.5">
+            <span class="eyebrow">Guests <span class="text-[var(--color-stone)] normal-case tracking-normal ml-1 text-[0.72rem]" data-max-hint>(max 2)</span></span>
+            <input type="number" name="guests" required min="1" max="2" value="2" class="form-input" />
+          </label>
+          <label class="grid gap-1.5">
+            <span class="eyebrow">Your name</span>
+            <input type="text" name="name" required placeholder="Full name" class="form-input" />
+          </label>
+        </div>
+
+        <label class="grid gap-1.5">
+          <span class="eyebrow">Email</span>
+          <input type="email" name="email" required placeholder="you@example.com" class="form-input" />
+        </label>
+
+        <label class="grid gap-1.5">
+          <span class="eyebrow">Special requests <span class="text-[var(--color-stone)] normal-case tracking-normal ml-1 text-[0.72rem]">(optional)</span></span>
+          <textarea name="requests" rows="2" class="form-input resize-none" placeholder="Anything we should know..."></textarea>
+        </label>
+
+        <div class="bg-[var(--color-bone)] rounded-lg p-3 grid gap-1.5 text-[0.83rem]" data-price-summary>
+          <div class="flex justify-between"><span class="text-[var(--color-soil)]" data-line>฿5,200 × 1 night</span><span class="font-medium" data-total>฿5,200</span></div>
+          <div class="flex justify-between text-[var(--color-mute)]"><span>Deposit (50%)</span><span data-deposit>฿1,560</span></div>
+          <div class="h-px bg-[var(--color-line)] my-1"></div>
+          <div class="flex justify-between font-semibold text-[0.92rem]"><span>Total</span><span data-grand>฿5,200</span></div>
+        </div>
+
+        <button type="submit" class="btn-whatsapp w-full mt-1">
+          <Icon name="whatsapp" size={16} />
+          Send booking via WhatsApp
+        </button>
+        <p class="text-center text-[0.74rem] text-[var(--color-stone)]">{site.whatsapp.replyTime}</p>
+        <p class="text-center text-[0.74rem] text-[var(--color-stone)] mt-1"><a href="/stays" class="ulink">Not ready? See all rooms first</a></p>
+      </form>
+    </section>
+
+    {/* ============ STEP 3 — SUCCESS ============ */}
+    <section data-step="3" class="modal-step hidden">
+      <div class="flex justify-end px-5 py-3 border-b border-[var(--color-line)]">
+        <button type="button" data-modal-close aria-label="Close" class="grid place-items-center w-8 h-8 rounded-full bg-[var(--color-bone)] border border-[var(--color-line)] text-[var(--color-soil)] hover:bg-[var(--color-line)] transition">
+          <Icon name="x" size={14} />
+        </button>
+      </div>
+
+      <div class="p-6 text-center">
+        <div class="mx-auto grid place-items-center w-12 h-12 rounded-full bg-[var(--color-leaf-50)] border border-[var(--color-line-sage)] text-[var(--color-forest)]">
+          <Icon name="check-circle" size={26} />
+        </div>
+        <h3 class="font-display text-[1.4rem] text-[var(--color-ink)] mt-4 leading-tight">Booking request sent!</h3>
+        <p class="mt-2 text-[0.88rem] text-[var(--color-mute)] leading-relaxed max-w-[340px] mx-auto">
+          Your request has been sent to Tony via WhatsApp. He'll confirm and send deposit details.
+        </p>
+
+        {/* Summary */}
+        <div class="mt-5 text-left bg-[var(--color-bone)] rounded-lg p-3.5 grid gap-2 text-[0.83rem]" data-success-summary>
+          {/* Filled in by JS */}
+        </div>
+
+        {/* Anti-scam */}
+        <div class="anti-scam mt-4 text-left">
+          <Icon name="shield" size={16} />
+          <div>
+            <p class="font-medium text-[0.83rem] text-[var(--color-ink)]">Stay safe</p>
+            <p class="text-[0.78rem] text-[var(--color-soil)] mt-0.5 leading-snug">Tony only sends deposit details via WhatsApp personally. Never via third-party link or email form.</p>
+          </div>
+        </div>
+
+        <a data-success-wa-link href="#" target="_blank" rel="noreferrer noopener" class="btn-whatsapp w-full mt-5">
+          <Icon name="whatsapp" size={16} />
+          Open booking in WhatsApp
+        </a>
+        <p class="text-[0.74rem] text-[var(--color-stone)] mt-3">Tony typically replies within 30 mins · When Tony wakes up</p>
+      </div>
+    </section>
+  </div>
+</div>
+
+<style>
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px) scale(0.985); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  #book-modal.is-open { display: flex; }
+
+  .form-input {
+    width: 100%;
+    padding: 0.55rem 0.7rem;
+    border-radius: 7px;
+    border: 1px solid var(--color-line);
+    background: var(--color-paper);
+    font-size: 0.92rem;
+    color: var(--color-ink);
+    transition: border-color 200ms, box-shadow 200ms;
+  }
+  .form-input:focus {
+    outline: none;
+    border-color: var(--color-forest);
+    box-shadow: 0 0 0 3px rgba(58, 92, 42, 0.12);
+  }
+  select.form-input { appearance: none; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='m3 4.5 3 3 3-3' fill='none' stroke='%236b5f4a' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/></svg>"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px; }
+
+  /* Date input placeholder — iOS Safari renders empty date inputs as blank boxes; this overlay supplies a visible placeholder until a date is picked */
+  .date-field { position: relative; display: block; }
+  .date-field::after {
+    content: attr(data-placeholder);
+    position: absolute;
+    left: 0.7rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-mute);
+    font-size: 0.92rem;
+    pointer-events: none;
+    z-index: 1;
+    white-space: nowrap;
+  }
+  .date-field:has(input:focus)::after,
+  .date-field:has(input:valid)::after { display: none; }
+  /* Strip iOS Safari native sizing so date inputs match text inputs in height */
+  .date-field input[type="date"].form-input {
+    -webkit-appearance: none;
+    appearance: none;
+    min-height: 38px;
+    line-height: 1.4;
+    font-family: inherit;
+  }
+  /* Hide Chrome's native "mm/dd/yyyy" so it doesn't double up with our overlay */
+  .date-field input[type="date"]:required:invalid::-webkit-datetime-edit { opacity: 0; }
+  .date-field input[type="date"]:focus::-webkit-datetime-edit,
+  .date-field input[type="date"]:valid::-webkit-datetime-edit { opacity: 1; }
+
+  .type-card.is-selected {
+    border-color: var(--color-forest);
+    box-shadow: 0 0 0 3px rgba(58, 92, 42, 0.12);
+  }
+</style>
+
+<script>
+  // -----------------------
+  // Book Now modal controller
+  // -----------------------
+  const modal = document.getElementById("book-modal");
+  if (modal) {
+    const steps = modal.querySelectorAll<HTMLElement>(".modal-step");
+    const setStep = (id: string) => {
+      steps.forEach((s) => s.classList.toggle("hidden", s.dataset.step !== id));
+    };
+
+    const open = (opts: { type?: string; tourSlug?: string; staySlug?: string; includeRecommended?: boolean } = {}) => {
+      modal.classList.add("is-open");
+      document.body.style.overflow = "hidden";
+      refreshMinDates();
+      if (opts.type === "tour") {
+        setStep("2-tour");
+        const tourForm = modal.querySelector<HTMLFormElement>('form[data-form="tour"]');
+        // Reset Guests field to default (2) every time modal opens
+        const guestsInput = tourForm?.querySelector<HTMLInputElement>('input[name="guests"]');
+        if (guestsInput) guestsInput.value = "2";
+        // Reset time slot radios to Morning (first option) on each open
+        const morningRadio = tourForm?.querySelector<HTMLInputElement>('input[name="timeSlot"][value="Morning"]');
+        if (morningRadio) morningRadio.checked = true;
+        const select = modal.querySelector<HTMLSelectElement>('select[name="tour"]');
+        // Show ONLY the relevant options based on entry point:
+        //   data-include-recommended="true" → Recommended Activities only
+        //   default                          → Doi Lom Tours only
+        const mainOptions = select?.querySelectorAll<HTMLOptionElement>(".main-option");
+        const recOptions = select?.querySelectorAll<HTMLOptionElement>(".recommended-option");
+        mainOptions?.forEach((o) => { o.hidden = !!opts.includeRecommended; });
+        recOptions?.forEach((o) => { o.hidden = !opts.includeRecommended; });
+        if (select) {
+          if (opts.tourSlug) {
+            select.value = opts.tourSlug;
+          } else {
+            // No specific slug — default to first visible option
+            const firstVisible = opts.includeRecommended ? recOptions?.[0] : mainOptions?.[0];
+            if (firstVisible) select.value = firstVisible.value;
+          }
+          // Always dispatch with bubbles=true so form-level listeners (recalcTour) fire
+          // — this also runs on no-slug open so time slot field reflects the default tour
+          select.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+      } else if (opts.type === "stay") {
+        setStep("2-stay");
+        const select = modal.querySelector<HTMLSelectElement>('select[name="room"]');
+        if (select) {
+          if (opts.staySlug) select.value = opts.staySlug;
+          select.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+      } else {
+        setStep("1");
+      }
+    };
+
+    const close = () => {
+      modal.classList.remove("is-open");
+      document.body.style.overflow = "";
+      setStep("1");
+    };
+
+    // Open triggers
+    document.querySelectorAll<HTMLElement>("[data-book-now]").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        open({
+          type: btn.dataset.bookType,
+          tourSlug: btn.dataset.tourSlug,
+          staySlug: btn.dataset.staySlug,
+          includeRecommended: btn.dataset.includeRecommended === "true",
+        });
+      });
+    });
+
+    // Close triggers
+    modal.querySelectorAll<HTMLElement>("[data-modal-close]").forEach((btn) => {
+      btn.addEventListener("click", close);
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modal.classList.contains("is-open")) close();
+    });
+
+    // Step 1 → choose type
+    modal.querySelectorAll<HTMLButtonElement>("[data-pick-type]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const type = btn.dataset.pickType;
+        setStep(type === "stay" ? "2-stay" : "2-tour");
+      });
+    });
+
+    // Back buttons
+    modal.querySelectorAll<HTMLButtonElement>("[data-back-to]").forEach((btn) => {
+      btn.addEventListener("click", () => setStep(btn.dataset.backTo || "1"));
+    });
+
+    // Open native date picker on click anywhere in the date input (desktop UX)
+    // — without this, Chrome/Edge only open the picker via the small calendar icon
+    modal.querySelectorAll<HTMLInputElement>('input[type="date"]').forEach((input) => {
+      input.addEventListener("click", () => {
+        if (typeof input.showPicker === "function") {
+          try { input.showPicker(); } catch { /* showPicker can throw without user activation — safe to ignore */ }
+        }
+      });
+    });
+
+    // Block past dates — set min to today on every date input.
+    // Computed in local time to avoid UTC off-by-one (toISOString shifts by tz offset).
+    const todayLocal = () => {
+      const d = new Date();
+      const yyyy = d.getFullYear();
+      const mm = String(d.getMonth() + 1).padStart(2, "0");
+      const dd = String(d.getDate()).padStart(2, "0");
+      return `${yyyy}-${mm}-${dd}`;
+    };
+    const refreshMinDates = () => {
+      const today = todayLocal();
+      modal.querySelectorAll<HTMLInputElement>('input[type="date"]').forEach((i) => { i.min = today; });
+      // Check-out cannot be before check-in
+      const ci = modal.querySelector<HTMLInputElement>('input[name="checkin"]');
+      const co = modal.querySelector<HTMLInputElement>('input[name="checkout"]');
+      if (ci && co && ci.value && ci.value > today) co.min = ci.value;
+    };
+    refreshMinDates();
+    // Update check-out min whenever check-in changes
+    const checkinInput = modal.querySelector<HTMLInputElement>('input[name="checkin"]');
+    checkinInput?.addEventListener("change", () => {
+      const co = modal.querySelector<HTMLInputElement>('input[name="checkout"]');
+      if (co && checkinInput.value) {
+        co.min = checkinInput.value;
+        if (co.value && co.value <= checkinInput.value) co.value = "";
+      }
+    });
+
+    // Belt-and-suspenders: iOS Safari can let users scroll the picker wheel to a
+    // past date even when min is set. Validate after every change and reset if past.
+    modal.querySelectorAll<HTMLInputElement>('input[type="date"]').forEach((input) => {
+      input.addEventListener("change", () => {
+        const today = todayLocal();
+        if (input.value && input.value < today) {
+          input.value = "";
+          input.setCustomValidity("Please pick today or a future date.");
+          input.reportValidity();
+          // Clear the custom message on next interaction
+          input.addEventListener("input", () => input.setCustomValidity(""), { once: true });
+        } else {
+          input.setCustomValidity("");
+        }
+      });
+    });
+
+    // ----- Tour form: price + submit -----
+    const tourForm = modal.querySelector<HTMLFormElement>('form[data-form="tour"]');
+    if (tourForm) {
+      const recalcTour = () => {
+        const select = tourForm.querySelector<HTMLSelectElement>('select[name="tour"]')!;
+        const opt = select.selectedOptions[0];
+        const price = Number(opt?.dataset.price || 0);
+        const guests = Number((tourForm.elements.namedItem("guests") as HTMLInputElement).value || 1);
+        const total = price * guests;
+        const deposit = Math.round(total * 0.5);
+        const sum = tourForm.querySelector<HTMLElement>("[data-price-summary]")!;
+        sum.querySelector<HTMLElement>("[data-line]")!.textContent = `฿${price.toLocaleString()} × ${guests} ${guests === 1 ? "guest" : "guests"}`;
+        sum.querySelector<HTMLElement>("[data-total]")!.textContent = `฿${total.toLocaleString()}`;
+        sum.querySelector<HTMLElement>("[data-deposit]")!.textContent = `฿${deposit.toLocaleString()}`;
+        sum.querySelector<HTMLElement>("[data-grand]")!.textContent = `฿${total.toLocaleString()}`;
+
+        // Show/hide Time slot field based on tour selection (only tours with timeSlots data)
+        const timeSlotField = tourForm.querySelector<HTMLElement>("[data-time-slot-field]");
+        const hasTimeSlots = opt?.dataset.hasTimeslots === "1";
+        if (timeSlotField) {
+          timeSlotField.classList.toggle("hidden", !hasTimeSlots);
+          tourForm.querySelectorAll<HTMLInputElement>('input[name="timeSlot"]').forEach((r) => {
+            r.required = hasTimeSlots;
+          });
+        }
+      };
+      tourForm.addEventListener("input", recalcTour);
+      tourForm.addEventListener("change", recalcTour);
+      recalcTour();
+
+      tourForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const data = new FormData(tourForm);
+        const select = tourForm.querySelector<HTMLSelectElement>('select[name="tour"]')!;
+        const opt = select.selectedOptions[0];
+        const tourName = opt?.dataset.name || "Tour";
+        const price = Number(opt?.dataset.price || 0);
+        const guests = Number(data.get("guests") || 1);
+        const total = price * guests;
+        const hasTimeSlots = opt?.dataset.hasTimeslots === "1";
+        const timeSlot = hasTimeSlots ? String(data.get("timeSlot") || "") : "";
+        const hotel = String(data.get("hotel") || "");
+        const room = String(data.get("room") || "");
+        const summary: [string, string][] = [["Tour", tourName]];
+        if (timeSlot) summary.push(["Time slot", timeSlot]);
+        summary.push(
+          ["Date", String(data.get("date"))],
+          ["Guests", String(guests)],
+          ["Pickup", `${hotel} · Room ${room}`],
+          ["Total", `฿${total.toLocaleString()}`],
+        );
+        showSuccess({
+          summary,
+          message: `Hi Tony, I'd like to book ${tourName}${timeSlot ? ` (${timeSlot})` : ""} for ${guests} guest${guests > 1 ? "s" : ""} on ${data.get("date")}.\nName: ${data.get("name")}\nNationality: ${data.get("nationality") || "—"}\nPickup hotel: ${hotel}\nRoom number: ${room}\nRequests: ${data.get("requests") || "—"}\nTotal estimate: ฿${total.toLocaleString()}.`,
+        });
+      });
+    }
+
+    // ----- Stay form: validation + price + submit -----
+    const stayForm = modal.querySelector<HTMLFormElement>('form[data-form="stay"]');
+    if (stayForm) {
+      const recalcStay = () => {
+        const select = stayForm.querySelector<HTMLSelectElement>('select[name="room"]')!;
+        const opt = select.selectedOptions[0];
+        const price = Number(opt?.dataset.price || 0);
+        const maxGuests = Number(opt?.dataset.max || 4);
+
+        // Update Guests input max + clamp value if exceeds, update hint label
+        const guestsInput = stayForm.querySelector<HTMLInputElement>('input[name="guests"]')!;
+        guestsInput.max = String(maxGuests);
+        if (Number(guestsInput.value) > maxGuests) guestsInput.value = String(maxGuests);
+        const hintEl = stayForm.querySelector<HTMLElement>("[data-max-hint]");
+        if (hintEl) hintEl.textContent = `(max ${maxGuests})`;
+
+        const ci = stayForm.querySelector<HTMLInputElement>('input[name="checkin"]')!.value;
+        const co = stayForm.querySelector<HTMLInputElement>('input[name="checkout"]')!.value;
+        let nights = 1;
+        const errEl = stayForm.querySelector<HTMLElement>("[data-validation-error]")!;
+        if (ci && co) {
+          const dCi = new Date(ci);
+          const dCo = new Date(co);
+          const ms = dCo.getTime() - dCi.getTime();
+          if (ms <= 0) {
+            errEl.classList.remove("hidden");
+            nights = 1;
+          } else {
+            errEl.classList.add("hidden");
+            nights = Math.max(1, Math.round(ms / (1000 * 60 * 60 * 24)));
+          }
+        } else {
+          errEl.classList.add("hidden");
+        }
+        const total = price * nights;
+        const deposit = Math.round(total * 0.5);
+        const sum = stayForm.querySelector<HTMLElement>("[data-price-summary]")!;
+        sum.querySelector<HTMLElement>("[data-line]")!.textContent = `฿${price.toLocaleString()} × ${nights} ${nights === 1 ? "night" : "nights"}`;
+        sum.querySelector<HTMLElement>("[data-total]")!.textContent = `฿${total.toLocaleString()}`;
+        sum.querySelector<HTMLElement>("[data-deposit]")!.textContent = `฿${deposit.toLocaleString()}`;
+        sum.querySelector<HTMLElement>("[data-grand]")!.textContent = `฿${total.toLocaleString()}`;
+      };
+      stayForm.addEventListener("input", recalcStay);
+      stayForm.addEventListener("change", recalcStay);
+      recalcStay();
+
+      stayForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const errEl = stayForm.querySelector<HTMLElement>("[data-validation-error]")!;
+        if (!errEl.classList.contains("hidden")) return;
+        const data = new FormData(stayForm);
+        const select = stayForm.querySelector<HTMLSelectElement>('select[name="room"]')!;
+        const opt = select.selectedOptions[0];
+        const roomName = opt?.dataset.name || "Room";
+        const price = Number(opt?.dataset.price || 0);
+        const ci = String(data.get("checkin"));
+        const co = String(data.get("checkout"));
+        const nights = Math.max(1, Math.round((new Date(co).getTime() - new Date(ci).getTime()) / (1000 * 60 * 60 * 24)));
+        const total = price * nights;
+        showSuccess({
+          summary: [
+            ["Room", roomName],
+            ["Check-in", ci],
+            ["Check-out", co],
+            ["Total", `฿${total.toLocaleString()}`],
+          ],
+          message: `Hi Tony, I'd like to book ${roomName} from ${ci} to ${co} (${nights} nights, ${data.get("guests")} guests).\nName: ${data.get("name")}\nEmail: ${data.get("email")}\nRequests: ${data.get("requests") || "—"}\nTotal estimate: ฿${total.toLocaleString()}.`,
+        });
+      });
+    }
+
+    // Success state
+    const showSuccess = (opts: { summary: [string, string][]; message: string }) => {
+      const summaryEl = modal.querySelector<HTMLElement>("[data-success-summary]")!;
+      summaryEl.innerHTML = opts.summary
+        .map(([k, v]) =>
+          `<div class="flex justify-between items-baseline ${k === "Total" ? "pt-2 border-t border-[var(--color-line)] font-semibold" : ""}"><span class="text-[var(--color-mute)]">${k}</span><span class="text-[var(--color-ink)]">${v}</span></div>`
+        )
+        .join("");
+      const waLink = modal.querySelector<HTMLAnchorElement>("[data-success-wa-link]")!;
+      const waNumber = modal.dataset.waNumber || "";
+      waLink.href = `https://wa.me/${waNumber}?text=${encodeURIComponent(opts.message)}`;
+      setStep("3");
+    };
+  }
+</script>

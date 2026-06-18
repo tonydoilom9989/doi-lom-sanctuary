@@ -1,0 +1,273 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Icon from "../../components/icons/Icon.astro";
+import { stays } from "../../data/stays";
+import { site, waLink } from "../../data/site";
+
+export function getStaticPaths() {
+  return stays.map((s) => ({ params: { slug: s.slug }, props: { stay: s } }));
+}
+
+const { stay } = Astro.props;
+const otherStays = stays.filter((s) => s.slug !== stay.slug);
+---
+
+<Layout
+  title={stay.name}
+  description={`${stay.description.split(".")[0]}. ฿${stay.pricePerNight.toLocaleString()}/night at Doi Lom Elephant Sanctuary, Mae Taeng, Chiang Mai.`}
+  ogImage={stay.photo ?? "/img/hero/stays.png"}
+>
+  {/* Breadcrumb */}
+  <nav aria-label="Breadcrumb" class="border-b border-[var(--color-line)] bg-[var(--color-paper)]">
+    <div class="wrap py-3 text-[0.82rem] text-[var(--color-mute)] flex items-center gap-1.5">
+      <a href="/" class="hover:text-[var(--color-forest)]">Home</a>
+      <Icon name="chevron" size={11} />
+      <a href="/stays" class="hover:text-[var(--color-forest)]">Stays</a>
+      <Icon name="chevron" size={11} />
+      <span class="text-[var(--color-ink)] font-medium">{stay.name}</span>
+    </div>
+  </nav>
+
+  {/* Gallery — 2-column with +N overlay */}
+  <section class="py-6 lg:py-8">
+    <div class="wrap">
+      <div class="grid grid-cols-3 gap-2 lg:gap-3 aspect-[16/8] lg:aspect-[16/7]">
+        <button type="button" data-stay-lb-open="0" class="col-span-2 frame overflow-hidden cursor-pointer group" style={`background-color:${stay.photoTint}`}>
+          <img src={stay.photo} alt={stay.name} loading="eager" fetchpriority="high" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"/>
+        </button>
+        <div class="grid grid-rows-2 gap-2 lg:gap-3">
+          <button type="button" data-stay-lb-open="1" class="frame overflow-hidden bg-[var(--color-leaf-100)] cursor-pointer group">
+            {stay.gallery && stay.gallery[0] && (
+              <img src={stay.gallery[0]} alt={`${stay.name} — photo 2`} loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"/>
+            )}
+          </button>
+          <button type="button" data-stay-lb-open="2" class="relative frame overflow-hidden bg-[var(--color-leaf-100)] cursor-pointer group">
+            {stay.gallery && stay.gallery[1] && (
+              <img src={stay.gallery[1]} alt={`${stay.name} — photo 3`} loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"/>
+            )}
+            {stay.gallery && stay.gallery.length > 2 && (
+              <div class="absolute inset-0 grid place-items-center bg-black/35 text-white group-hover:bg-black/50 transition-colors">
+                <span class="font-display text-[1.4rem]">+{stay.gallery.length - 2} more</span>
+              </div>
+            )}
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Title + stat bar (3 or 4 cells depending on roomSize) */}
+  <section class="pb-6 lg:pb-8">
+    <div class="wrap">
+      <p class="eyebrow eyebrow-green">{stay.type}</p>
+      <h1 class="mt-3">{stay.name}</h1>
+      {stay.shortDesc && <p class="mt-3 text-[1.05rem] text-[var(--color-mute)] max-w-4xl">{stay.shortDesc}</p>}
+
+      {(() => {
+        const stats = [
+          { icon: "bed", value: stay.bedType, label: "Bed type" },
+          ...(stay.roomSize
+            ? [{ icon: "ruler", value: stay.roomSize, label: "Room size" }]
+            : stay.sleeps
+            ? [{ icon: "users", value: stay.sleeps, label: "Number of guests" }]
+            : []),
+          { icon: "eye", value: stay.view, label: "Outlook" },
+          { icon: stay.poolIcon || "pool", value: stay.poolType, label: stay.poolLabel || "Pool" },
+        ];
+        const colsClass = stats.length === 4 ? "md:grid-cols-4" : "md:grid-cols-3";
+        return (
+          <div class={`mt-8 grid grid-cols-2 ${colsClass} divide-x divide-[var(--color-line)] border border-[var(--color-line)] rounded-xl overflow-hidden`}>
+            {stats.map((s) => (
+              <div class="py-4 px-3 text-center">
+                <Icon name={s.icon} size={18} class="mx-auto text-[var(--color-forest)]" />
+                <p class="font-medium text-[0.92rem] text-[var(--color-ink)] mt-2">{s.value}</p>
+                <p class="text-[0.72rem] text-[var(--color-mute)] mt-0.5 tracking-wide">{s.label}</p>
+              </div>
+            ))}
+          </div>
+        );
+      })()}
+    </div>
+  </section>
+
+  {/* 2-column: content + sticky sidebar */}
+  <section class="pb-20">
+    <div class="wrap grid lg:grid-cols-[1.5fr_1fr] gap-10 lg:gap-12">
+      {/* LEFT */}
+      <div>
+        {/* About */}
+        <div>
+          <p class="eyebrow">About this room</p>
+          <p class="mt-4 text-[var(--color-soil)] leading-[1.75] text-[1rem]">{stay.description}</p>
+        </div>
+
+        {/* Amenities 2×4 */}
+        <div class="mt-10">
+          <p class="eyebrow">Amenities</p>
+          <div class="mt-4 grid sm:grid-cols-2 gap-2">
+            {stay.amenities.map((a) => (
+              <div class="bg-[var(--color-bone)] rounded-md px-3 py-2.5 flex items-center gap-2.5 text-[0.88rem]">
+                <Icon name="check" size={14} class="text-[var(--color-forest)] shrink-0" />
+                <span class="text-[var(--color-soil)]">{a}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Includes/Not included */}
+        <div class="mt-10 grid sm:grid-cols-2 gap-4">
+          <div class="bg-[var(--color-leaf-50)] rounded-xl p-5">
+            <p class="eyebrow text-[var(--color-forest)] flex items-center gap-1.5">
+              <Icon name="check" size={12} />
+              Included
+            </p>
+            <ul class="mt-4 grid gap-2.5 text-[0.92rem] text-[var(--color-soil)]">
+              {stay.includes.map((inc) => (
+                <li class="flex items-start gap-2.5"><Icon name="check-circle" size={14} class="text-[var(--color-forest)] mt-0.5 shrink-0" /><span>{inc}</span></li>
+              ))}
+            </ul>
+          </div>
+          <div class="bg-[var(--color-amber-surface)] rounded-xl p-5">
+            <p class="eyebrow text-[var(--color-amber)] flex items-center gap-1.5">
+              <Icon name="x" size={12} />
+              Not included
+            </p>
+            <ul class="mt-4 grid gap-2.5 text-[0.92rem] text-[var(--color-soil)]">
+              {stay.excludes.map((exc) => (
+                <li class="flex items-start gap-2.5"><Icon name="x-circle" size={14} class="text-[var(--color-amber)] mt-0.5 shrink-0" /><span>{exc}</span></li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Policies — grid adapts to count */}
+        <div class="mt-10">
+          <p class="eyebrow">Policies</p>
+          <div class:list={["mt-4 grid gap-3", stay.policies.length >= 3 ? "sm:grid-cols-3" : stay.policies.length === 2 ? "sm:grid-cols-2" : "sm:max-w-md"]}>
+            {stay.policies.map((p, i) => (
+              <div class="card p-4">
+                <Icon name={i === 0 ? "clock" : i === 1 ? "calendar-x" : "fork"} size={18} class="text-[var(--color-forest)]" />
+                <p class="font-display text-[1rem] text-[var(--color-ink)] mt-2">{p.title}</p>
+                <ul class="mt-2 grid gap-1 text-[0.82rem] text-[var(--color-soil)]">
+                  {p.lines.map((l) => <li>{l}</li>)}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+
+      </div>
+
+      {/* RIGHT — Sticky sidebar */}
+      <aside class="lg:sticky lg:top-24 self-start space-y-4">
+        <div class="card p-5">
+          <p class="font-display text-[1.2rem] text-[var(--color-ink)] leading-tight">{stay.name}</p>
+          <p class="text-[0.85rem] text-[var(--color-mute)] mt-1">฿{stay.pricePerNight.toLocaleString()} / room / night</p>
+
+          <button
+            type="button"
+            data-book-now
+            data-book-type="stay"
+            data-stay-slug={stay.slug}
+            class="btn-primary w-full mt-5"
+          >
+            Book this room
+          </button>
+          <a href={waLink(`Hi Tony, I have a question about ${stay.name}.`)} target="_blank" rel="noreferrer noopener" class="btn-outline w-full mt-2">
+            Ask about this room
+          </a>
+          <p class="text-center text-[0.74rem] text-[var(--color-stone)] mt-3">{site.whatsapp.replyTime}</p>
+
+          <div class="mt-6 pt-5 border-t border-[var(--color-line)]">
+            <div class="anti-scam">
+              <Icon name="shield" size={16} />
+              <p class="text-[0.78rem] text-[var(--color-soil)] leading-snug">Deposit details are only sent via Tony's personal WhatsApp — never via third-party links.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Other rooms */}
+        <div class="card p-5">
+          <p class="eyebrow">Other rooms</p>
+          <ul class="mt-3 grid divide-y divide-[var(--color-line)]">
+            {otherStays.map((s) => (
+              <li>
+                <a href={`/stays/${s.slug}`} class="flex items-center justify-between py-2.5 gap-3 group">
+                  <span class="text-[0.88rem] text-[var(--color-ink)] group-hover:text-[var(--color-forest)] transition-colors truncate">{s.name}</span>
+                  <span class="text-[0.82rem] text-[var(--color-mute)] shrink-0">฿{s.pricePerNight.toLocaleString()}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  {/* ============ LIGHTBOX — gallery viewer ============ */}
+  <div id="stay-lightbox" class="hidden fixed inset-0 z-[90] items-center justify-center p-4">
+    <div class="absolute inset-0 bg-[var(--color-overlay)]/90 backdrop-blur-sm" data-stay-lb-close></div>
+
+    {/* Close button (top-right) */}
+    <button type="button" data-stay-lb-close aria-label="Close" class="absolute top-4 right-4 z-10 grid place-items-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur transition">
+      <Icon name="x" size={16} />
+    </button>
+
+    {/* Prev button */}
+    <button type="button" id="stay-lb-prev" aria-label="Previous photo" class="absolute left-4 top-1/2 -translate-y-1/2 z-10 grid place-items-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur transition">
+      <Icon name="arrow-left" size={16} />
+    </button>
+
+    {/* Image */}
+    <img id="stay-lb-img" src="" alt="" class="relative max-w-[95vw] max-h-[90vh] object-contain rounded-lg shadow-2xl"/>
+
+    {/* Next button */}
+    <button type="button" id="stay-lb-next" aria-label="Next photo" class="absolute right-4 top-1/2 -translate-y-1/2 z-10 grid place-items-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur transition">
+      <Icon name="arrow" size={16} />
+    </button>
+
+    {/* Counter */}
+    <span id="stay-lb-counter" class="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 text-white/85 text-[0.82rem] bg-black/35 backdrop-blur px-3 py-1 rounded-full">1 / 1</span>
+  </div>
+</Layout>
+
+<script define:vars={{ photos: [stay.photo, ...(stay.gallery || [])] }}>
+  // Stay detail lightbox — image-only with prev/next
+  const lb = document.getElementById("stay-lightbox");
+  const lbImg = document.getElementById("stay-lb-img");
+  const lbCounter = document.getElementById("stay-lb-counter");
+  let currentIdx = 0;
+
+  function showPhoto(idx) {
+    if (!photos || photos.length === 0) return;
+    currentIdx = (idx + photos.length) % photos.length;
+    lbImg.src = photos[currentIdx];
+    lbCounter.textContent = `${currentIdx + 1} / ${photos.length}`;
+  }
+
+  function openLB(idx) {
+    showPhoto(idx);
+    lb.classList.remove("hidden");
+    lb.style.display = "flex";
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeLB() {
+    lb.classList.add("hidden");
+    lb.style.display = "";
+    document.body.style.overflow = "";
+  }
+
+  document.querySelectorAll("[data-stay-lb-open]").forEach((b) => {
+    b.addEventListener("click", () => openLB(Number(b.dataset.stayLbOpen)));
+  });
+  document.querySelectorAll("[data-stay-lb-close]").forEach((b) => b.addEventListener("click", closeLB));
+  document.getElementById("stay-lb-prev")?.addEventListener("click", () => showPhoto(currentIdx - 1));
+  document.getElementById("stay-lb-next")?.addEventListener("click", () => showPhoto(currentIdx + 1));
+  document.addEventListener("keydown", (e) => {
+    if (lb.classList.contains("hidden")) return;
+    if (e.key === "Escape") closeLB();
+    if (e.key === "ArrowLeft") showPhoto(currentIdx - 1);
+    if (e.key === "ArrowRight") showPhoto(currentIdx + 1);
+  });
+</script>

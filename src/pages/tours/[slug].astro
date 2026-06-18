@@ -1,0 +1,254 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Icon from "../../components/icons/Icon.astro";
+import { tours } from "../../data/tours";
+import { recommendedActivities } from "../../data/recommendedActivities";
+import { site, waLink } from "../../data/site";
+
+export function getStaticPaths() {
+  const all = [...tours, ...recommendedActivities];
+  return all.map((t) => ({ params: { slug: t.slug }, props: { tour: t } }));
+}
+
+const { tour } = Astro.props;
+// Other tours sidebar — show related tours from the same group (main vs recommended)
+const isRecommended = recommendedActivities.some((r) => r.slug === tour.slug);
+const pool = isRecommended ? recommendedActivities : tours;
+const otherTours = pool.filter((t) => t.slug !== tour.slug).slice(0, 4);
+---
+
+<Layout
+  title={tour.name}
+  description={`${tour.shortDesc} ฿${tour.price.toLocaleString()} per person at Doi Lom Elephant Rescue, Mae Taeng, Chiang Mai. ${tour.duration}.`}
+  ogImage={tour.photos?.[0] ?? "/img/hero/elephants.png"}
+>
+  {/* Breadcrumb */}
+  <nav aria-label="Breadcrumb" class="border-b border-[var(--color-line)] bg-[var(--color-paper)]">
+    <div class="wrap py-3 text-[0.82rem] text-[var(--color-mute)] flex items-center gap-1.5">
+      <a href="/" class="hover:text-[var(--color-forest)]">Home</a>
+      <Icon name="chevron" size={11} />
+      <a href="/tours" class="hover:text-[var(--color-forest)]">Tours</a>
+      <Icon name="chevron" size={11} />
+      <span class="text-[var(--color-ink)] font-medium">{tour.name}</span>
+    </div>
+  </nav>
+
+  {/* Hero photo */}
+  <section class="py-6 lg:py-8">
+    <div class="wrap">
+      <div class="frame aspect-[16/7]" style={`background-color:${tour.tint}`}>
+        <img src={tour.photo} alt={tour.name} loading="eager" fetchpriority="high" class="w-full h-full object-cover"/>
+      </div>
+    </div>
+  </section>
+
+  {/* Title + overview bar */}
+  <section class="pb-6 lg:pb-8">
+    <div class="wrap">
+      <p class="eyebrow eyebrow-green">{tour.categoryLabel}</p>
+      <h1 class="mt-3">{tour.name}</h1>
+      <p class="mt-3 text-[1.05rem] text-[var(--color-mute)] max-w-4xl">{tour.shortDesc}</p>
+
+      {/* Stat bar (4 or 5 cells depending on data) */}
+      {(() => {
+        const stats = [
+          { icon: "clock", value: tour.duration, label: "Duration" },
+          { icon: "mountain", value: tour.difficulty, label: "Difficulty" },
+          ...(tour.groupSize ? [{ icon: "users", value: tour.groupSize, label: "Group size" }] : []),
+          { icon: "pin", value: tour.startLocation, label: "Start location" },
+          { icon: "globe", value: tour.languages, label: "Language" },
+        ];
+        const colsClass = stats.length === 5 ? "md:grid-cols-5" : "md:grid-cols-4";
+        return (
+          <div class={`mt-8 grid grid-cols-2 ${colsClass} divide-x divide-[var(--color-line)] border border-[var(--color-line)] rounded-xl overflow-hidden`}>
+            {stats.map((s) => (
+              <div class="py-4 px-3 text-center">
+                <Icon name={s.icon} size={18} class="mx-auto text-[var(--color-forest)]" />
+                <p class="font-medium text-[0.92rem] text-[var(--color-ink)] mt-2">{s.value}</p>
+                <p class="text-[0.72rem] text-[var(--color-mute)] mt-0.5 tracking-wide">{s.label}</p>
+              </div>
+            ))}
+          </div>
+        );
+      })()}
+    </div>
+  </section>
+
+  {/* Main 2-column content + sticky sidebar */}
+  <section class="pb-20">
+    <div class="wrap grid lg:grid-cols-[1.6fr_1fr] gap-10 lg:gap-12">
+      {/* LEFT */}
+      <div>
+        {/* TIME SLOTS (optional — for tours with multiple pickup times) */}
+        {tour.timeSlots && tour.timeSlots.length > 0 && (
+          <div class="mb-8 bg-[var(--color-leaf-50)] border border-[var(--color-line-sage)] rounded-xl p-5 grid gap-3">
+            {tour.timeSlots.map((slot) => (
+              <div class="flex items-center gap-3">
+                <Icon name={slot.icon} size={22} class="text-[var(--color-amber)] shrink-0" />
+                <p class="text-[0.98rem] text-[var(--color-soil)] leading-snug">
+                  <span class="font-display text-[1.1rem] text-[var(--color-forest)]">{slot.title}</span>
+                  <span class="ml-2">{slot.desc}</span>
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* ACTIVITIES / ITINERARY */}
+        <div>
+          <p class="eyebrow">{tour.activitiesLabel || "Activities"}</p>
+          {tour.activitiesText && (
+            <p
+              class="mt-5 text-[0.98rem] lg:text-[1rem] text-[var(--color-soil)] leading-[1.75]"
+              style="font-family: var(--font-body);"
+            >{tour.activitiesText}</p>
+          )}
+          <ol class:list={["relative", tour.itinerary.length === 0 ? "hidden" : (tour.activitiesText ? "mt-4" : "mt-5")]}>
+            {tour.itinerary.map((step, i) => {
+              const last = i === tour.itinerary.length - 1;
+              const nextStep = tour.itinerary[i + 1];
+              const nextIsDayStart = nextStep?.dayLabel != null;
+              const showConnector = !last && !nextIsDayStart;
+              return (
+                <Fragment>
+                  {step.dayLabel && (
+                    <li class:list={["list-none mb-5", i > 0 && "mt-4"]}>
+                      <p class="font-display text-[1.35rem] text-[var(--color-forest)] tracking-tight pb-2 border-b border-[var(--color-line)]">{step.dayLabel}</p>
+                    </li>
+                  )}
+                  <li class="grid grid-cols-[18px_1fr] gap-4 pb-7 last:pb-0 relative">
+                    <div class="relative flex justify-center">
+                      <span class:list={["block w-3 h-3 rounded-full mt-1.5", last ? "bg-[var(--color-leaf-200)]" : "bg-[var(--color-forest)]"]}></span>
+                      {showConnector && <span class="absolute top-5 bottom-[-12px] w-px bg-[var(--color-line)]"></span>}
+                    </div>
+                    <div>
+                      {step.time && <p class="text-[0.82rem] font-medium text-[var(--color-forest)] tracking-wide">{step.time}</p>}
+                      <h3
+                        class:list={[
+                          "text-[var(--color-ink)]",
+                          step.desc
+                            ? "font-display text-[1.15rem]"
+                            : "text-[1rem] font-medium leading-snug",
+                          step.time && "mt-1",
+                        ]}
+                        style={step.desc ? undefined : "font-family: var(--font-body);"}
+                      >{step.title}</h3>
+                      {step.desc && <p class="mt-1 text-[var(--color-soil)] text-[0.95rem] leading-relaxed">{step.desc}</p>}
+                    </div>
+                  </li>
+                </Fragment>
+              );
+            })}
+          </ol>
+        </div>
+
+        {/* PROGRAM NOTE (optional callout) */}
+        {tour.programNote && (
+          <div class="mt-8 bg-[var(--color-leaf-50)] border border-[var(--color-line-sage)] rounded-xl p-5 lg:p-6 flex items-center gap-4 lg:gap-5">
+            <Icon name={tour.programNoteIcon || "elephant"} size={48} class="text-[var(--color-forest-dark)] shrink-0" />
+            <p
+              class="text-[0.95rem] lg:text-[1rem] text-[var(--color-forest-dark)] font-medium leading-relaxed"
+              style="font-family: var(--font-body);"
+            >{tour.programNote}</p>
+          </div>
+        )}
+
+        {/* INCLUDES + NOT INCLUDED (Not included card hides if excludes is empty) */}
+        <div class:list={["mt-12 grid gap-4", tour.excludes.length > 0 && "sm:grid-cols-2"]}>
+          <div class="bg-[var(--color-leaf-50)] rounded-xl p-5">
+            <p class="eyebrow text-[var(--color-forest)] flex items-center gap-1.5">
+              <Icon name="check" size={12} />
+              Included
+            </p>
+            <ul class:list={["mt-4 grid gap-2.5 text-[0.92rem] text-[var(--color-soil)]", tour.excludes.length === 0 && "sm:grid-cols-2"]}>
+              {tour.includes.map((inc) => (
+                <li class="flex items-start gap-2.5">
+                  <Icon name="check-circle" size={15} class="text-[var(--color-forest)] mt-0.5 shrink-0" />
+                  <span>{inc}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          {tour.excludes.length > 0 && (
+            <div class="bg-[var(--color-amber-surface)] rounded-xl p-5">
+              <p class="eyebrow text-[var(--color-amber)] flex items-center gap-1.5">
+                <Icon name="x" size={12} />
+                Not included
+              </p>
+              <ul class="mt-4 grid gap-2.5 text-[0.92rem] text-[var(--color-soil)]">
+                {tour.excludes.map((exc) => (
+                  <li class="flex items-start gap-2.5">
+                    <Icon name="x-circle" size={15} class="text-[var(--color-amber)] mt-0.5 shrink-0" />
+                    <span>{exc}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+
+        {/* WHAT TO BRING — hide entire section if no items */}
+        {tour.whatToBring.length > 0 && (
+          <div class="mt-12">
+            <p class="eyebrow">What to bring</p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              {tour.whatToBring.map((item) => (
+                <span class="chip py-2 px-3 text-[0.85rem]">{item}</span>
+              ))}
+            </div>
+          </div>
+        )}
+
+      </div>
+
+      {/* RIGHT — Sticky booking sidebar */}
+      <aside class="lg:sticky lg:top-24 self-start space-y-4">
+        <div class="card p-5">
+          <p class="font-display text-[1.2rem] text-[var(--color-ink)] leading-tight">{tour.name}</p>
+          <p class="text-[0.85rem] text-[var(--color-mute)] mt-1">฿{tour.price.toLocaleString()} {tour.priceUnit} · {tour.duration}</p>
+          {tour.childDiscount && (
+            <p class="text-[0.8rem] text-[var(--color-forest)] mt-1 font-medium">{tour.childDiscount}</p>
+          )}
+
+          <button
+            type="button"
+            data-book-now
+            data-book-type="tour"
+            data-tour-slug={tour.slug}
+            data-include-recommended={isRecommended ? "true" : undefined}
+            class="btn-whatsapp w-full mt-5"
+          >
+            <Icon name="whatsapp" size={16} />
+            Book this tour
+          </button>
+          <a href={waLink(`Hi Tony, I have a question about ${tour.name}.`)} target="_blank" rel="noreferrer noopener" class="btn-outline w-full mt-2">
+            Ask Tony a question
+          </a>
+          <p class="text-center text-[0.74rem] text-[var(--color-stone)] mt-3">{site.whatsapp.replyTime}</p>
+
+          <div class="mt-6 pt-5 border-t border-[var(--color-line)]">
+            <div class="anti-scam">
+              <Icon name="shield" size={16} />
+              <p class="text-[0.78rem] text-[var(--color-soil)] leading-snug">Tony only sends payment details via WhatsApp personally. Never via third-party links.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Other tours */}
+        <div class="card p-5">
+          <p class="eyebrow">Other tours</p>
+          <ul class="mt-3 grid divide-y divide-[var(--color-line)]">
+            {otherTours.map((t) => (
+              <li>
+                <a href={`/tours/${t.slug}`} class="flex items-center justify-between py-2.5 gap-3 group">
+                  <span class="text-[0.88rem] text-[var(--color-ink)] group-hover:text-[var(--color-forest)] transition-colors truncate">{t.name}</span>
+                  <span class="text-[0.82rem] text-[var(--color-mute)] shrink-0">฿{t.price.toLocaleString()}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+</Layout>

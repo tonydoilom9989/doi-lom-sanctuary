@@ -1,0 +1,99 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Icon from "../components/icons/Icon.astro";
+import { stays } from "../data/stays";
+import { site, waLink } from "../data/site";
+---
+
+<Layout
+  title="Overnight Stays in the Forest"
+  description={`Sleep beside the elephants at Doi Lom Sanctuary — ${site.counts.rooms} hand-built rooms in 25 rai of forest, 45 min north of Chiang Mai. Mini pool bungalow + family room. From ฿1,700/night.`}
+  ogImage="/img/hero/stays.png"
+>
+  {/* ============ HERO ============ */}
+  <section class="relative overflow-hidden bg-[var(--color-forest-dark)] text-white">
+    <img src="/img/hero/stays.png" alt="" class="absolute inset-0 w-full h-full object-cover opacity-55"/>
+    <div class="absolute inset-0 bg-black/30"></div>
+
+    <div class="wrap relative py-16 lg:py-20">
+      <div class="max-w-2xl reveal">
+        <div class="flex flex-wrap gap-2 mb-6">
+          <span class="trust-pill"><Icon name="certificate" size={12} />TAT Licensed</span>
+          <span class="trust-pill"><Icon name="star" size={12} />4.9★ Google</span>
+          <span class="trust-pill"><Icon name="trees" size={12} />Forest setting</span>
+        </div>
+        <h1 class="font-display italic text-white leading-[1.04]">Doi Lom Farm Stay</h1>
+        <p class="mt-5 text-[1.05rem] text-white/85 leading-relaxed max-w-xl">
+          For those seeking a peaceful escape in nature, surrounded by mountains, rivers, and elephants with a beautiful 360° view, we warmly welcome you to Doi Lom Farmstay. Experience the simple charm of rural life while staying in comfortable rooms with air conditional or fan, and hot showers.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <button type="button" data-book-now data-book-type="stay" class="btn-primary">
+            Check availability
+          </button>
+          <a href="/tours" class="btn-outline-white">View all tours</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ PROPERTY PHOTO GRID 2+2 ============ */}
+  <section class="py-6 lg:py-8">
+    <div class="wrap">
+      <div class="grid grid-cols-3 gap-2 lg:gap-3 aspect-[16/6] lg:aspect-[16/5]">
+        <div class="col-span-2 frame bg-[var(--color-leaf-100)]">
+          <img src="/img/stays/main.png" alt="Doi Lom property — main view" loading="lazy" class="w-full h-full object-cover"/>
+        </div>
+        <div class="grid grid-rows-2 gap-2 lg:gap-3">
+          <div class="frame bg-[var(--color-leaf-100)]">
+            <img src="/img/stays/thumb-1.png" alt="Doi Lom property — detail 1" loading="lazy" class="w-full h-full object-cover"/>
+          </div>
+          <div class="frame bg-[var(--color-leaf-100)]">
+            <img src="/img/stays/thumb-2.jpeg" alt="Doi Lom property — detail 2" loading="lazy" class="w-full h-full object-cover"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ ROOM CARDS ============ */}
+  <section class="py-16 lg:py-20">
+    <div class="wrap">
+      <div class="flex items-end justify-between flex-wrap gap-4 mb-8 reveal">
+        <div>
+          <p class="eyebrow eyebrow-green">Choose your room</p>
+          <h2 class="mt-3">Two room types · all on the mountains</h2>
+        </div>
+        <p class="text-[0.85rem] text-[var(--color-mute)]">Prices per room / night</p>
+      </div>
+
+      {/* 2 portrait cards */}
+      <div class="grid sm:grid-cols-2 gap-5">
+        {stays.map((stay, i) => (
+          <article class="card card-lift reveal flex flex-col" style={`transition-delay:${i * 60}ms`}>
+            <a href={`/stays/${stay.slug}`} class="block aspect-[16/10] overflow-hidden" style={`background-color:${stay.photoTint}`}>
+              <img src={stay.photo} alt={stay.name} loading="lazy" class="w-full h-full object-cover transition-transform duration-[900ms] hover:scale-105"/>
+            </a>
+            <div class="p-5 flex-1 flex flex-col">
+              <h3 class="font-display text-[1.2rem] text-[var(--color-ink)] leading-tight">
+                <a href={`/stays/${stay.slug}`} class="hover:text-[var(--color-forest)]">{stay.name}</a>
+              </h3>
+              <p class="text-[0.78rem] text-[var(--color-mute)] mt-1">{stay.type}</p>
+              <div class="flex flex-wrap gap-1.5 mt-3 pb-4">
+                {stay.sleeps && <span class="chip">{stay.sleeps}</span>}
+                <span class="chip">{stay.bedType}</span>
+                {stay.poolType === "Mini pool" && <span class="chip">Mini pool</span>}
+              </div>
+              <div class="mt-auto pt-4 border-t border-[var(--color-line)] flex items-end justify-between">
+                <div>
+                  <p class="font-display text-[1.3rem] text-[var(--color-ink)] leading-none">฿{stay.pricePerNight.toLocaleString()}</p>
+                  <p class="text-[0.7rem] text-[var(--color-mute)] mt-1">per night</p>
+                </div>
+                <a href={`/stays/${stay.slug}`} class="btn-primary h-9 px-3 text-[0.82rem]">View room</a>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,230 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Icon from "../components/icons/Icon.astro";
+import ReviewCard from "../components/ReviewCard.astro";
+import { site, waLink } from "../data/site";
+import { testimonials } from "../data/testimonials";
+
+const stats = [
+  { value: site.stats.yearsOperating, label: "Years operating in Mae Taeng" },
+  { value: 9, label: "Experiences available" },
+  { value: site.stats.googleReviews, label: "Google reviews · 4.9★" },
+  { value: `${site.stats.forestRai}+`, label: "Rai of forest habitat" },
+];
+
+const timeline = [
+  { year: 2001, title: "Tony rescues his first elephant", desc: "The first elephant was rescued from a trekking camp in Chiang Mai." },
+  { year: 2002, title: "TAT certification", desc: "After the first official inspection, Doi Lom was established and opened." },
+  { year: 2008, title: "Tony begins expanding rescue efforts", desc: "More elephants gradually joined the sanctuary over time." },
+  { year: "Today", title: "A sanctuary growing toward the future", desc: `${site.stats.yearsOperating} years on, many elephants have finally been given the chance to live as elephants. The sanctuary is now expanding its forest corridors to reconnect more natural habitat.`, isCurrent: true },
+];
+
+const trustBadges = [
+  { icon: "certificate", title: "TAT Licensed", desc: `License No. ${site.tatLicense}. Audited annually since 2009.` },
+  { icon: "star", title: `${site.rating.score}★ · ${site.rating.reviewCount} reviews`, desc: "Every Google review from a real guest. We never deleted one." },
+  { icon: "clock", title: `${site.stats.yearsOperating} years operating`, desc: "Family-owned since 2002. No investors, no corporate backing." },
+  { icon: "pin", title: "Mae Taeng, Chiang Mai", desc: "Tony lives here. Tourism funds local livelihoods directly." },
+];
+---
+
+<Layout
+  title="About"
+  description="The story of Doi Lom — Tony's family sanctuary in Mae Taeng, Chiang Mai. 24 years, three rescued elephants, 25 rai of forest. TAT Licensed since 2002."
+  ogImage="/img/hero/about.png"
+>
+  {/* ============ HERO ============ */}
+  <section class="relative overflow-hidden bg-[var(--color-forest-dark)] text-white">
+    <img src="/img/hero/about.png" alt="" class="absolute inset-0 w-full h-full object-cover opacity-55"/>
+    <div class="absolute inset-0 bg-black/30"></div>
+    <div class="wrap relative py-16 lg:py-24">
+      <div class="max-w-2xl reveal">
+        <p class="eyebrow text-white">Our story</p>
+        <h1 class="mt-4 font-display italic text-white leading-[1.04]">{site.stats.yearsOperating} years on the mountain</h1>
+        <p class="mt-6 text-[1.05rem] text-white/85 leading-relaxed max-w-xl">
+          A family story about elephants, community, and a different kind of tourism.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ OUR STORY ============ */}
+  <section class="py-16 lg:py-20">
+    <div class="wrap">
+      {/* Stat cards */}
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        {stats.map((s) => (
+          <div class="bg-[var(--color-bone)] rounded-xl p-5 text-center reveal">
+            <p class="font-display text-[2.4rem] text-[var(--color-forest)] leading-none">{s.value}</p>
+            <p class="mt-2 text-[0.78rem] text-[var(--color-soil)] tracking-wide">{s.label}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* 2-col story */}
+      <div class="mt-14 grid lg:grid-cols-[1fr_1.2fr] gap-10 lg:gap-14 items-start">
+        <div class="reveal">
+          <div class="frame aspect-[4/3] bg-[var(--color-leaf-100)]">
+            <img src="/img/about/main.png" alt="Tony and the Doi Lom family" loading="lazy" class="w-full h-full object-cover"/>
+          </div>
+          <div class="grid grid-cols-2 gap-3 mt-3">
+            <div class="frame aspect-[3/2] bg-[var(--color-leaf-100)]">
+              <img src="/img/about/thumb-1.png" alt="Sanctuary early days" loading="lazy" class="w-full h-full object-cover"/>
+            </div>
+            <div class="frame aspect-[3/2] bg-[var(--color-leaf-100)]">
+              <img src="/img/about/thumb-2.png" alt="Tony with the elephants" loading="lazy" class="w-full h-full object-cover"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <p class="eyebrow">Our Story</p>
+          <h2 class="mt-3 font-display">From One Elephant to a Family</h2>
+          <div class="mt-5 text-[var(--color-soil)] leading-[1.75] text-[1rem] space-y-4">
+            <p>Tony was hardworking and determined from a young age. He saved money through years of dedicated work.</p>
+            <p>In 2001, Tony encountered an elephant that had been forced into hard labor and suffered regular abuse. As someone who had always loved elephants, he was deeply affected by what he saw. Unable to walk away, he used his life savings to buy the elephant's freedom.</p>
+            <p>He cared for her, fed her, and most importantly, gave her something she had never truly known before — freedom.</p>
+            <p>That was the beginning of Doi Lom.</p>
+            <p>Over the years, Tony continued rescuing and helping elephants whenever he could. Today, rescued elephants live freely across more than {site.stats.forestRai} rai of mountain forest, surrounded by nature and cared for with respect.</p>
+            <p>Yet the principle at Doi Lom has never changed:</p>
+            <p class="font-display italic text-[1.2rem] text-[var(--color-forest)]">The elephants decide.</p>
+          </div>
+          <blockquote class="mt-7 pl-5 border-l border-[var(--color-line-sage)]">
+            <p class="font-display italic text-[1.15rem] text-[var(--color-forest)] leading-snug">"The elephants are the real hosts here. We're just the people who take care of the place for them."</p>
+            <footer class="mt-2 text-[0.78rem] text-[var(--color-mute)] tracking-wide">— Tony, Founder</footer>
+          </blockquote>
+          <div class="mt-7 flex flex-wrap gap-2">
+            <span class="chip chip-sage py-2 px-3"><Icon name="pin" size={12} /> Mae Taeng Village</span>
+            <span class="chip chip-sage py-2 px-3"><Icon name="users" size={12} /> Local Team</span>
+            <span class="chip chip-sage py-2 px-3"><Icon name="home" size={12} /> Family-Owned</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ MISSION ============ */}
+  <section class="py-16 lg:py-20 bg-[var(--color-cream)] border-y border-[var(--color-line)]">
+    <div class="wrap">
+      <div class="text-center max-w-2xl mx-auto reveal">
+        <p class="eyebrow">Our Mission</p>
+        <h2 class="mt-3 font-display">No riding. No chains. No force.</h2>
+        <p class="mt-4 text-[var(--color-soil)] leading-relaxed">Three guiding principles behind every decision at Doi Lom since day one.</p>
+      </div>
+
+      <div class="mt-12 grid md:grid-cols-3 gap-4 max-w-5xl mx-auto">
+        {[
+          { icon: "ban", title: "No riding", desc: "Under any circumstances" },
+          { icon: "unlock", title: "No chains", desc: "Day or night" },
+          { icon: "x-circle", title: "No force", desc: "No harm or coercion of any kind" },
+        ].map((p, i) => (
+          <div class="bg-[var(--color-leaf-50)] border border-[var(--color-line-sage)] rounded-xl p-5 flex items-center gap-4 reveal" style={`transition-delay:${i * 60}ms`}>
+            <div class="grid place-items-center w-12 h-12 rounded-full bg-[var(--color-forest)] text-white shrink-0">
+              <Icon name={p.icon} size={22} />
+            </div>
+            <div>
+              <p class="font-display text-[1.15rem] text-[var(--color-ink)]">{p.title}</p>
+              <p class="text-[0.85rem] text-[var(--color-soil)] mt-0.5">{p.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-12 grid sm:grid-cols-2 gap-4 max-w-5xl mx-auto">
+        {[
+          { icon: "trees", title: "Natural habitat", desc: `Elephants roam freely across a protected ${site.stats.forestRai}-rai forest reserve` },
+          { icon: "users", title: "Family-run", desc: "Managed by Tony and the local team" },
+          { icon: "apple", title: "Natural diet only", desc: "Forest fruits and sugarcane grown on-site" },
+          { icon: "heart", title: "Rescue first", desc: "Every elephant here has been rescued from exploitation" },
+        ].map((c, i) => (
+          <div class="card p-5 reveal flex items-center gap-4" style={`transition-delay:${i * 50}ms`}>
+            <div class="grid place-items-center w-11 h-11 rounded-md bg-[var(--color-leaf-50)] border border-[var(--color-line-sage)] text-[var(--color-forest)] shrink-0">
+              <Icon name={c.icon} size={20} />
+            </div>
+            <div>
+              <p class="font-display text-[1.05rem] text-[var(--color-ink)]">{c.title}</p>
+              <p class="text-[0.86rem] text-[var(--color-soil)] mt-1 leading-snug">{c.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ============ TIMELINE ============ */}
+  <section class="py-16 lg:py-20">
+    <div class="wrap">
+      <div class="max-w-2xl reveal">
+        <p class="eyebrow">Our Journey</p>
+        <h2 class="mt-3 font-display">{site.stats.yearsOperating} years of milestones</h2>
+      </div>
+
+      <ol class="mt-12 max-w-3xl">
+        {timeline.map((t, i) => {
+          const last = i === timeline.length - 1;
+          return (
+            <li class="grid grid-cols-[80px_24px_1fr] gap-4 pb-8 last:pb-0 reveal">
+              <span class:list={["font-display text-[1.4rem] leading-none mt-1", t.isCurrent ? "text-[var(--color-forest)]" : "text-[var(--color-stone)]"]}>{t.year}</span>
+              <div class="relative flex justify-center">
+                <span class:list={[
+                  "rounded-full mt-2",
+                  t.isCurrent ? "w-4 h-4 bg-[var(--color-forest)] ring-1 ring-[var(--color-leaf-50)]" : "w-3 h-3 bg-[var(--color-line-sage)]",
+                ]}></span>
+                {!last && <span class="absolute top-7 bottom-[-24px] w-px bg-[var(--color-line)]"></span>}
+              </div>
+              <div>
+                <h3 class="font-display text-[1.2rem] text-[var(--color-ink)] leading-tight">{t.title}</h3>
+                <p class="mt-2 text-[var(--color-soil)] leading-relaxed">{t.desc}</p>
+              </div>
+            </li>
+          );
+        })}
+      </ol>
+    </div>
+  </section>
+
+  {/* ============ CREDENTIALS & TRUST ============ */}
+  <section class="py-16 lg:py-20 bg-[var(--color-cream)] border-y border-[var(--color-line)]">
+    <div class="wrap">
+      <div class="text-center max-w-2xl mx-auto reveal">
+        <p class="eyebrow">Credentials & trust</p>
+        <h2 class="mt-3 font-display">Why you can trust us</h2>
+        <p class="mt-4 text-[var(--color-mute)] max-w-xl mx-auto">Independent verification, real guest reviews, and 24 years of experience.</p>
+      </div>
+
+      <div class="mt-12 grid sm:grid-cols-2 gap-4">
+        {trustBadges.map((b, i) => (
+          <div class="card p-5 flex items-center gap-4 reveal" style={`transition-delay:${i * 60}ms`}>
+            <div class="grid place-items-center w-12 h-12 rounded-md bg-[var(--color-leaf-50)] border border-[var(--color-line-sage)] text-[var(--color-forest)] shrink-0">
+              <Icon name={b.icon} size={22} />
+            </div>
+            <div>
+              <p class="font-display text-[1.1rem] text-[var(--color-ink)]">{b.title}</p>
+              <p class="mt-1 text-[0.88rem] text-[var(--color-soil)] leading-relaxed">{b.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-10 grid md:grid-cols-3 gap-4">
+        {testimonials.slice(0, 3).map((r) => <ReviewCard review={r} />)}
+      </div>
+
+      <div class="mt-6 text-center">
+        <a href={site.location.googleReviewsLink} target="_blank" rel="noreferrer noopener" class="ulink text-[0.92rem] inline-flex items-center gap-1.5">
+          See all {site.rating.reviewCount} reviews on Google
+          <Icon name="arrow" size={14} />
+        </a>
+      </div>
+
+      <div class="mt-12 reveal">
+        <div class="grid sm:grid-cols-2 gap-3 max-w-md mx-auto">
+          <a href="/tours" class="btn-primary justify-center">View our tours</a>
+          <a href={waLink("Hi Tony, I just wanted to say hello.")} target="_blank" rel="noreferrer noopener" class="btn-whatsapp justify-center">
+            <Icon name="whatsapp" size={16} />
+            Say hello to Tony
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

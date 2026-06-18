@@ -1,0 +1,23 @@
+---
+import type { Testimonial } from "../data/testimonials";
+import Icon from "./icons/Icon.astro";
+interface Props { review: Testimonial; }
+const { review } = Astro.props;
+---
+
+<article class="card p-5 h-full flex flex-col">
+  <div class="flex items-center gap-3">
+    <span class="grid place-items-center w-10 h-10 rounded-full bg-[var(--color-leaf-50)] text-[var(--color-forest)] font-semibold text-[0.85rem]">{review.initials}</span>
+    <div class="flex-1">
+      <p class="text-[0.92rem] font-medium text-[var(--color-ink)]">{review.author}</p>
+      {review.origin && <p class="text-[0.75rem] text-[var(--color-mute)]">{review.origin}</p>}
+    </div>
+    <div class="flex gap-0.5 text-[var(--color-amber)]">
+      {Array.from({ length: review.rating }).map(() => <Icon name="star" size={12} />)}
+    </div>
+  </div>
+  <p class="mt-4 font-display italic text-[1rem] text-[var(--color-soil)] leading-relaxed line-clamp-6">
+    "{review.quote}"
+  </p>
+  <p class="mt-auto pt-4 text-[0.75rem] text-[var(--color-mute)] tracking-wide">{review.meta} · {review.source}</p>
+</article>

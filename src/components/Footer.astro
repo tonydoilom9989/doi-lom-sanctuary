@@ -1,0 +1,75 @@
+---
+import { footerNav, site, waLink } from "../data/site";
+import Icon from "./icons/Icon.astro";
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-[var(--color-footer)] text-white/85">
+  <div class="wrap pt-14 pb-8">
+    <div class="grid lg:grid-cols-[1.2fr_1fr_1.5fr] gap-10 lg:gap-14">
+      {/* Column 1 — Brand */}
+      <div>
+        <div class="flex items-center gap-2.5">
+          <span class="grid place-items-center w-10 h-10 rounded-full bg-white/95 p-1">
+            <img src="/img/logo.png" alt={site.name} class="block w-full h-full object-contain" />
+          </span>
+          <span class="font-display text-[1.1rem] text-white">{site.name}</span>
+        </div>
+        <p class="mt-5 text-[0.92rem] leading-relaxed text-white/65 max-w-xs">
+          An ethical home for three rescued elephants in the hills above Mae Taeng, Chiang Mai.
+        </p>
+        <p class="mt-4 text-[0.78rem] text-white/55 max-w-xs">
+          Family-owned since {site.founded}. TAT License No. {site.tatLicense}.
+        </p>
+        <div class="mt-5 flex items-center gap-2">
+          <a href={site.social.instagram} target="_blank" rel="noreferrer noopener" aria-label="Instagram" class="grid place-items-center w-9 h-9 rounded-md border border-white/20 text-white/70 hover:text-white hover:border-white/40 transition">
+            <Icon name="instagram" size={16} />
+          </a>
+          <a href={site.social.facebook} target="_blank" rel="noreferrer noopener" aria-label="Facebook" class="grid place-items-center w-9 h-9 rounded-md border border-white/20 text-white/70 hover:text-white hover:border-white/40 transition">
+            <Icon name="facebook" size={16} />
+          </a>
+        </div>
+      </div>
+
+      {/* Column 2 — Navigate */}
+      <div>
+        <p class="eyebrow text-white/55">Navigate</p>
+        <ul class="mt-5 grid gap-2.5 text-[0.92rem]">
+          {footerNav.map((item) => (
+            <li>
+              <a href={item.href} class="text-white/75 hover:text-white transition-colors">{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Column 3 — Get in touch */}
+      <div>
+        <p class="eyebrow text-white/55">Get in touch</p>
+        <ul class="mt-5 grid gap-3 text-[0.92rem]">
+          <li class="flex items-start gap-3 text-white/75">
+            <Icon name="pin" size={16} class="text-white/55 mt-0.5 shrink-0" />
+            <span>{site.location.address}</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <Icon name="whatsapp" size={16} class="text-white/55 shrink-0" />
+            <a href={waLink()} target="_blank" rel="noreferrer noopener" class="text-white/75 hover:text-white">{site.whatsapp.display}</a>
+          </li>
+          <li class="flex items-center gap-3">
+            <Icon name="mail" size={16} class="text-white/55 shrink-0" />
+            <a href={`mailto:${site.email}`} class="text-white/75 hover:text-white">{site.email}</a>
+          </li>
+          <li class="flex items-center gap-3 text-white/75">
+            <Icon name="clock" size={16} class="text-white/55 shrink-0" />
+            <span>{site.hours}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="border-t border-[var(--color-footer-line)] mt-12 pt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-3 text-[0.78rem] text-white/45">
+      <p>© {year} {site.name}. All rights reserved.</p>
+      <p>TAT License No. {site.tatLicense} · No riding · No chains · No forcing.</p>
+    </div>
+  </div>
+</footer>

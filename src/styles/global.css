@@ -1,0 +1,384 @@
+@import "tailwindcss";
+
+/* =====================================================================
+   DOI LOM ELEPHANT SANCTUARY — DESIGN SYSTEM
+   Per Stitch wireframe brief (May 28)
+   Palette:  Forest green primary · warm off-white · earth-tone supports
+   Typography: DM Serif Display (display) · Inter (body)
+   ===================================================================== */
+
+@theme {
+  /* Surfaces */
+  --color-bg: #fffdf9;            /* page background — warm off-white */
+  --color-paper: #fffdf9;
+  --color-surface: #faf6ec;       /* light surface tint */
+  --color-bone: #f5ede3;          /* warm beige surface */
+  --color-cream: #f2eae0;         /* saturated warm */
+  --color-amber-surface: #fbf5ee; /* amber-tinted alert surface */
+
+  /* Borders & lines */
+  --color-line: #ead9c5;          /* dashed/solid borders */
+  --color-line-amber: #edd9bf;    /* amber borders for warnings */
+  --color-line-sage: #c8ddb8;     /* sage borders for green areas */
+
+  /* Forest green family */
+  --color-leaf-50: #f0f5ec;       /* lightest sage */
+  --color-leaf-100: #c8ddb8;      /* light sage */
+  --color-leaf-200: #b4cfa6;      /* mid-light sage */
+  --color-leaf-300: #9dc27e;      /* sage green */
+  --color-leaf-400: #7a9e6c;      /* mid forest */
+  --color-forest: #3a5c2a;        /* PRIMARY brand green */
+  --color-forest-dark: #2c4a1e;   /* hero background */
+  --color-forest-darker: #1a3010; /* gradient overlay */
+  --color-canopy: #0d1f08;        /* tree silhouette */
+  --color-overlay: #162810;       /* modal overlay */
+
+  /* Earth & accent */
+  --color-clay: #d4b48a;          /* warm earth tint */
+  --color-amber: #a0674a;         /* amber/shield warning */
+  --color-warn-yellow: #f0e4c4;   /* difficulty Easy */
+  --color-warn-orange: #f5d5b8;   /* difficulty Moderate */
+  --color-warn-red: #c66454;      /* destructive */
+
+  /* Text */
+  --color-ink: #1a1a14;           /* primary text */
+  --color-soil: #3a3024;          /* secondary text */
+  --color-mute: #6b5f4a;          /* muted text */
+  --color-stone: #8a7560;         /* lightest muted */
+
+  /* Footer */
+  --color-footer: #2c1f14;        /* dark brown */
+  --color-footer-line: #3a2c1a;   /* footer divider */
+
+  /* WhatsApp brand */
+  --color-wa: #25d366;
+  --color-wa-dark: #128c4d;
+
+  /* Typography stacks */
+  --font-display: "DM Serif Display", ui-serif, Georgia, "Times New Roman", serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+
+  /* Shadows */
+  --shadow-soft: 0 1px 2px rgba(26, 26, 20, 0.04), 0 4px 12px -4px rgba(26, 26, 20, 0.08);
+  --shadow-card: 0 2px 4px rgba(26, 26, 20, 0.06), 0 12px 28px -12px rgba(26, 26, 20, 0.14);
+  --shadow-lift: 0 18px 48px -20px rgba(26, 26, 20, 0.28);
+}
+
+@layer base {
+  :root { color-scheme: light; }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    color: var(--color-ink);
+    letter-spacing: -0.018em;
+    line-height: 1.08;
+  }
+
+  h1 { font-size: clamp(2.5rem, 5.5vw, 3.4rem); }
+  h2 { font-size: clamp(1.75rem, 3.8vw, 2.4rem); }
+  h3 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
+  h4 { font-size: clamp(1.05rem, 1.4vw, 1.25rem); line-height: 1.25; }
+
+  em { font-style: italic; }
+
+  ::selection { background: var(--color-forest); color: white; }
+
+  :focus-visible {
+    outline: 1px solid var(--color-forest);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  img { color: transparent; }
+}
+
+@layer components {
+  /* Eyebrow / overline labels */
+  .eyebrow {
+    font-family: var(--font-body);
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-mute);
+  }
+  .eyebrow-green { color: var(--color-forest); }
+
+  /* Layout */
+  .wrap {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 2rem);
+  }
+  @media (min-width: 1280px) {
+    .wrap { padding-inline: 0; }
+  }
+
+  /* ============ Buttons ============ */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 44px;
+    padding: 0 1.25rem;
+    border-radius: var(--radius-md);
+    background: var(--color-forest);
+    color: white;
+    font-weight: 500;
+    font-size: 0.92rem;
+    letter-spacing: -0.005em;
+    transition: all 200ms cubic-bezier(0.2, 0, 0.2, 1);
+    border: 1px solid transparent;
+    white-space: nowrap;
+  }
+  .btn-primary:hover {
+    background: var(--color-forest-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px -6px rgba(58, 92, 42, 0.5);
+  }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 42px;
+    padding: 0 1.15rem;
+    border-radius: var(--radius-md);
+    color: var(--color-ink);
+    border: 1px solid var(--color-line);
+    background: transparent;
+    font-weight: 500;
+    font-size: 0.92rem;
+    transition: all 200ms cubic-bezier(0.2, 0, 0.2, 1);
+    white-space: nowrap;
+  }
+  .btn-outline:hover {
+    border-color: var(--color-forest);
+    color: var(--color-forest);
+  }
+
+  .btn-outline-white {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 42px;
+    padding: 0 1.15rem;
+    border-radius: var(--radius-md);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.5);
+    background: transparent;
+    font-weight: 500;
+    font-size: 0.92rem;
+    transition: all 200ms;
+    white-space: nowrap;
+  }
+  .btn-outline-white:hover { background: rgba(255,255,255,0.1); border-color: white; }
+
+  .btn-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 44px;
+    padding: 0 1.25rem;
+    border-radius: var(--radius-md);
+    background: var(--color-wa);
+    color: white;
+    font-weight: 500;
+    font-size: 0.92rem;
+    transition: all 200ms cubic-bezier(0.2, 0, 0.2, 1);
+    border: 1px solid transparent;
+    white-space: nowrap;
+  }
+  .btn-whatsapp:hover {
+    background: var(--color-wa-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px -6px rgba(37, 211, 102, 0.55);
+  }
+
+  .btn-ghost-light {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 40px;
+    padding: 0 1rem;
+    border-radius: var(--radius-md);
+    background: var(--color-leaf-50);
+    color: var(--color-ink);
+    font-weight: 500;
+    font-size: 0.92rem;
+    transition: all 200ms;
+    border: 1px solid transparent;
+    white-space: nowrap;
+  }
+  .btn-ghost-light:hover { background: var(--color-leaf-100); }
+
+  /* ============ Chips & Pills ============ */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 9999px;
+    background: var(--color-bone);
+    color: var(--color-soil);
+    border: 1px solid var(--color-line);
+    font-size: 0.72rem;
+    font-weight: 500;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+  .chip-sage {
+    background: var(--color-leaf-50);
+    border-color: var(--color-line-sage);
+    color: var(--color-forest);
+  }
+  .chip-easy {
+    background: var(--color-warn-yellow);
+    border-color: transparent;
+    color: #8a6810;
+  }
+  .chip-moderate {
+    background: var(--color-warn-orange);
+    border-color: transparent;
+    color: #a04923;
+  }
+
+  /* Trust badge — translucent on dark hero */
+  .trust-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.32);
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 0.74rem;
+    font-weight: 500;
+    backdrop-filter: blur(4px);
+    white-space: nowrap;
+  }
+
+  /* ============ Cards & frames ============ */
+  .frame {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--color-leaf-100);
+  }
+  .card {
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-line);
+    background: var(--color-paper);
+    overflow: hidden;
+  }
+  .card-lift {
+    transition: transform 300ms cubic-bezier(0.2, 0, 0.2, 1), box-shadow 300ms;
+  }
+  .card-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lift);
+  }
+
+  /* ============ Links ============ */
+  .ulink {
+    position: relative;
+    color: var(--color-forest);
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 200ms;
+  }
+  .ulink::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform-origin: right center;
+    transform: scaleX(0);
+    transition: transform 280ms cubic-bezier(0.2, 0, 0.2, 1);
+  }
+  .ulink:hover::after {
+    transform-origin: left center;
+    transform: scaleX(1);
+  }
+
+  /* ============ Tree silhouette ============ */
+  .tree-silhouette {
+    display: block;
+    width: 100%;
+    height: 56px;
+    background: var(--color-canopy);
+    /* Jagged top edge — SVG tree shape */
+    mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 56' preserveAspectRatio='none'><path d='M0,56 L0,32 L20,28 L36,16 L52,22 L68,8 L84,18 L100,4 L120,20 L136,12 L156,24 L172,14 L188,28 L208,10 L224,22 L240,6 L260,18 L276,28 L296,12 L312,22 L332,8 L352,24 L372,14 L392,28 L412,10 L432,22 L452,6 L472,20 L492,14 L512,28 L532,10 L552,22 L572,8 L592,24 L612,14 L632,26 L652,10 L672,22 L692,4 L712,18 L732,28 L752,12 L772,22 L792,8 L812,24 L832,14 L852,28 L872,10 L892,22 L912,6 L932,20 L952,14 L972,28 L992,10 L1012,22 L1032,8 L1052,24 L1072,14 L1092,26 L1112,10 L1132,22 L1152,4 L1172,18 L1192,28 L1212,12 L1232,22 L1252,8 L1272,24 L1292,14 L1312,28 L1332,10 L1352,22 L1372,6 L1392,20 L1412,14 L1432,28 L1440,24 L1440,56 Z' fill='black'/></svg>");
+    mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+    -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 56' preserveAspectRatio='none'><path d='M0,56 L0,32 L20,28 L36,16 L52,22 L68,8 L84,18 L100,4 L120,20 L136,12 L156,24 L172,14 L188,28 L208,10 L224,22 L240,6 L260,18 L276,28 L296,12 L312,22 L332,8 L352,24 L372,14 L392,28 L412,10 L432,22 L452,6 L472,20 L492,14 L512,28 L532,10 L552,22 L572,8 L592,24 L612,14 L632,26 L652,10 L672,22 L692,4 L712,18 L732,28 L752,12 L772,22 L792,8 L812,24 L832,14 L852,28 L872,10 L892,22 L912,6 L932,20 L952,14 L972,28 L992,10 L1012,22 L1032,8 L1052,24 L1072,14 L1092,26 L1112,10 L1132,22 L1152,4 L1172,18 L1192,28 L1212,12 L1232,22 L1252,8 L1272,24 L1292,14 L1312,28 L1332,10 L1352,22 L1372,6 L1392,20 L1412,14 L1432,28 L1440,24 L1440,56 Z' fill='black'/></svg>");
+    -webkit-mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+  }
+
+  /* ============ Anti-scam notice ============ */
+  .anti-scam {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    background: var(--color-amber-surface);
+    border: 1px solid var(--color-line-amber);
+    border-radius: var(--radius-md);
+    padding: 0.7rem 0.85rem;
+  }
+  .anti-scam svg { flex-shrink: 0; color: var(--color-amber); margin-top: 2px; }
+
+  /* ============ Reveal animation ============ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 600ms cubic-bezier(0.2, 0, 0.2, 1), transform 600ms;
+  }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ============ Accordion summary marker ============ */
+  details > summary { list-style: none; }
+  details > summary::-webkit-details-marker { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}

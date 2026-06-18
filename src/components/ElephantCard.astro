@@ -1,0 +1,40 @@
+---
+import type { Elephant } from "../data/elephants";
+interface Props {
+  elephant: Elephant;
+  index: number;
+}
+const { elephant, index } = Astro.props;
+const ratio =
+  elephant.ratio === "square"
+    ? "aspect-square"
+    : elephant.ratio === "wide"
+    ? "aspect-[16/11]"
+    : "aspect-[4/5]";
+---
+
+<article class="reveal group" style={`transition-delay:${index * 60}ms`}>
+  <div class:list={["frame relative overflow-hidden card-lift", ratio]}>
+    <img
+      src={elephant.photo}
+      alt={`${elephant.name}, ${elephant.age} year old ${elephant.sex.toLowerCase()} elephant at Doi Lom`}
+      loading="lazy"
+      class="w-full h-full object-cover transition-transform duration-[1100ms] group-hover:scale-[1.04]"
+    />
+    <div class="absolute top-3 left-3 chip backdrop-blur-md bg-[var(--color-paper)]/85">
+      Rescued {elephant.rescuedYear}
+    </div>
+  </div>
+  <div class="mt-5 lg:mt-6">
+    <div class="flex items-baseline gap-3 flex-wrap">
+      <h3 class="font-display text-[1.55rem] text-[var(--color-bark)] leading-tight">{elephant.name}</h3>
+      {elephant.nameMeaning && (
+        <span class="text-[0.85rem] italic text-[var(--color-stone)]">"{elephant.nameMeaning}"</span>
+      )}
+    </div>
+    <p class="mt-1 text-[0.82rem] text-[var(--color-mute)] tracking-wide">
+      {elephant.sex} · {elephant.age} years · from {elephant.rescuedFrom}
+    </p>
+    <p class="mt-4 text-[0.95rem] text-[var(--color-soil)] leading-relaxed italic">{elephant.personality}</p>
+  </div>
+</article>

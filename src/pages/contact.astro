@@ -1,0 +1,302 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Icon from "../components/icons/Icon.astro";
+import { site, waLink } from "../data/site";
+import { quickFAQ } from "../data/faq";
+---
+
+<Layout
+  title="Contact Tony"
+  description={`Reach Tony at Doi Lom Elephant Rescue — WhatsApp ${site.whatsapp.display}, email ${site.email}, or visit ${site.location.address}. Most messages answered within 30 mins.`}
+  ogImage="/img/hero/about.png"
+>
+  {/* ============ WHATSAPP HERO ============ */}
+  <section class="border-b border-[var(--color-line)]">
+    <div class="wrap py-10 lg:py-14">
+      <div class="border border-dashed border-[var(--color-line)] rounded-2xl p-6 lg:p-8 grid lg:grid-cols-[1fr_auto] gap-6 lg:gap-10 items-center reveal">
+        <div class="flex items-start gap-5">
+          <div class="grid place-items-center w-14 h-14 rounded-full bg-[var(--color-leaf-50)] border border-[var(--color-line-sage)] text-[var(--color-wa)] shrink-0">
+            <Icon name="whatsapp" size={26} />
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="block w-2 h-2 rounded-full bg-[var(--color-wa)] animate-pulse"></span>
+              <span class="text-[0.82rem] font-medium text-[var(--color-wa-dark)]">{site.founder} is available now</span>
+            </div>
+            <h1 class="mt-2 font-display text-[1.8rem] lg:text-[2.2rem] text-[var(--color-ink)] leading-tight">We'd love to hear from you</h1>
+            <p class="mt-2 text-[var(--color-soil)]">Most questions answered within 30 mins via WhatsApp.</p>
+          </div>
+        </div>
+        <div class="text-center lg:text-right">
+          <a href={waLink()} target="_blank" rel="noreferrer noopener" class="btn-whatsapp text-[1rem] h-12 px-6">
+            <Icon name="whatsapp" size={18} />
+            Chat with Tony
+          </a>
+          <p class="mt-2 text-[0.78rem] text-[var(--color-stone)]">Opens WhatsApp · Replies in 30 mins</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ 2-COLUMN: FORM + INFO ============ */}
+  <section class="py-16 lg:py-20">
+    <div class="wrap grid lg:grid-cols-2 gap-10 lg:gap-5 items-start">
+      {/* LEFT — Form */}
+      <div>
+        <p class="eyebrow">Send us a message</p>
+        <h2 class="font-display text-[1.5rem] text-[var(--color-ink)] mt-2">Email Tony directly</h2>
+
+        <form id="contact-form" class="mt-7 grid gap-4">
+          <label class="grid gap-1.5">
+            <span class="eyebrow">Your name <span class="text-[var(--color-warn-red)]">*</span></span>
+            <input type="text" name="name" required placeholder="Full name" class="form-input"/>
+          </label>
+          <label class="grid gap-1.5">
+            <span class="eyebrow">Email address <span class="text-[var(--color-warn-red)]">*</span></span>
+            <input type="email" name="email" required placeholder="you@example.com" class="form-input"/>
+          </label>
+          <label class="grid gap-1.5">
+            <span class="eyebrow">Subject</span>
+            <select name="subject" class="form-input">
+              <option value="">Select a topic...</option>
+              <option>Booking inquiry</option>
+              <option>General question</option>
+              <option>Tour info</option>
+              <option>Stays info</option>
+            </select>
+          </label>
+          <div class="flex flex-wrap gap-1.5">
+            {["Booking inquiry", "General question", "Tour info", "Stays info"].map((s) => (
+              <button type="button" data-subject={s} class="subject-chip chip py-1.5 px-3 hover:bg-[var(--color-leaf-50)] hover:border-[var(--color-line-sage)] hover:text-[var(--color-forest)] cursor-pointer">{s}</button>
+            ))}
+          </div>
+          <label class="grid gap-1.5">
+            <span class="eyebrow">Message <span class="text-[var(--color-warn-red)]">*</span></span>
+            <textarea name="message" rows="5" required class="form-input resize-none" placeholder="Tell us a little about your group and what you're hoping to do..."></textarea>
+          </label>
+
+          <div class="flex flex-wrap gap-3 items-center">
+            <button type="submit" class="btn-primary">
+              <Icon name="mail" size={16} />
+              Send message
+            </button>
+            <a href={waLink()} target="_blank" rel="noreferrer noopener" class="btn-whatsapp">
+              <Icon name="whatsapp" size={16} />
+              WhatsApp instead
+            </a>
+          </div>
+          <p class="text-[0.78rem] text-[var(--color-mute)]">Email replies within 24 hours.</p>
+        </form>
+
+        {/* Success state (hidden initially) */}
+        <div id="contact-success" class="hidden mt-7 border border-dashed border-[var(--color-line-sage)] rounded-2xl p-6 lg:p-8 text-center">
+          <div class="mx-auto grid place-items-center w-14 h-14 rounded-full bg-[var(--color-leaf-50)] border border-[var(--color-line-sage)] text-[var(--color-forest)]">
+            <Icon name="check-circle" size={28} />
+          </div>
+          <h3 class="mt-4 font-display text-[1.4rem] text-[var(--color-ink)]">Message sent!</h3>
+          <p class="mt-2 text-[var(--color-soil)] max-w-md mx-auto">We'll reply to your email within 24 hours.</p>
+
+          <div id="success-summary" class="mt-5 bg-[var(--color-bone)] rounded-lg p-4 text-left text-[0.88rem] grid gap-1.5 max-w-md mx-auto"></div>
+
+          <a href={waLink()} target="_blank" rel="noreferrer noopener" class="btn-whatsapp mt-6">
+            <Icon name="whatsapp" size={16} />
+            Need faster? Chat on WhatsApp
+          </a>
+          <p class="text-[0.78rem] text-[var(--color-stone)] mt-3">Tony replies within 30 mins via WhatsApp</p>
+        </div>
+      </div>
+
+      {/* RIGHT — Contact info */}
+      <aside class="space-y-5 w-full">
+        <p class="eyebrow">Find us</p>
+
+        {[
+          { icon: "pin", title: "Address", value: site.location.address },
+          { icon: "whatsapp", title: "WhatsApp", value: `${site.whatsapp.display} · Replies within 30 mins` },
+          { icon: "mail", title: "Email", value: site.email, href: `mailto:${site.email}` },
+          { icon: "facebook", title: "Facebook", value: site.social.facebookHandle },
+        ].map((item) => (
+          <div class="card p-4 flex items-start gap-4">
+            <div class="grid place-items-center w-11 h-11 rounded-md bg-[var(--color-leaf-50)] border border-[var(--color-line-sage)] text-[var(--color-forest)] shrink-0">
+              <Icon name={item.icon} size={20} />
+            </div>
+            <div>
+              <p class="font-medium text-[0.92rem] text-[var(--color-ink)]">{item.title}</p>
+              {item.href ? (
+                <a href={item.href} class="text-[0.85rem] text-[var(--color-soil)] mt-0.5 inline-block hover:text-[var(--color-forest)] transition-colors break-all">{item.value}</a>
+              ) : (
+                <p class="text-[0.85rem] text-[var(--color-soil)] mt-0.5">{item.value}</p>
+              )}
+            </div>
+          </div>
+        ))}
+
+        <p class="eyebrow pt-4">Opening hours</p>
+        <div class="card p-4 grid divide-y divide-dashed divide-[var(--color-line)]">
+          {[
+            { day: "Mon–Fri", hours: "8am – 4pm", open: true },
+            { day: "Sat–Sun", hours: "8am – 4pm", open: true },
+            { day: "Public holidays", hours: "8am – 4pm", open: true },
+          ].map((r) => (
+            <div class="flex items-center justify-between py-2 text-[0.88rem]">
+              <span class="text-[var(--color-soil)]">{r.day}</span>
+              <span class="flex items-center gap-2">
+                <span class:list={["block w-2 h-2 rounded-full", r.open ? "bg-[var(--color-wa)]" : "bg-[var(--color-stone)]"]}></span>
+                <span class="text-[var(--color-ink)]">{r.hours}</span>
+              </span>
+            </div>
+          ))}
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  {/* ============ HOW TO GET HERE + MAP ============ */}
+  <section class="py-16 lg:py-20 border-y border-[var(--color-line)] bg-[var(--color-paper)]">
+    <div class="wrap grid lg:grid-cols-2 gap-10 lg:gap-5">
+      <div class="w-full">
+        <p class="eyebrow">How to get here</p>
+        <div class="mt-5 grid gap-3">
+          {[
+            { icon: "car", title: "Shared pickup", desc: "Included in most tours, with hotel pickup between 8:00 AM – 8:30 AM." },
+            { icon: "taxi", title: "Grab or private car", desc: "Transportation from Chiang Mai city costs approximately THB 500–1,100." },
+            { icon: "bus", title: "Songthaew from Warorot (Warorot Market)", desc: "Takes around 60 minutes to Mae Taeng junction." },
+          ].map((t) => (
+            <div class="card p-4 flex items-start gap-3">
+              <div class="grid place-items-center w-11 h-11 rounded-md bg-[var(--color-leaf-50)] border border-[var(--color-line-sage)] text-[var(--color-forest)] shrink-0">
+                <Icon name={t.icon} size={20} />
+              </div>
+              <div>
+                <p class="font-medium text-[0.92rem] text-[var(--color-ink)]">{t.title}</p>
+                <p class="text-[0.85rem] text-[var(--color-soil)] mt-0.5">{t.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="mt-6 card p-4 flex items-center justify-between gap-3">
+          <div class="flex items-center gap-2 text-[0.88rem] text-[var(--color-soil)]">
+            <Icon name="pin" size={14} class="text-[var(--color-forest)]" />
+            <span>{site.location.address}</span>
+          </div>
+          <button type="button" id="copy-address" class="btn-outline h-9 px-3 text-[0.82rem]">
+            <Icon name="copy" size={13} />
+            Copy address
+          </button>
+        </div>
+      </div>
+
+      <div class="lg:flex lg:flex-col">
+        <div class="frame aspect-[16/10] lg:aspect-auto lg:flex-1 lg:min-h-[280px] bg-[var(--color-leaf-100)] overflow-hidden">
+          <iframe
+            src={site.location.googleMapsEmbed}
+            width="100%"
+            height="100%"
+            style="border:0;"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Doi Lom Elephant Rescue Sanctuary location on Google Maps"
+            class="block w-full h-full"
+          ></iframe>
+        </div>
+        <div class="mt-3 flex flex-wrap gap-2">
+          <a href={site.location.googleMapsLink} target="_blank" rel="noreferrer noopener" class="btn-outline h-9 px-3 text-[0.82rem]">
+            <Icon name="external" size={13} />
+            Open in Google Maps
+          </a>
+          <a href={site.location.appleMapsLink} target="_blank" rel="noreferrer noopener" class="btn-outline h-9 px-3 text-[0.82rem]">
+            <Icon name="external" size={13} />
+            Apple Maps
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ QUICK FAQ TEASER (reusable) ============ */}
+  <section class="py-12 lg:py-14">
+    <div class="wrap">
+      <div class="flex items-end justify-between flex-wrap gap-4 mb-6">
+        <div>
+          <p class="eyebrow">Still have questions?</p>
+          <h2 class="font-display text-[1.4rem] text-[var(--color-ink)] mt-2">Quick answers</h2>
+        </div>
+        <a href="/faq" class="ulink text-[0.92rem]">See all FAQs →</a>
+      </div>
+      <div class="grid sm:grid-cols-3 gap-3">
+        {quickFAQ.map((q) => (
+          <div class="card p-5">
+            <Icon name={q.icon} size={18} class="text-[var(--color-forest)]" />
+            <p class="font-medium text-[0.95rem] text-[var(--color-ink)] mt-2.5">{q.title}</p>
+            <p class="text-[0.85rem] text-[var(--color-soil)] mt-1.5 leading-relaxed">{q.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  // Subject chips → set dropdown
+  const subjectSelect = document.querySelector<HTMLSelectElement>('select[name="subject"]');
+  document.querySelectorAll<HTMLElement>(".subject-chip").forEach((c) => {
+    c.addEventListener("click", () => {
+      if (subjectSelect) subjectSelect.value = c.dataset.subject || "";
+    });
+  });
+
+  // Copy address
+  const copyBtn = document.getElementById("copy-address");
+  copyBtn?.addEventListener("click", () => {
+    navigator.clipboard.writeText("Mae Taeng, Chiang Mai 50150, Thailand");
+    const original = copyBtn.innerHTML;
+    copyBtn.innerHTML = "✓ Copied";
+    setTimeout(() => { copyBtn.innerHTML = original; }, 2000);
+  });
+
+  // Form submission → show success state
+  const form = document.getElementById("contact-form") as HTMLFormElement | null;
+  const success = document.getElementById("contact-success");
+  const summary = document.getElementById("success-summary");
+
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    if (summary) {
+      summary.innerHTML = `
+        <div class="flex justify-between gap-3"><span class="text-[var(--color-mute)]">Name</span><span class="text-[var(--color-ink)] truncate">${data.get("name")}</span></div>
+        <div class="flex justify-between gap-3"><span class="text-[var(--color-mute)]">Email</span><span class="text-[var(--color-ink)] truncate">${data.get("email")}</span></div>
+        <div class="flex justify-between gap-3"><span class="text-[var(--color-mute)]">Subject</span><span class="text-[var(--color-ink)] truncate">${data.get("subject") || "—"}</span></div>
+      `;
+    }
+    form.classList.add("hidden");
+    success?.classList.remove("hidden");
+    success?.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+</script>
+
+<style is:global>
+  /* Cream-bordered Contact form fields — visible at rest, focus = forest green */
+  #contact-form .form-input {
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--color-line);
+    background-color: var(--color-paper);
+    border-radius: 14px;
+    padding: 0.95rem 1.15rem;
+  }
+  #contact-form textarea.form-input {
+    padding-top: 0.85rem;
+    padding-bottom: 0.85rem;
+  }
+  #contact-form select.form-input {
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+  }
+  #contact-form .form-input:hover {
+    border-color: var(--color-stone);
+  }
+  #contact-form .form-input:focus {
+    border-color: var(--color-forest);
+  }
+</style>

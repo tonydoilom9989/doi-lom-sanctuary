@@ -1,0 +1,346 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Icon from "../components/icons/Icon.astro";
+import { site, waLink } from "../data/site";
+import { ugcPosts } from "../data/testimonials";
+
+type Cat = "elephants" | "trekking" | "stays" | "food" | "guests";
+type Photo = {
+  src: string;
+  caption: string;
+  category: Cat;
+  inPhoto?: string[];
+  date?: string;
+  tint: string;
+  aspect: "square" | "wide" | "square" | "portrait";
+};
+
+// Photos interleaved across 5 categories for a varied "All photos" view.
+// Filter buttons (Elephants/Trekking/Stays/Food/Guests) still group by category.
+const photos: Photo[] = [
+  // Round 1
+  { src: "/img/gallery/trekking/1.jpg", caption: "Forest trail", category: "trekking", tint: "#c8ddb8", aspect: "square" },
+  { src: "/img/gallery/elephants/1.jpg", caption: "Elephant in the meadow", category: "elephants", tint: "#9dc27e", aspect: "square" },
+  { src: "/img/gallery/stays/1.png", caption: "Bungalow with mini pool", category: "stays", tint: "#ead9c5", aspect: "square" },
+  { src: "/img/gallery/guests/1.jpg", caption: "Guest with elephant", category: "guests", tint: "#f5ede3", aspect: "square" },
+  { src: "/img/gallery/food/1.jpg", caption: "Northern Thai lunch", category: "food", tint: "#d4b48a", aspect: "square" },
+
+  // Round 2
+  { src: "/img/gallery/trekking/2.jpg", caption: "Mountain path", category: "trekking", tint: "#b4cfa6", aspect: "square" },
+  { src: "/img/gallery/elephants/2.jpg", caption: "Morning with the herd", category: "elephants", tint: "#c8ddb8", aspect: "square" },
+  { src: "/img/gallery/stays/2.png", caption: "Family room interior", category: "stays", tint: "#d4b48a", aspect: "square" },
+  { src: "/img/gallery/guests/2.jpg", caption: "Sharing a moment", category: "guests", tint: "#ead9c5", aspect: "square" },
+  { src: "/img/gallery/food/2.jpg", caption: "Herbal medicine preparation", category: "food", tint: "#edd9bf", aspect: "square" },
+
+  // Round 3
+  { src: "/img/gallery/trekking/3.jpg", caption: "Through the bamboo", category: "trekking", tint: "#9dc27e", aspect: "square" },
+  { src: "/img/gallery/elephants/3.jpg", caption: "Wandering the forest", category: "elephants", tint: "#b4cfa6", aspect: "square" },
+  { src: "/img/gallery/stays/3.jpeg", caption: "Forest accommodation", category: "stays", tint: "#c8ddb8", aspect: "square" },
+  { src: "/img/gallery/guests/3.jpg", caption: "Group photo", category: "guests", tint: "#f5ede3", aspect: "square" },
+  { src: "/img/gallery/food/3.webp", caption: "Traditional cooking", category: "food", tint: "#d4b48a", aspect: "square" },
+
+  // Round 4 (food done)
+  { src: "/img/gallery/trekking/4.jpg", caption: "Hidden waterfall", category: "trekking", tint: "#c8ddb8", aspect: "square" },
+  { src: "/img/gallery/elephants/4.jpg", caption: "Close-up portrait", category: "elephants", tint: "#d4b48a", aspect: "square" },
+  { src: "/img/gallery/stays/4.png", caption: "Bedroom view", category: "stays", tint: "#ead9c5", aspect: "square" },
+  { src: "/img/gallery/guests/4.jpg", caption: "Hands-on care", category: "guests", tint: "#ead9c5", aspect: "square" },
+
+  // Round 5
+  { src: "/img/gallery/trekking/5.jpg", caption: "Hill tribe village", category: "trekking", tint: "#7a9e6c", aspect: "square" },
+  { src: "/img/gallery/elephants/5.jpg", caption: "Walking together", category: "elephants", tint: "#9dc27e", aspect: "square" },
+  { src: "/img/gallery/stays/5.jpg", caption: "Outdoor terrace", category: "stays", tint: "#d4b48a", aspect: "square" },
+  { src: "/img/gallery/guests/5.jpg", caption: "Smiling guests", category: "guests", tint: "#f5ede3", aspect: "square" },
+
+  // Round 6 (stays done)
+  { src: "/img/gallery/trekking/6.jpg", caption: "Mae Taeng river", category: "trekking", tint: "#b4cfa6", aspect: "square" },
+  { src: "/img/gallery/elephants/6.jpg", caption: "Quiet moment", category: "elephants", tint: "#c8ddb8", aspect: "square" },
+  { src: "/img/gallery/stays/6.png", caption: "Bungalow exterior", category: "stays", tint: "#c8ddb8", aspect: "square" },
+  { src: "/img/gallery/guests/6.jpg", caption: "Family visit", category: "guests", tint: "#c8ddb8", aspect: "square" },
+
+  // Round 7 (guests done)
+  { src: "/img/gallery/trekking/7.jpg", caption: "Bamboo grove", category: "trekking", tint: "#d4b48a", aspect: "square" },
+  { src: "/img/gallery/elephants/7.jpg", caption: "Bathing time", category: "elephants", tint: "#7a9e6c", aspect: "square" },
+  { src: "/img/gallery/guests/7.jpg", caption: "Walk with the herd", category: "guests", tint: "#f5ede3", aspect: "square" },
+
+  // Round 8-9 (elephants done)
+  { src: "/img/gallery/trekking/8.jpg", caption: "Mountain viewpoint", category: "trekking", tint: "#c8ddb8", aspect: "square" },
+  { src: "/img/gallery/elephants/8.jpg", caption: "Forest companion", category: "elephants", tint: "#b4cfa6", aspect: "square" },
+  { src: "/img/gallery/trekking/9.jpg", caption: "River crossing", category: "trekking", tint: "#9dc27e", aspect: "square" },
+  { src: "/img/gallery/elephants/9.jpg", caption: "Resting in the shade", category: "elephants", tint: "#d4b48a", aspect: "square" },
+
+  // Round 10-11 (trekking only — most populous, remaining)
+  { src: "/img/gallery/trekking/10.jpeg", caption: "Trail through the trees", category: "trekking", tint: "#b4cfa6", aspect: "square" },
+  { src: "/img/gallery/trekking/11.jpg", caption: "Bamboo rafting", category: "trekking", tint: "#7a9e6c", aspect: "square" },
+];
+
+const filters = [
+  { id: "all", label: "All photos", icon: "image" },
+  { id: "elephants", label: "Elephants", icon: "paw" },
+  { id: "trekking", label: "Trekking", icon: "mountain" },
+  { id: "stays", label: "Stays", icon: "home" },
+  { id: "food", label: "Food", icon: "fork" },
+  { id: "guests", label: "Guests", icon: "users" },
+];
+
+const aspectClass = (a: Photo["aspect"]) =>
+  a === "tall" ? "row-span-2" : a === "wide" ? "col-span-2" : a === "portrait" ? "row-span-2" : "";
+
+const aspectRatio = (a: Photo["aspect"]) =>
+  a === "tall" ? "aspect-[3/4]" : a === "wide" ? "aspect-[16/9]" : a === "portrait" ? "aspect-[3/4]" : "aspect-square";
+---
+
+<Layout
+  title="Photo Gallery"
+  description="Real photos from Doi Lom Elephant Rescue Sanctuary — elephants, accommodations, treks, food, and guest moments in Mae Taeng. No stock imagery."
+  ogImage="/img/hero/home.png"
+>
+  {/* ============ PAGE HEADER ============ */}
+  <section class="border-b border-[var(--color-line)]">
+    <div class="wrap py-10 lg:py-14 text-center">
+      <p class="eyebrow eyebrow-green">Life at Doi Lom</p>
+      <h1 class="mt-3">Real moments, real elephants</h1>
+      <p class="mt-4 text-[var(--color-mute)] max-w-xl mx-auto">Every photo from guests and our team. No stock imagery.</p>
+    </div>
+  </section>
+
+  {/* ============ STICKY FILTER BAR ============ */}
+  <div class="sticky top-16 z-30 bg-[var(--color-bg)]/95 backdrop-blur-md border-b border-[var(--color-line)]">
+    <div class="wrap py-3.5 flex items-center gap-2 overflow-x-auto justify-start md:justify-center">
+      {filters.map((f) => (
+        <button
+          type="button"
+          data-filter={f.id}
+          class:list={[
+            "gallery-pill flex items-center gap-1.5 whitespace-nowrap px-3.5 py-1.5 rounded-full text-[0.82rem] transition-all border",
+            f.id === "all"
+              ? "bg-[var(--color-forest)] text-white border-[var(--color-forest)]"
+              : "bg-[var(--color-paper)] text-[var(--color-soil)] border-[var(--color-line)] hover:border-[var(--color-forest)] hover:text-[var(--color-forest)]",
+          ]}
+        >
+          <Icon name={f.icon} size={12} />
+          {f.label}
+        </button>
+      ))}
+    </div>
+  </div>
+
+  {/* ============ FILTER RESULT BAR (hidden by default) ============ */}
+  <div id="filter-result" class="hidden bg-[var(--color-leaf-50)] border-b border-[var(--color-line-sage)]">
+    <div class="wrap py-2.5 flex items-center justify-between text-[0.86rem]">
+      <span class="text-[var(--color-forest)] font-medium" id="filter-count">Showing all photos</span>
+      <button type="button" id="clear-filter" class="text-[var(--color-forest)] hover:underline flex items-center gap-1">
+        Clear filter <Icon name="x" size={12} />
+      </button>
+    </div>
+  </div>
+
+  {/* ============ MASONRY GRID ============ */}
+  <section class="py-8 lg:py-12">
+    <div class="wrap">
+      <div id="gallery-grid" class="grid grid-cols-2 lg:grid-cols-4 auto-rows-[180px] lg:auto-rows-[200px] gap-2 lg:gap-3">
+        {photos.map((p, i) => (
+          <button
+            type="button"
+            data-photo-index={i}
+            data-category={p.category}
+            class:list={["gallery-cell group frame relative overflow-hidden text-left", aspectClass(p.aspect)]}
+            style={`background-color:${p.tint}`}
+          >
+            <img src={p.src} alt={p.caption} loading="lazy" class:list={[aspectRatio(p.aspect), "w-full h-full object-cover transition-transform duration-[900ms] group-hover:scale-105"]}/>
+            <span class="absolute bottom-2 left-2 chip bg-white/90 backdrop-blur text-[0.66rem] capitalize">{p.category}</span>
+            <span class="absolute top-2 right-2 grid place-items-center w-7 h-7 rounded-full bg-white/90 backdrop-blur text-[var(--color-ink)] opacity-0 group-hover:opacity-100 transition-opacity">
+              <Icon name="zoom" size={13} />
+            </span>
+          </button>
+        ))}
+      </div>
+
+    </div>
+  </section>
+
+  {/* ============ CONTEXTUAL CTA ============ */}
+  <section class="pb-10">
+    <div class="wrap">
+      <div id="contextual-cta" class="bg-[var(--color-forest)] text-white rounded-xl px-6 py-5 flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <p class="font-display text-[1.15rem]">
+            <span data-cta-title>Ready to be in these photos?</span>
+          </p>
+          <p class="text-[0.85rem] text-white/75 mt-1" data-cta-sub>The elephants of Doi Lom are waiting for you.</p>
+        </div>
+        <a id="cta-action" href="/tours" class="btn-ghost-light">View all tours →</a>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ UGC / INSTAGRAM ============ */}
+  <section class="py-12 lg:py-14 border-t border-[var(--color-line)]">
+    <div class="wrap">
+      <div class="mb-8">
+        <p class="eyebrow">Our guests on Instagram</p>
+        <h2 class="mt-3">People who've been here</h2>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+        {ugcPosts.map((u) => (
+          <a href={site.social.instagram} target="_blank" rel="noreferrer noopener" class="card card-lift overflow-hidden">
+            <div class="aspect-square" style={`background-color:${u.tint}`}>
+              <img src={u.photo} alt={u.caption} loading="lazy" class="w-full h-full object-cover"/>
+            </div>
+            <div class="p-3">
+              <p class="font-medium text-[0.85rem] text-[var(--color-ink)]">{u.handle}</p>
+              <p class="text-[0.78rem] text-[var(--color-mute)] mt-0.5 line-clamp-1">{u.caption}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <div class="mt-6 bg-[var(--color-bone)] border border-[var(--color-line)] rounded-xl p-5 flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <p class="font-display text-[1.1rem] text-[var(--color-ink)]">Been here? Tag us in your photos.</p>
+          <p class="text-[0.85rem] text-[var(--color-soil)] mt-1">Use {site.social.instagramHandle} or #doilomelephantrescue and we'll feature your moment here.</p>
+        </div>
+        <a href={site.social.instagram} target="_blank" rel="noreferrer noopener" class="btn-primary">
+          <Icon name="instagram" size={15} />
+          Follow us
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ FINAL CTA BANNER ============ */}
+  <section class="bg-[var(--color-forest-dark)] text-white text-center py-20 lg:py-24">
+    <div class="wrap">
+      <h2 class="font-display italic text-white max-w-2xl mx-auto">Ready to be in these photos?</h2>
+      <p class="mt-4 text-white/75 text-[0.95rem]">{site.counts.tours} tours · {site.counts.rooms} rooms · one forest you won't forget</p>
+      <div class="mt-7 flex flex-wrap justify-center gap-3">
+        <a href="/tours" class="btn-ghost-light">View all tours</a>
+        <a href={waLink()} target="_blank" rel="noreferrer noopener" class="btn-whatsapp">
+          <Icon name="whatsapp" size={16} />
+          Chat with Tony
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ LIGHTBOX — image-only ============ */}
+  <div id="lightbox" class="hidden fixed inset-0 z-[90] items-center justify-center p-4">
+    <div class="absolute inset-0 bg-[var(--color-overlay)]/90 backdrop-blur-sm" data-lb-close></div>
+
+    {/* Close button (top-right) */}
+    <button type="button" data-lb-close aria-label="Close" class="absolute top-4 right-4 z-10 grid place-items-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur transition">
+      <Icon name="x" size={16} />
+    </button>
+
+    {/* Prev button */}
+    <button type="button" id="lb-prev" aria-label="Previous photo" class="absolute left-4 top-1/2 -translate-y-1/2 z-10 grid place-items-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur transition">
+      <Icon name="arrow-left" size={16} />
+    </button>
+
+    {/* Image */}
+    <img id="lb-img" src="" alt="" class="relative max-w-[95vw] max-h-[90vh] object-contain rounded-lg shadow-2xl"/>
+
+    {/* Next button */}
+    <button type="button" id="lb-next" aria-label="Next photo" class="absolute right-4 top-1/2 -translate-y-1/2 z-10 grid place-items-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur transition">
+      <Icon name="arrow" size={16} />
+    </button>
+
+    {/* Counter (bottom) */}
+    <span id="lb-counter" class="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 text-white/85 text-[0.82rem] bg-black/35 backdrop-blur px-3 py-1 rounded-full">1 / {photos.length}</span>
+  </div>
+</Layout>
+
+<script define:vars={{ photos: photos }}>
+  // Gallery filter
+  const pills = document.querySelectorAll(".gallery-pill");
+  const cells = document.querySelectorAll(".gallery-cell");
+  const resultBar = document.getElementById("filter-result");
+  const countEl = document.getElementById("filter-count");
+  const clearBtn = document.getElementById("clear-filter");
+  const ctaTitle = document.querySelector("[data-cta-title]");
+  const ctaSub = document.querySelector("[data-cta-sub]");
+  const ctaAction = document.getElementById("cta-action");
+
+  const ctaByFilter = {
+    all: { title: "Ready to be in these photos?", sub: "The elephants of Doi Lom are waiting for you.", href: "/tours", label: "View all tours →" },
+    elephants: { title: "Want to meet them in person?", sub: "Mae Bua, Pom Pom and Nong Fah are waiting.", href: "/our-elephants", label: "View elephant profiles →" },
+    trekking: { title: "Walk the trails yourself.", sub: "Half-day, full-day and 2-day treks available.", href: "/tours", label: "See trekking tours →" },
+    stays: { title: "Sleep in the forest.", sub: "5 rooms, all hand-built, all unique.", href: "/stays", label: "View all rooms →" },
+    food: { title: "Eat with the team.", sub: "Northern Thai meals, fresh from the kitchen barn.", href: "/tours", label: "Browse experiences →" },
+    guests: { title: "Become part of the story.", sub: "Eight guests a day. Maybe you're one of them.", href: "/contact", label: "Get in touch →" },
+  };
+
+  function setFilter(filterId) {
+    pills.forEach((p) => {
+      const active = p.dataset.filter === filterId;
+      if (active) {
+        p.classList.add("bg-[var(--color-forest)]", "text-white", "border-[var(--color-forest)]");
+        p.classList.remove("bg-[var(--color-paper)]", "text-[var(--color-soil)]", "border-[var(--color-line)]");
+      } else {
+        p.classList.remove("bg-[var(--color-forest)]", "text-white", "border-[var(--color-forest)]");
+        p.classList.add("bg-[var(--color-paper)]", "text-[var(--color-soil)]", "border-[var(--color-line)]");
+      }
+    });
+    let visible = 0;
+    cells.forEach((c) => {
+      const show = filterId === "all" || c.dataset.category === filterId;
+      c.style.display = show ? "" : "none";
+      if (show) visible++;
+    });
+    if (filterId === "all") {
+      resultBar?.classList.add("hidden");
+    } else {
+      resultBar?.classList.remove("hidden");
+      if (countEl) countEl.textContent = `Showing ${visible} ${filterId} photos`;
+    }
+    const cta = ctaByFilter[filterId] ?? ctaByFilter.all;
+    if (ctaTitle) ctaTitle.textContent = cta.title;
+    if (ctaSub) ctaSub.textContent = cta.sub;
+    if (ctaAction) {
+      ctaAction.href = cta.href;
+      ctaAction.textContent = cta.label;
+    }
+  }
+
+  pills.forEach((p) => p.addEventListener("click", () => setFilter(p.dataset.filter)));
+  clearBtn?.addEventListener("click", () => setFilter("all"));
+
+  // Lightbox — image-only
+  const lb = document.getElementById("lightbox");
+  const lbImg = document.getElementById("lb-img");
+  const lbCounter = document.getElementById("lb-counter");
+  let currentIdx = 0;
+
+  function showPhoto(idx) {
+    currentIdx = (idx + photos.length) % photos.length;
+    const p = photos[currentIdx];
+    lbImg.src = p.src;
+    lbImg.alt = p.caption;
+    lbCounter.textContent = `${currentIdx + 1} / ${photos.length}`;
+  }
+
+  function openLB(idx) {
+    showPhoto(idx);
+    lb.classList.remove("hidden");
+    lb.style.display = "flex";
+    document.body.style.overflow = "hidden";
+  }
+  function closeLB() {
+    lb.classList.add("hidden");
+    lb.style.display = "";
+    document.body.style.overflow = "";
+  }
+
+  cells.forEach((c) => {
+    c.addEventListener("click", () => openLB(Number(c.dataset.photoIndex)));
+  });
+  document.querySelectorAll("[data-lb-close]").forEach((b) => b.addEventListener("click", closeLB));
+  document.getElementById("lb-prev")?.addEventListener("click", () => showPhoto(currentIdx - 1));
+  document.getElementById("lb-next")?.addEventListener("click", () => showPhoto(currentIdx + 1));
+  document.addEventListener("keydown", (e) => {
+    if (lb.classList.contains("hidden")) return;
+    if (e.key === "Escape") closeLB();
+    if (e.key === "ArrowLeft") showPhoto(currentIdx - 1);
+    if (e.key === "ArrowRight") showPhoto(currentIdx + 1);
+  });
+</script>
