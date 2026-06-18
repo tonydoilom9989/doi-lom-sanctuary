@@ -1,0 +1,79 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Icon from "../components/icons/Icon.astro";
+import { site, waLink } from "../data/site";
+---
+
+<Layout
+  title="Page Not Found"
+  description="The page you're looking for has moved or no longer exists. Find tours, stays, and elephants at Doi Lom."
+  noindex={true}
+>
+  <section class="bg-[var(--color-cream)]">
+    <div class="wrap py-20 lg:py-28 text-center">
+      <p class="eyebrow eyebrow-green">404</p>
+      <h1 class="mt-3">This page has moved</h1>
+      <p class="mt-4 text-[var(--color-mute)] max-w-md mx-auto">
+        Doi Lom got a fresh new website — old links don't work anymore. Try one of these instead:
+      </p>
+
+      <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-3xl mx-auto text-left">
+        <a href="/tours" class="group block rounded-xl border border-[var(--color-line)] bg-[var(--color-paper)] p-5 hover:border-[var(--color-forest)] transition">
+          <div class="flex items-center gap-3">
+            <span class="grid place-items-center w-9 h-9 rounded-md bg-[var(--color-leaf-50)] text-[var(--color-forest)]"><Icon name="elephant" size={18} /></span>
+            <p class="font-display text-[1.05rem] text-[var(--color-ink)]">Elephant tours</p>
+          </div>
+          <p class="mt-2 text-[0.85rem] text-[var(--color-mute)]">{site.counts.tours} ethical experiences — half-day to overnight.</p>
+        </a>
+
+        <a href="/stays" class="group block rounded-xl border border-[var(--color-line)] bg-[var(--color-paper)] p-5 hover:border-[var(--color-forest)] transition">
+          <div class="flex items-center gap-3">
+            <span class="grid place-items-center w-9 h-9 rounded-md bg-[var(--color-leaf-50)] text-[var(--color-forest)]"><Icon name="home" size={18} /></span>
+            <p class="font-display text-[1.05rem] text-[var(--color-ink)]">Overnight stays</p>
+          </div>
+          <p class="mt-2 text-[0.85rem] text-[var(--color-mute)]">{site.counts.rooms} rooms beside the elephant meadow.</p>
+        </a>
+
+        <a href="/our-elephants" class="group block rounded-xl border border-[var(--color-line)] bg-[var(--color-paper)] p-5 hover:border-[var(--color-forest)] transition">
+          <div class="flex items-center gap-3">
+            <span class="grid place-items-center w-9 h-9 rounded-md bg-[var(--color-leaf-50)] text-[var(--color-forest)]"><Icon name="heart" size={18} /></span>
+            <p class="font-display text-[1.05rem] text-[var(--color-ink)]">Meet the elephants</p>
+          </div>
+          <p class="mt-2 text-[0.85rem] text-[var(--color-mute)]">Each elephant's rescue story.</p>
+        </a>
+
+        <a href="/about" class="group block rounded-xl border border-[var(--color-line)] bg-[var(--color-paper)] p-5 hover:border-[var(--color-forest)] transition">
+          <div class="flex items-center gap-3">
+            <span class="grid place-items-center w-9 h-9 rounded-md bg-[var(--color-leaf-50)] text-[var(--color-forest)]"><Icon name="certificate" size={18} /></span>
+            <p class="font-display text-[1.05rem] text-[var(--color-ink)]">About Doi Lom</p>
+          </div>
+          <p class="mt-2 text-[0.85rem] text-[var(--color-mute)]">Tony's family sanctuary since 2002.</p>
+        </a>
+
+        <a href="/faq" class="group block rounded-xl border border-[var(--color-line)] bg-[var(--color-paper)] p-5 hover:border-[var(--color-forest)] transition">
+          <div class="flex items-center gap-3">
+            <span class="grid place-items-center w-9 h-9 rounded-md bg-[var(--color-leaf-50)] text-[var(--color-forest)]"><Icon name="info" size={18} /></span>
+            <p class="font-display text-[1.05rem] text-[var(--color-ink)]">FAQ</p>
+          </div>
+          <p class="mt-2 text-[0.85rem] text-[var(--color-mute)]">{site.counts.faqs} answers to common questions.</p>
+        </a>
+
+        <a href="/contact" class="group block rounded-xl border border-[var(--color-line)] bg-[var(--color-paper)] p-5 hover:border-[var(--color-forest)] transition">
+          <div class="flex items-center gap-3">
+            <span class="grid place-items-center w-9 h-9 rounded-md bg-[var(--color-leaf-50)] text-[var(--color-forest)]"><Icon name="mail" size={18} /></span>
+            <p class="font-display text-[1.05rem] text-[var(--color-ink)]">Contact Tony</p>
+          </div>
+          <p class="mt-2 text-[0.85rem] text-[var(--color-mute)]">WhatsApp, email, directions.</p>
+        </a>
+      </div>
+
+      <div class="mt-12 flex flex-wrap justify-center gap-3">
+        <a href="/" class="btn-primary">Back to home</a>
+        <a href={waLink("Hi Tony, I clicked an old link on Google and ended up at a 404 page.")} target="_blank" rel="noreferrer noopener" class="btn-whatsapp">
+          <Icon name="whatsapp" size={16} />
+          Ask Tony directly
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,90 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/about-us",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/accommodations",
+      "destination": "/stays",
+      "permanent": true
+    },
+    {
+      "source": "/accommodations/:slug*",
+      "destination": "/stays",
+      "permanent": true
+    },
+    {
+      "source": "/products",
+      "destination": "/tours",
+      "permanent": true
+    },
+    {
+      "source": "/products/:slug*",
+      "destination": "/tours",
+      "permanent": true
+    },
+    {
+      "source": "/chiang-mai",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/elephant-sanctuary-thailand-doilom-tour",
+      "destination": "/tours",
+      "permanent": true
+    },
+    {
+      "source": "/elephant-sanctuary-thailand-doilom-tour/:slug*",
+      "destination": "/tours",
+      "permanent": true
+    },
+    {
+      "source": "/full-day-elephant-care",
+      "destination": "/tours/full-day-elephant-care",
+      "permanent": true
+    },
+    {
+      "source": "/half-day-elephant-care",
+      "destination": "/tours/morning-elephant-care",
+      "permanent": true
+    },
+    {
+      "source": "/elephant-care",
+      "destination": "/tours",
+      "permanent": true
+    },
+    {
+      "source": "/elephant-care/:slug*",
+      "destination": "/tours",
+      "permanent": true
+    },
+    {
+      "source": "/booking",
+      "destination": "/tours",
+      "permanent": true
+    },
+    {
+      "source": "/contact-us",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/home",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/index.php",
+      "destination": "/",
+      "permanent": true
+    }
+  ]
+}
