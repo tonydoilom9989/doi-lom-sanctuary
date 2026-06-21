@@ -59,7 +59,7 @@ export const site = {
   },
 
   // Counts used throughout the site
-  counts: { tours: 5, rooms: 2, faqs: 26 },
+  counts: { tours: 6, rooms: 2, faqs: 26 },
 };
 
 export const navigation = [
