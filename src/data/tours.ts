@@ -145,7 +145,7 @@ export const tours: Tour[] = [
       { title: "Relax and shower at a nearby waterfall" },
       { title: "Enjoy an ATV ride along the scenic trails of Mae Taeng" },
     ],
-    photo: "/img/tours/full-day-elephant-care.png",
+    photo: "/img/tours/half-day-elephant-care-atv.png",
     tint: "#b4cfa6",
   },
 
