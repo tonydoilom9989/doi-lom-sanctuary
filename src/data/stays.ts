@@ -36,7 +36,7 @@ export const stays: Stay[] = [
     sleepsMax: 2,
     pricePerNight: 1700,
     description:
-      "Our most-loved room — a bungalow hand-built by Tony, with a private mini pool overlooking the elephant nearby. Inside, there is a king bed, bathroom, and natural views all around the room. If you are lucky, the elephants may walk past your bungalow.",
+      "Our most-loved room — a bungalow hand-built by Tony, with a private mini pool overlooking the elephants nearby. Inside, there is a king bed, bathroom, and natural views all around the room. If you are lucky, the elephants may walk past your bungalow.",
     amenities: [
       "Air conditioning",
       "Hot water shower",
