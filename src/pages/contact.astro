@@ -62,11 +62,11 @@ import { quickFAQ } from "../data/faq";
               <option>Booking inquiry</option>
               <option>General question</option>
               <option>Tour info</option>
-              <option>Stays info</option>
+              <option>Accommodations info</option>
             </select>
           </label>
           <div class="flex flex-wrap gap-1.5">
-            {["Booking inquiry", "General question", "Tour info", "Stays info"].map((s) => (
+            {["Booking inquiry", "General question", "Tour info", "Accommodations info"].map((s) => (
               <button type="button" data-subject={s} class="subject-chip chip py-1.5 px-3 hover:bg-[var(--color-leaf-50)] hover:border-[var(--color-line-sage)] hover:text-[var(--color-forest)] cursor-pointer">{s}</button>
             ))}
           </div>

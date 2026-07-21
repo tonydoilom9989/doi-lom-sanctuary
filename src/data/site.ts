@@ -66,7 +66,7 @@ export const navigation = [
   { label: "Home", href: "/" },
   { label: "Our elephants", href: "/our-elephants" },
   { label: "Tours", href: "/tours" },
-  { label: "Stays", href: "/stays" },
+  { label: "Accommodations", href: "/stays" },
   { label: "Gallery", href: "/gallery" },
   { label: "FAQ", href: "/faq" },
   { label: "About", href: "/about" },
@@ -76,7 +76,7 @@ export const navigation = [
 export const footerNav = [
   { label: "Our elephants", href: "/our-elephants" },
   { label: "Tours", href: "/tours" },
-  { label: "Stays", href: "/stays" },
+  { label: "Accommodations", href: "/stays" },
   { label: "Gallery", href: "/gallery" },
   { label: "FAQ", href: "/faq" },
   { label: "About us", href: "/about" },
