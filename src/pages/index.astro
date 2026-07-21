@@ -6,6 +6,7 @@ import ReviewCard from "../components/ReviewCard.astro";
 import Icon from "../components/icons/Icon.astro";
 import { site, waLink } from "../data/site";
 import { tours } from "../data/tours";
+import { stays } from "../data/stays";
 import { testimonials } from "../data/testimonials";
 
 const featuredTours = tours;
@@ -93,6 +94,50 @@ const featuredReviews = testimonials.slice(0, 3);
           <div class="reveal" style={`transition-delay:${i * 80}ms`}>
             <TourCard tour={t} />
           </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ============ SECTION 5B — ACCOMMODATIONS ============ */}
+  <section class="py-16 lg:py-20 border-t border-[var(--color-line)]">
+    <div class="wrap">
+      <div class="flex items-end justify-between flex-wrap gap-4 mb-10 reveal">
+        <div>
+          <p class="eyebrow eyebrow-green">Stay overnight</p>
+          <h2 class="mt-3">Sleep in the forest</h2>
+        </div>
+        <a href="/stays" class="ulink text-[0.92rem] inline-flex items-center gap-1.5">
+          All {site.counts.rooms} rooms
+          <Icon name="arrow" size={14} />
+        </a>
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-5">
+        {stays.map((stay, i) => (
+          <article class="card card-lift reveal flex flex-col" style={`transition-delay:${i * 60}ms`}>
+            <a href={`/stays/${stay.slug}`} class="block aspect-[16/10] overflow-hidden" style={`background-color:${stay.photoTint}`}>
+              <img src={stay.photo} alt={stay.name} loading="lazy" class="w-full h-full object-cover transition-transform duration-[900ms] hover:scale-105"/>
+            </a>
+            <div class="p-5 flex-1 flex flex-col">
+              <h3 class="font-display text-[1.2rem] text-[var(--color-ink)] leading-tight">
+                <a href={`/stays/${stay.slug}`} class="hover:text-[var(--color-forest)]">{stay.name}</a>
+              </h3>
+              <p class="text-[0.78rem] text-[var(--color-mute)] mt-1">{stay.type}</p>
+              <div class="flex flex-wrap gap-1.5 mt-3 pb-4">
+                {stay.sleeps && <span class="chip">{stay.sleeps}</span>}
+                <span class="chip">{stay.bedType}</span>
+                {stay.poolType === "Mini pool" && <span class="chip">Mini pool</span>}
+              </div>
+              <div class="mt-auto pt-4 border-t border-[var(--color-line)] flex items-end justify-between">
+                <div>
+                  <p class="font-display text-[1.3rem] text-[var(--color-ink)] leading-none">฿{stay.pricePerNight.toLocaleString()}</p>
+                  <p class="text-[0.7rem] text-[var(--color-mute)] mt-1">per night</p>
+                </div>
+                <a href={`/stays/${stay.slug}`} class="btn-primary h-9 px-3 text-[0.82rem]">View room</a>
+              </div>
+            </div>
+          </article>
         ))}
       </div>
     </div>
