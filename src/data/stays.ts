@@ -57,6 +57,8 @@ export const stays: Stay[] = [
       "/img/stays/bungalow-with-mini-pool/thumb-2.png",
       "/img/stays/bungalow-with-mini-pool/thumb-3.png",
       "/img/stays/bungalow-with-mini-pool/thumb-4.jpeg",
+      "/img/stays/bungalow-with-mini-pool/thumb-5.jpeg",
+      "/img/stays/bungalow-with-mini-pool/thumb-6.jpeg",
     ],
     popular: true,
   },
@@ -95,6 +97,8 @@ export const stays: Stay[] = [
       "/img/stays/family-room/thumb-2.png",
       "/img/stays/family-room/thumb-3.jpeg",
       "/img/stays/family-room/thumb-4.jpeg",
+      "/img/stays/family-room/thumb-5.jpeg",
+      "/img/stays/family-room/thumb-6.jpeg",
     ],
   },
 ];
