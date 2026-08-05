@@ -70,6 +70,7 @@ export const tours: Tour[] = [
       { title: "Take the elephants to the river for drinking and bathing" },
       { title: "Relax and shower at the nearby waterfall" },
     ],
+    programNote: "After your half-day elephant care program you may choose to continue with additional activities such as whitewater rafting, bamboo rafting or a visit to the sticky waterfall for an extra 500 THB per person, per activity.",
     photo: "/img/tours/morning-elephant-care.png",
     tint: "#c8ddb8",
     featured: true,
