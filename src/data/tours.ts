@@ -55,7 +55,7 @@ export const tours: Tour[] = [
       "A Thai style lunch",
     ],
     excludes: ["Hotel pickups outside city limits", "All kinds of drinks"],
-    whatToBring: ["Comfortable clothes", "Closed shoes", "Water bottle", "Sunscreen", "Camera"],
+    whatToBring: ["Extra clothes", "Swimming suit", "Sandals", "Own allergies medication", "Rain coat (rainy season)", "Winter coat (winter season)", "Walking shoes", "Sunblock lotion", "Insect spray", "Towel"],
     timeSlots: [
       { icon: "sun", title: "Morning", desc: "pick up 8.00 - 8.30 am. Return 2.00 pm." },
       { icon: "cloud-sun", title: "Afternoon", desc: "pick up 12.00-12.30 pm. Return 5.30 pm." },
@@ -94,7 +94,7 @@ export const tours: Tour[] = [
       "A Thai style lunch",
     ],
     excludes: ["Hotel pickups outside city limits", "All kinds of drinks"],
-    whatToBring: ["Comfortable clothes", "Closed shoes", "Water bottle", "Sunscreen", "Camera"],
+    whatToBring: ["Extra clothes", "Swimming suit", "Sandals", "Own allergies medication", "Rain coat (rainy season)", "Winter coat (winter season)", "Walking shoes", "Sunblock lotion", "Insect spray", "Towel"],
     itinerary: [
       { title: "Hotel Pick-up 8.00 - 8.30 am. and drive to Doi Lom Elephant Sanctuary" },
       { title: "Change into traditional Mahout clothing" },
@@ -133,7 +133,7 @@ export const tours: Tour[] = [
       "A Thai style lunch",
     ],
     excludes: ["Hotel pickups outside city limits", "All kinds of drinks"],
-    whatToBring: ["Extra clothes", "Comfortable clothes", "Closed shoes", "Water bottle", "Sunscreen", "Camera"],
+    whatToBring: ["Extra clothes", "Swimming suit", "Sandals", "Own allergies medication", "Rain coat (rainy season)", "Winter coat (winter season)", "Walking shoes", "Sunblock lotion", "Insect spray", "Towel"],
     itinerary: [
       { title: "Hotel pick-up and transfer to Doi Lom Elephant Sanctuary" },
       { title: "Change into traditional mahout clothing" },
@@ -170,7 +170,7 @@ export const tours: Tour[] = [
       "Food and drinking water",
     ],
     excludes: ["Hotel pickups outside city limits", "All kinds of drinks"],
-    whatToBring: ["Comfortable clothes", "Closed shoes", "Water bottle", "Sunscreen", "Camera"],
+    whatToBring: ["Extra clothes", "Swimming suit", "Sandals", "Own allergies medication", "Rain coat (rainy season)", "Winter coat (winter season)", "Walking shoes", "Sunblock lotion", "Insect spray", "Towel"],
     itinerary: [],
     activitiesText: "Hotel pick-up is at 8.30 AM, followed by a 1-hour drive to the countryside. Begin a 1.5-hour trek through the forest, visiting a local village and farms before arriving at Doi Lom Elephant Sanctuary. After lunch, enjoy caring for the elephants by feeding and take the elephants to the river for drinking and bathing. Relax at a nearby waterfall, then finish the day with a 40-minute bamboo rafting experience. Return to Chiang Mai around 5.00 PM.",
     photo: "/img/tours/waterfall-trek.png",
@@ -199,7 +199,7 @@ export const tours: Tour[] = [
       "1-night accommodation",
     ],
     excludes: ["Personal gear", "Hotel pickups outside city limits", "All kinds of drinks"],
-    whatToBring: ["Essential personal items", "Comfortable clothes", "Comfortable walking shoes", "Slippers", "Swimwear", "Towel", "Camera", "Mosquito spray"],
+    whatToBring: ["Extra clothes", "Swimming suit", "Sandals", "Own allergies medication", "Rain coat (rainy season)", "Winter coat (winter season)", "Walking shoes", "Sunblock lotion", "Insect spray", "Towel"],
     itinerary: [
       { dayLabel: "Day 1", title: "Hotel pickup: 9.00 - 9.30 AM. Drive approximately 1 hour to Mae Taeng District." },
       { title: "Stop at a local market for supplies." },
@@ -241,7 +241,7 @@ export const tours: Tour[] = [
       "2-night accommodation",
     ],
     excludes: ["Personal gear", "Hotel pickups outside city limits", "All kinds of drinks"],
-    whatToBring: ["Essential personal items", "Comfortable clothes", "Comfortable walking shoes", "Slippers", "Water bottle", "Sunscreen", "Camera", "Mosquito spray"],
+    whatToBring: ["Extra clothes", "Swimming suit", "Sandals", "Own allergies medication", "Rain coat (rainy season)", "Winter coat (winter season)", "Walking shoes", "Sunblock lotion", "Insect spray", "Towel"],
     itinerary: [
       { title: "Additional jungle trekking on Day 2 approximately 4-5 hours." },
       { title: "Overnight stay in a traditional Lahu hill tribe village." },
