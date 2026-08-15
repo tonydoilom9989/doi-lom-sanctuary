@@ -12,7 +12,7 @@ const { stay } = Astro.props;
 const otherStays = stays.filter((s) => s.slug !== stay.slug);
 
 const canonicalStay = `${site.url}/stays/${stay.slug}`;
-const stayImage = stay.photo ?? "/img/hero/stays.png";
+const stayImage = stay.photo ?? "/img/hero/stays.webp";
 const absoluteStayImage = stayImage.startsWith("http") ? stayImage : `${site.url}${stayImage}`;
 
 // BreadcrumbList — Google shows breadcrumb trail in search results instead of raw URL
@@ -64,7 +64,7 @@ const stayJsonLd = {
 <Layout
   title={stay.name}
   description={`${stay.description.split(".")[0]}. ฿${stay.pricePerNight.toLocaleString()}/night at Doi Lom Elephant Sanctuary, Mae Taeng, Chiang Mai.`}
-  ogImage={stay.photo ?? "/img/hero/stays.png"}
+  ogImage={stay.photo ?? "/img/hero/stays.webp"}
 >
   {/* Breadcrumb */}
   <nav aria-label="Breadcrumb" class="border-b border-[var(--color-line)] bg-[var(--color-paper)]">

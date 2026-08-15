@@ -11,7 +11,7 @@ const year = new Date().getFullYear();
       <div>
         <div class="flex items-center gap-2.5">
           <span class="grid place-items-center w-10 h-10 rounded-full bg-white/95 p-1">
-            <img src="/img/logo.png" alt={site.name} class="block w-full h-full object-contain" />
+            <img src="/img/logo.webp" alt={site.name} class="block w-full h-full object-contain" />
           </span>
           <span class="font-display text-[1.1rem] text-white">{site.name}</span>
         </div>
@@ -57,7 +57,14 @@ const year = new Date().getFullYear();
           </li>
           <li class="flex items-center gap-3">
             <Icon name="mail" size={16} class="text-white/55 shrink-0" />
-            <a href={`mailto:${site.email}`} class="text-white/75 hover:text-white">{site.email}</a>
+            {/* Email obfuscated at build time — swapped into a mailto link by inline JS on load to defeat naive scrapers */}
+            <a
+              href="#"
+              class="text-white/75 hover:text-white"
+              data-eu={site.email.split("@")[0]}
+              data-ed={site.email.split("@")[1]}
+              aria-label="Send email to Tony"
+            >Email us</a>
           </li>
           <li class="flex items-center gap-3 text-white/75">
             <Icon name="clock" size={16} class="text-white/55 shrink-0" />
@@ -73,3 +80,12 @@ const year = new Date().getFullYear();
     </div>
   </div>
 </footer>
+
+<script>
+  // Wire up obfuscated email — assemble mailto only after page loads (bots skip)
+  document.querySelectorAll<HTMLAnchorElement>("a[data-eu][data-ed]").forEach((el) => {
+    const address = `${el.dataset.eu}@${el.dataset.ed}`;
+    el.href = `mailto:${address}`;
+    el.textContent = address;
+  });
+</script>

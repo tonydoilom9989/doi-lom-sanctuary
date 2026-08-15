@@ -27,7 +27,7 @@ export const recommendedActivities: Tour[] = [
     includes: ["Round-trip transfer", "Insurance", "Lunch", "All entrance fees", "Tour guide", "Drinking water"],
     excludes: [],
     whatToBring: ["Clothing that covers arms and legs", "Sunscreen", "Camera", "Mosquito spray"],
-    photo: "/img/tours/chiang-rai3-temple.png",
+    photo: "/img/tours/chiang-rai3-temple.webp",
     tint: "#c8ddb8",
   },
   {
@@ -91,7 +91,7 @@ export const recommendedActivities: Tour[] = [
     includes: ["Round-trip transfer", "Insurance", "Lunch", "All entrance fees", "English speaking guide", "Drinking water"],
     excludes: [],
     whatToBring: ["Sport shoes", "Sunscreen", "Mosquito spray"],
-    photo: "/img/tours/doi-inthanon-national-park&-kew-mae-pan-nature-trail.png",
+    photo: "/img/tours/doi-inthanon-national-park&-kew-mae-pan-nature-trail.webp",
     tint: "#9dc27e",
   },
   {
@@ -121,7 +121,7 @@ export const recommendedActivities: Tour[] = [
     includes: ["Hotel pickup", "Local market visit", "Organic garden visit", "All ingredients", "8 Thai dishes to enjoy"],
     excludes: ["Visitor charge 500 Baht/person"],
     whatToBring: [],
-    photo: "/img/tours/full-day-cooking-course.jpg",
+    photo: "/img/tours/full-day-cooking-course.webp",
     tint: "#d4b48a",
   },
   {
@@ -150,7 +150,7 @@ export const recommendedActivities: Tour[] = [
     includes: ["Hotel pickup", "Local market visit", "Organic garden visit", "All ingredients", "5 Thai dishes to enjoy"],
     excludes: ["Visitor charge 400 Baht/person"],
     whatToBring: [],
-    photo: "/img/tours/half-day-cooking-course.jpg",
+    photo: "/img/tours/half-day-cooking-course.webp",
     tint: "#ead9c5",
   },
   {
@@ -179,7 +179,7 @@ export const recommendedActivities: Tour[] = [
     includes: ["Hotel pickup", "Local market visit", "Organic garden visit", "All ingredients", "5 Thai dishes to enjoy"],
     excludes: ["Visitor charge 400 Baht/person"],
     whatToBring: [],
-    photo: "/img/tours/evening-cooking-course.jpg",
+    photo: "/img/tours/evening-cooking-course.webp",
     tint: "#f5ede3",
   },
 ];

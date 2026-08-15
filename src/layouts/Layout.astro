@@ -16,7 +16,7 @@ interface Props {
 const {
   title,
   description = `${site.tagline} An ethical elephant sanctuary in ${site.location.district}, ${site.location.province}. Founded by ${site.founder} in ${site.founded}. TAT Licensed No. ${site.tatLicense}.`,
-  ogImage = "/img/hero/home.png",
+  ogImage = "/img/hero/home.webp",
   noindex = false,
 } = Astro.props;
 
@@ -37,7 +37,7 @@ const jsonLd = {
   name: site.name,
   description: site.tagline,
   url: site.url,
-  logo: new URL("/img/logo.png", baseUrl).href,
+  logo: new URL("/img/logo.webp", baseUrl).href,
   image: absoluteOgImage,
   telephone: `+${site.whatsapp.raw}`,
   email: site.email,
@@ -121,6 +121,10 @@ const jsonLd = {
 
     {/* Structured data — TouristAttraction schema for rich Google results */}
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    {/* Vercel Analytics + Speed Insights — no external account needed */}
+    <script defer src="/_vercel/insights/script.js" is:inline></script>
+    <script defer src="/_vercel/speed-insights/script.js" is:inline></script>
   </head>
   <body>
     <a

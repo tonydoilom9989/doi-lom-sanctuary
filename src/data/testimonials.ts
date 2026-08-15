@@ -78,9 +78,9 @@ export const testimonials: Testimonial[] = [
 export type UGC = { handle: string; caption: string; tint: string; photo: string };
 
 export const ugcPosts: UGC[] = [
-  { handle: "@soyzekrix", caption: "De las mejores experiencias que tuve en Tailandia 🇹🇭 Mi primer contacto con uno de los animales que más me flipaban de pequeño… ¡ELEFANTES! 😍", tint: "#9dc27e", photo: "/img/ugc/@username_1.png" },
-  { handle: "@julien_dbc", caption: "Doi Lom Elephant rescue sanctuary 🐘🌴 Chiang Mai 🇹🇭", tint: "#c8ddb8", photo: "/img/ugc/@username_2.png" },
-  { handle: "@cristianlecchi", caption: "Muchas Gracias @doilomelephantrescue por esta hermosa experiencia. ❤️🐘", tint: "#d4b48a", photo: "/img/ugc/@username_3.png" },
-  { handle: "@nachorodriguez9", caption: "Kop khun khrap 🫶🏼🇹🇭🐘", tint: "#b4cfa6", photo: "/img/ugc/@username_4.png" },
-  { handle: "@elenaperinelli", caption: "🐘", tint: "#f5ede3", photo: "/img/ugc/@username_5.png" },
+  { handle: "@soyzekrix", caption: "De las mejores experiencias que tuve en Tailandia 🇹🇭 Mi primer contacto con uno de los animales que más me flipaban de pequeño… ¡ELEFANTES! 😍", tint: "#9dc27e", photo: "/img/ugc/@username_1.webp" },
+  { handle: "@julien_dbc", caption: "Doi Lom Elephant rescue sanctuary 🐘🌴 Chiang Mai 🇹🇭", tint: "#c8ddb8", photo: "/img/ugc/@username_2.webp" },
+  { handle: "@cristianlecchi", caption: "Muchas Gracias @doilomelephantrescue por esta hermosa experiencia. ❤️🐘", tint: "#d4b48a", photo: "/img/ugc/@username_3.webp" },
+  { handle: "@nachorodriguez9", caption: "Kop khun khrap 🫶🏼🇹🇭🐘", tint: "#b4cfa6", photo: "/img/ugc/@username_4.webp" },
+  { handle: "@elenaperinelli", caption: "🐘", tint: "#f5ede3", photo: "/img/ugc/@username_5.webp" },
 ];

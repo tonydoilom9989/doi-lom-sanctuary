@@ -21,16 +21,16 @@ const photos: Photo[] = [
   // Round 1
   { src: "/img/gallery/trekking/1.jpg", caption: "Forest trail", category: "trekking", tint: "#c8ddb8", aspect: "square" },
   { src: "/img/gallery/elephants/1.jpg", caption: "Elephant in the meadow", category: "elephants", tint: "#9dc27e", aspect: "square" },
-  { src: "/img/gallery/stays/1.png", caption: "Bungalow with mini pool", category: "stays", tint: "#ead9c5", aspect: "square" },
+  { src: "/img/gallery/stays/1.webp", caption: "Bungalow with mini pool", category: "stays", tint: "#ead9c5", aspect: "square" },
   { src: "/img/gallery/guests/1.jpg", caption: "Guest with elephant", category: "guests", tint: "#f5ede3", aspect: "square" },
   { src: "/img/gallery/food/1.jpg", caption: "Northern Thai lunch", category: "food", tint: "#d4b48a", aspect: "square" },
 
   // Round 2
   { src: "/img/gallery/trekking/2.jpg", caption: "Mountain path", category: "trekking", tint: "#b4cfa6", aspect: "square" },
   { src: "/img/gallery/elephants/2.jpg", caption: "Morning with the herd", category: "elephants", tint: "#c8ddb8", aspect: "square" },
-  { src: "/img/gallery/stays/2.png", caption: "Family room interior", category: "stays", tint: "#d4b48a", aspect: "square" },
+  { src: "/img/gallery/stays/2.webp", caption: "Family room interior", category: "stays", tint: "#d4b48a", aspect: "square" },
   { src: "/img/gallery/guests/2.jpg", caption: "Sharing a moment", category: "guests", tint: "#ead9c5", aspect: "square" },
-  { src: "/img/gallery/food/2.jpg", caption: "Herbal medicine preparation", category: "food", tint: "#edd9bf", aspect: "square" },
+  { src: "/img/gallery/food/2.webp", caption: "Herbal medicine preparation", category: "food", tint: "#edd9bf", aspect: "square" },
 
   // Round 3
   { src: "/img/gallery/trekking/3.jpg", caption: "Through the bamboo", category: "trekking", tint: "#9dc27e", aspect: "square" },
@@ -42,7 +42,7 @@ const photos: Photo[] = [
   // Round 4 (food done)
   { src: "/img/gallery/trekking/4.jpg", caption: "Hidden waterfall", category: "trekking", tint: "#c8ddb8", aspect: "square" },
   { src: "/img/gallery/elephants/4.jpg", caption: "Close-up portrait", category: "elephants", tint: "#d4b48a", aspect: "square" },
-  { src: "/img/gallery/stays/4.png", caption: "Bedroom view", category: "stays", tint: "#ead9c5", aspect: "square" },
+  { src: "/img/gallery/stays/4.webp", caption: "Bedroom view", category: "stays", tint: "#ead9c5", aspect: "square" },
   { src: "/img/gallery/guests/4.jpg", caption: "Hands-on care", category: "guests", tint: "#ead9c5", aspect: "square" },
 
   // Round 5
@@ -54,7 +54,7 @@ const photos: Photo[] = [
   // Round 6 (stays done)
   { src: "/img/gallery/trekking/6.jpg", caption: "Mae Taeng river", category: "trekking", tint: "#b4cfa6", aspect: "square" },
   { src: "/img/gallery/elephants/6.jpg", caption: "Quiet moment", category: "elephants", tint: "#c8ddb8", aspect: "square" },
-  { src: "/img/gallery/stays/6.png", caption: "Bungalow exterior", category: "stays", tint: "#c8ddb8", aspect: "square" },
+  { src: "/img/gallery/stays/6.webp", caption: "Bungalow exterior", category: "stays", tint: "#c8ddb8", aspect: "square" },
   { src: "/img/gallery/guests/6.jpg", caption: "Family visit", category: "guests", tint: "#c8ddb8", aspect: "square" },
 
   // Round 7 (guests done)
@@ -69,14 +69,14 @@ const photos: Photo[] = [
   { src: "/img/gallery/elephants/9.jpg", caption: "Resting in the shade", category: "elephants", tint: "#d4b48a", aspect: "square" },
 
   // Round 10-11 (trekking only — most populous, remaining)
-  { src: "/img/gallery/trekking/10.jpeg", caption: "Trail through the trees", category: "trekking", tint: "#b4cfa6", aspect: "square" },
+  { src: "/img/gallery/trekking/10.webp", caption: "Trail through the trees", category: "trekking", tint: "#b4cfa6", aspect: "square" },
   { src: "/img/gallery/trekking/11.jpg", caption: "Bamboo rafting", category: "trekking", tint: "#7a9e6c", aspect: "square" },
 
   // Round 12+ (guests + trekking additions)
-  { src: "/img/gallery/guests/8.jpeg", caption: "Meeting the herd", category: "guests", tint: "#c8ddb8", aspect: "square" },
-  { src: "/img/gallery/guests/9.jpeg", caption: "Bathing together", category: "guests", tint: "#b4cfa6", aspect: "square" },
-  { src: "/img/gallery/trekking/12.jpeg", caption: "Along the ridge", category: "trekking", tint: "#9dc27e", aspect: "square" },
-  { src: "/img/gallery/trekking/13.jpeg", caption: "Forest crossing", category: "trekking", tint: "#c8ddb8", aspect: "square" },
+  { src: "/img/gallery/guests/8.webp", caption: "Meeting the herd", category: "guests", tint: "#c8ddb8", aspect: "square" },
+  { src: "/img/gallery/guests/9.webp", caption: "Bathing together", category: "guests", tint: "#b4cfa6", aspect: "square" },
+  { src: "/img/gallery/trekking/12.webp", caption: "Along the ridge", category: "trekking", tint: "#9dc27e", aspect: "square" },
+  { src: "/img/gallery/trekking/13.webp", caption: "Forest crossing", category: "trekking", tint: "#c8ddb8", aspect: "square" },
 ];
 
 const filters = [
@@ -98,7 +98,7 @@ const aspectRatio = (a: Photo["aspect"]) =>
 <Layout
   title="Photo Gallery"
   description="Real photos from Doi Lom Elephant Rescue Sanctuary — elephants, accommodations, treks, food, and guest moments in Mae Taeng. No stock imagery."
-  ogImage="/img/hero/home.png"
+  ogImage="/img/hero/home.webp"
 >
   {/* ============ PAGE HEADER ============ */}
   <section class="border-b border-[var(--color-line)]">

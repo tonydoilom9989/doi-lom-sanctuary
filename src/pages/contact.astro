@@ -8,7 +8,7 @@ import { quickFAQ } from "../data/faq";
 <Layout
   title="Contact Tony"
   description={`Reach Tony at Doi Lom Elephant Rescue — WhatsApp ${site.whatsapp.display}, email ${site.email}, or visit ${site.location.address}. Most messages answered within 30 mins.`}
-  ogImage="/img/hero/about.png"
+  ogImage="/img/hero/about.webp"
 >
   {/* ============ WHATSAPP HERO ============ */}
   <section class="border-b border-[var(--color-line)]">
@@ -113,7 +113,7 @@ import { quickFAQ } from "../data/faq";
         {[
           { icon: "pin", title: "Address", value: site.location.address },
           { icon: "whatsapp", title: "WhatsApp", value: `${site.whatsapp.display} · Replies within 30 mins` },
-          { icon: "mail", title: "Email", value: site.email, href: `mailto:${site.email}` },
+          { icon: "mail", title: "Email", value: "Click to reveal & email us", href: "#", isEmail: true },
           { icon: "facebook", title: "Facebook", value: site.social.facebookHandle },
         ].map((item) => (
           <div class="card p-4 flex items-start gap-4">
@@ -123,7 +123,13 @@ import { quickFAQ } from "../data/faq";
             <div>
               <p class="font-medium text-[0.92rem] text-[var(--color-ink)]">{item.title}</p>
               {item.href ? (
-                <a href={item.href} class="text-[0.85rem] text-[var(--color-soil)] mt-0.5 inline-block hover:text-[var(--color-forest)] transition-colors break-all">{item.value}</a>
+                <a
+                  href={item.href}
+                  data-eu={item.isEmail ? site.email.split("@")[0] : undefined}
+                  data-ed={item.isEmail ? site.email.split("@")[1] : undefined}
+                  aria-label={item.isEmail ? "Send email to Tony" : undefined}
+                  class="text-[0.85rem] text-[var(--color-soil)] mt-0.5 inline-block hover:text-[var(--color-forest)] transition-colors break-all"
+                >{item.value}</a>
               ) : (
                 <p class="text-[0.85rem] text-[var(--color-soil)] mt-0.5">{item.value}</p>
               )}

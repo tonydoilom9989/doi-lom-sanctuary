@@ -17,7 +17,7 @@ const pool = isRecommended ? recommendedActivities : tours;
 const otherTours = pool.filter((t) => t.slug !== tour.slug).slice(0, 4);
 
 const canonicalTour = `${site.url}/tours/${tour.slug}`;
-const tourImage = tour.photos?.[0] ?? tour.photo ?? "/img/hero/elephants.png";
+const tourImage = tour.photos?.[0] ?? tour.photo ?? "/img/hero/elephants.webp";
 const absoluteTourImage = tourImage.startsWith("http") ? tourImage : `${site.url}${tourImage}`;
 
 // BreadcrumbList — Google shows breadcrumb trail in search results instead of raw URL
@@ -63,7 +63,7 @@ const productJsonLd = {
 <Layout
   title={tour.name}
   description={`${tour.shortDesc} ฿${tour.price.toLocaleString()} per person at Doi Lom Elephant Rescue, Mae Taeng, Chiang Mai. ${tour.duration}.`}
-  ogImage={tour.photos?.[0] ?? "/img/hero/elephants.png"}
+  ogImage={tour.photos?.[0] ?? "/img/hero/elephants.webp"}
 >
   {/* Breadcrumb */}
   <nav aria-label="Breadcrumb" class="border-b border-[var(--color-line)] bg-[var(--color-paper)]">

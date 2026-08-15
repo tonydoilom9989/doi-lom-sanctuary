@@ -21,21 +21,21 @@ const herdTimeline = [
 ];
 
 const herdThumbs = [
-  "/img/elephants/thumb-1.png",
-  "/img/elephants/thumb-2.png",
-  "/img/elephants/thumb-3.png",
+  "/img/elephants/thumb-1.webp",
+  "/img/elephants/thumb-2.webp",
+  "/img/elephants/thumb-3.webp",
 ];
 ---
 
 <Layout
   title="Meet Our Rescued Elephants"
   description="Three rescued Asian elephants now living free at Doi Lom Sanctuary, Mae Taeng. Each elephant has its own story, personality, and a peaceful retirement after years of exploitation."
-  ogImage="/img/hero/elephants.png"
+  ogImage="/img/hero/elephants.webp"
 >
   {/* ============ HERO ============ */}
   <section class="relative overflow-hidden bg-[var(--color-forest-dark)] text-white">
     <img
-      src="/img/hero/elephants.png"
+      src="/img/hero/elephants.webp"
       alt="Rescued Asian elephants living peacefully at Doi Lom Sanctuary in the hills of Mae Taeng"
       class="absolute inset-0 w-full h-full object-cover opacity-60"
     />
@@ -62,7 +62,7 @@ const herdThumbs = [
         {/* Photo column */}
         <div class="reveal">
           <div class="frame aspect-[4/3] lg:aspect-[5/4]" style="background-color:#c8ddb8">
-            <img src="/img/elephants/main.png" alt="The elephants of Doi Lom" loading="lazy" class="w-full h-full object-cover"/>
+            <img src="/img/elephants/main.webp" alt="The elephants of Doi Lom" loading="lazy" class="w-full h-full object-cover"/>
           </div>
           <div class="mt-3 grid grid-cols-3 gap-3">
             {herdThumbs.map((t, ti) => (
