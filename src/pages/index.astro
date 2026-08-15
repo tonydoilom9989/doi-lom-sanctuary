@@ -218,8 +218,29 @@ const featuredReviews = testimonials.slice(0, 3);
         </a>
       </div>
 
+      {/* Verified-business trust row — strong signal for security scanners (McAfee, Norton, etc.) */}
+      <div class="mt-10 pt-8 border-t border-white/15 max-w-3xl mx-auto reveal">
+        <p class="text-center text-[0.72rem] uppercase tracking-[0.15em] text-white/50 mb-4">Verified since 2002</p>
+        <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-[0.85rem] text-white/80">
+          <span class="inline-flex items-center gap-2">
+            <Icon name="certificate" size={16} class="text-white/60" />
+            TAT License No. {site.tatLicense}
+          </span>
+          <span class="text-white/25">·</span>
+          <a href={site.location.googleReviewsLink} target="_blank" rel="noreferrer noopener" class="inline-flex items-center gap-2 hover:text-white">
+            <Icon name="star" size={16} class="text-white/60" />
+            {site.rating.score}★ · {site.rating.reviewCount} Google reviews
+          </a>
+          <span class="text-white/25">·</span>
+          <span class="inline-flex items-center gap-2">
+            <Icon name="shield" size={16} class="text-white/60" />
+            Family-owned since {site.founded}
+          </span>
+        </div>
+      </div>
+
       {/* Visible NAP (Name/Address/Phone) — required for Local SEO */}
-      <address class="not-italic mt-10 pt-8 border-t border-white/15 text-white/70 text-[0.88rem] max-w-2xl mx-auto grid sm:grid-cols-3 gap-4 reveal">
+      <address class="not-italic mt-8 pt-6 border-t border-white/10 text-white/70 text-[0.88rem] max-w-2xl mx-auto grid sm:grid-cols-3 gap-4 reveal">
         <div class="flex items-center justify-center gap-2">
           <Icon name="pin" size={14} class="text-white/50 shrink-0" />
           <span>{site.location.address}</span>
