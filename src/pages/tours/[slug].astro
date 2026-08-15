@@ -15,7 +15,50 @@ const { tour } = Astro.props;
 const isRecommended = recommendedActivities.some((r) => r.slug === tour.slug);
 const pool = isRecommended ? recommendedActivities : tours;
 const otherTours = pool.filter((t) => t.slug !== tour.slug).slice(0, 4);
+
+const canonicalTour = `${site.url}/tours/${tour.slug}`;
+const tourImage = tour.photos?.[0] ?? tour.photo ?? "/img/hero/elephants.png";
+const absoluteTourImage = tourImage.startsWith("http") ? tourImage : `${site.url}${tourImage}`;
+
+// BreadcrumbList — Google shows breadcrumb trail in search results instead of raw URL
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: site.url },
+    { "@type": "ListItem", position: 2, name: "Tours", item: `${site.url}/tours` },
+    { "@type": "ListItem", position: 3, name: tour.name, item: canonicalTour },
+  ],
+};
+
+// Product schema — makes tour eligible for rich results with price + rating
+const productJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  name: tour.name,
+  description: tour.shortDesc,
+  image: absoluteTourImage,
+  brand: { "@type": "Organization", name: site.name },
+  offers: {
+    "@type": "Offer",
+    price: String(tour.price),
+    priceCurrency: "THB",
+    availability: "https://schema.org/InStock",
+    url: canonicalTour,
+    validFrom: new Date().toISOString().split("T")[0],
+  },
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: String(site.rating.score),
+    reviewCount: String(site.rating.reviewCount),
+    bestRating: "5",
+    worstRating: "1",
+  },
+};
 ---
+
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} is:inline></script>
+<script type="application/ld+json" set:html={JSON.stringify(productJsonLd)} is:inline></script>
 
 <Layout
   title={tour.name}

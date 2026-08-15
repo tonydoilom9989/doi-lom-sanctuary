@@ -3,7 +3,20 @@ import Layout from "../layouts/Layout.astro";
 import Icon from "../components/icons/Icon.astro";
 import { faqGroups, quickFAQ } from "../data/faq";
 import { site, waLink } from "../data/site";
+
+// FAQPage schema — makes each Q&A eligible for a Google rich result
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqGroups.flatMap((g) => g.items).map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
 ---
+
+<script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} is:inline></script>
 
 <Layout
   title="FAQ — Booking, Ethics & Pickup"

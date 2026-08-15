@@ -10,7 +10,56 @@ export function getStaticPaths() {
 
 const { stay } = Astro.props;
 const otherStays = stays.filter((s) => s.slug !== stay.slug);
+
+const canonicalStay = `${site.url}/stays/${stay.slug}`;
+const stayImage = stay.photo ?? "/img/hero/stays.png";
+const absoluteStayImage = stayImage.startsWith("http") ? stayImage : `${site.url}${stayImage}`;
+
+// BreadcrumbList — Google shows breadcrumb trail in search results instead of raw URL
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: site.url },
+    { "@type": "ListItem", position: 2, name: "Accommodations", item: `${site.url}/stays` },
+    { "@type": "ListItem", position: 3, name: stay.name, item: canonicalStay },
+  ],
+};
+
+// LodgingBusiness / Accommodation schema — nightly rate, amenities, rating
+const stayJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "LodgingBusiness",
+  name: stay.name,
+  description: stay.description,
+  image: absoluteStayImage,
+  url: canonicalStay,
+  priceRange: `฿${stay.pricePerNight.toLocaleString()} / night`,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: site.location.address,
+    addressLocality: site.location.district,
+    addressRegion: site.location.province,
+    postalCode: site.location.postalCode,
+    addressCountry: "TH",
+  },
+  amenityFeature: stay.amenities.map((a) => ({
+    "@type": "LocationFeatureSpecification",
+    name: a,
+    value: true,
+  })),
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: String(site.rating.score),
+    reviewCount: String(site.rating.reviewCount),
+    bestRating: "5",
+    worstRating: "1",
+  },
+};
 ---
+
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} is:inline></script>
+<script type="application/ld+json" set:html={JSON.stringify(stayJsonLd)} is:inline></script>
 
 <Layout
   title={stay.name}

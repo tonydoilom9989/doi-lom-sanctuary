@@ -35,7 +35,7 @@ const diffClass = tour.difficulty === "Easy" ? "chip-easy" : tour.difficulty ===
         <p class="text-[0.7rem] text-[var(--color-mute)] mt-1">{tour.priceUnit}</p>
       </div>
       <div class="flex items-center gap-2">
-        <a href={`/tours/${tour.slug}`} class="btn-outline h-9 px-3 text-[0.78rem]">Read more</a>
+        <a href={`/tours/${tour.slug}`} class="btn-outline h-9 px-3 text-[0.78rem]" aria-label={`View tour details for ${tour.name}`}>View tour</a>
         <button type="button" data-book-now data-book-type="tour" data-tour-slug={tour.slug} data-include-recommended={isRecommended ? "true" : undefined} class="btn-primary h-9 px-3 text-[0.78rem]">Book now</button>
       </div>
     </div>
