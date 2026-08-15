@@ -1,0 +1,35 @@
+# Google Search Console — Disavow file for www.doilomelephant.com
+# Generated: 2026-08-15
+#
+# Purpose: Tell Google to ignore backlinks from spam / suspicious domains
+# that auto-listed our site without permission. This helps clean up our
+# reputation with security scanners (McAfee, Norton) and search rankings.
+#
+# HOW TO USE:
+# 1. Log in to https://search.google.com/search-console/disavow-links
+# 2. Select the property: https://www.doilomelephant.com/
+# 3. Upload this file
+# 4. Google processes it within a few days
+#
+# Format reference: https://support.google.com/webmasters/answer/2648487
+# - "domain:X" disavows the domain and all subdomains
+# - "http(s)://X" disavows a specific URL
+# - Wildcards / TLD-wide disavows are NOT supported — must list explicit domains
+#
+# ---
+# Spam / suspicious backlink domains identified from SEOptimer audit (Aug 2026)
+# ---
+
+domain:wants.cfd
+domain:takes.sbs
+domain:urls-shortener.eu
+domain:quero.party
+domain:bye.fyi
+domain:atomizelink.icu
+domain:drjack.world
+domain:domains.com.bz
+
+# ---
+# Add any additional spam domains here as they appear in
+# Search Console → Links → "Top linking sites"
+# ---

@@ -1,0 +1,9 @@
+# Security contact for Doi Lom Elephant Rescue Sanctuary
+# https://www.doilomelephant.com
+
+Contact: mailto:tonydoilom9989@gmail.com
+Contact: https://wa.me/66917898226
+Expires: 2027-08-15T00:00:00.000Z
+Preferred-Languages: en, th
+Canonical: https://www.doilomelephant.com/.well-known/security.txt
+Policy: https://www.doilomelephant.com/
