@@ -80,6 +80,7 @@ export const footerNav = [
   { label: "Gallery", href: "/gallery" },
   { label: "FAQ", href: "/faq" },
   { label: "About us", href: "/about" },
+  { label: "Trust & Verification", href: "/trust" },
 ];
 
 export const trustBadges = [
