@@ -185,14 +185,45 @@ const productJsonLd = {
           </ol>
         </div>
 
-        {/* PROGRAM NOTE (optional callout) */}
+        {/* PROGRAM NOTE (optional callout). When programNotePhotos is set, drop
+             the leading icon and show a 3-up photo grid below the text instead. */}
         {tour.programNote && (
-          <div class="mt-8 bg-[var(--color-leaf-50)] border border-[var(--color-line-sage)] rounded-xl p-5 lg:p-6 flex items-center gap-4 lg:gap-5">
-            <Icon name={tour.programNoteIcon || "elephant"} size={48} class="text-[var(--color-forest-dark)] shrink-0" />
-            <p
-              class="text-[0.95rem] lg:text-[1rem] text-[var(--color-forest-dark)] font-medium leading-relaxed"
-              style="font-family: var(--font-body);"
-            >{tour.programNote}</p>
+          <div class="mt-8 bg-[var(--color-leaf-50)] border border-[var(--color-line-sage)] rounded-xl p-5 lg:p-6">
+            {tour.programNotePhotos && tour.programNotePhotos.length > 0 ? (
+              <>
+                <p
+                  class="text-[0.95rem] lg:text-[1rem] text-[var(--color-forest-dark)] font-medium leading-relaxed"
+                  style="font-family: var(--font-body);"
+                >{tour.programNote}</p>
+                <div class="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {tour.programNotePhotos.map((p) => (
+                    <figure class="group overflow-hidden rounded-lg bg-[var(--color-leaf-100)] border border-[var(--color-line-sage)]">
+                      <div class="aspect-[4/3] overflow-hidden">
+                        <img
+                          src={p.src}
+                          alt={p.alt}
+                          loading="lazy"
+                          class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                      </div>
+                      {p.caption && (
+                        <figcaption class="px-3 py-2 text-[0.78rem] text-[var(--color-forest-dark)] font-medium text-center">
+                          {p.caption}
+                        </figcaption>
+                      )}
+                    </figure>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <div class="flex items-center gap-4 lg:gap-5">
+                <Icon name={tour.programNoteIcon || "elephant"} size={48} class="text-[var(--color-forest-dark)] shrink-0" />
+                <p
+                  class="text-[0.95rem] lg:text-[1rem] text-[var(--color-forest-dark)] font-medium leading-relaxed"
+                  style="font-family: var(--font-body);"
+                >{tour.programNote}</p>
+              </div>
+            )}
           </div>
         )}
 

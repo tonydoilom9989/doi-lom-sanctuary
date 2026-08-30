@@ -23,6 +23,9 @@ export type Tour = {
   timeSlots?: { icon: string; title: string; desc: string }[];
   programNote?: string;
   programNoteIcon?: string;
+  // Optional photo row rendered below programNote (e.g. add-on activities).
+  // When set, the callout drops the leading icon and shows a 3-up photo grid instead.
+  programNotePhotos?: { src: string; alt: string; caption?: string }[];
   includes: string[];
   excludes: string[];
   whatToBring: string[];
@@ -71,6 +74,12 @@ export const tours: Tour[] = [
       { title: "Relax and shower at the nearby waterfall" },
     ],
     programNote: "After your half-day elephant care program you may choose to continue with additional activities such as whitewater rafting, bamboo rafting or a visit to the sticky waterfall for an extra 500 THB per person, per activity.",
+    // TODO: swap these placeholder photos for real ones — upload to /public/img/tours/extras/
+    programNotePhotos: [
+      { src: "/img/tours/extras/whitewater-rafting.jpg", alt: "Whitewater rafting on the Mae Taeng river", caption: "Whitewater rafting" },
+      { src: "/img/tours/extras/bamboo-rafting.jpg", alt: "Bamboo rafting through the Mae Taeng valley", caption: "Bamboo rafting" },
+      { src: "/img/tours/extras/sticky-waterfall.jpg", alt: "Guests exploring the Sticky Waterfall near Doi Lom", caption: "Sticky Waterfall" },
+    ],
     photo: "/img/tours/morning-elephant-care.webp",
     tint: "#c8ddb8",
     featured: true,
