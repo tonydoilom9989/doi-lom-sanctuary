@@ -77,7 +77,7 @@ export const tours: Tour[] = [
     // TODO: swap these placeholder photos for real ones — upload to /public/img/tours/extras/
     programNotePhotos: [
       { src: "/img/tours/extras/whitewater-rafting.jpg", alt: "Whitewater rafting on the Mae Taeng river", caption: "Whitewater rafting" },
-      { src: "/img/tours/extras/bamboo-rafting.jpg", alt: "Bamboo rafting through the Mae Taeng valley", caption: "Bamboo rafting" },
+      { src: "/img/tours/extras/bamboo-rafting.png", alt: "Bamboo rafting through the Mae Taeng valley", caption: "Bamboo rafting" },
       { src: "/img/tours/extras/sticky-waterfall.jpg", alt: "Guests exploring the Sticky Waterfall near Doi Lom", caption: "Sticky Waterfall" },
     ],
     photo: "/img/tours/morning-elephant-care.webp",
