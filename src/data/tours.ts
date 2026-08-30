@@ -76,9 +76,9 @@ export const tours: Tour[] = [
     programNote: "After your half-day elephant care program you may choose to continue with additional activities such as whitewater rafting, bamboo rafting or a visit to the sticky waterfall for an extra 500 THB per person, per activity.",
     // TODO: swap these placeholder photos for real ones — upload to /public/img/tours/extras/
     programNotePhotos: [
-      { src: "/img/tours/extras/whitewater-rafting.jpg", alt: "Whitewater rafting on the Mae Taeng river", caption: "Whitewater rafting" },
-      { src: "/img/tours/extras/bamboo-rafting.png", alt: "Bamboo rafting through the Mae Taeng valley", caption: "Bamboo rafting" },
-      { src: "/img/tours/extras/sticky-waterfall.jpg", alt: "Guests exploring the Sticky Waterfall near Doi Lom", caption: "Sticky Waterfall" },
+      { src: "/img/tours/extras/whitewater-rafting.webp", alt: "Whitewater rafting on the Mae Taeng river", caption: "Whitewater rafting" },
+      { src: "/img/tours/extras/bamboo-rafting.webp", alt: "Bamboo rafting through the Mae Taeng valley", caption: "Bamboo rafting" },
+      { src: "/img/tours/extras/sticky-waterfall.webp", alt: "Guests exploring the Sticky Waterfall near Doi Lom", caption: "Sticky Waterfall" },
     ],
     photo: "/img/tours/morning-elephant-care.webp",
     tint: "#c8ddb8",
