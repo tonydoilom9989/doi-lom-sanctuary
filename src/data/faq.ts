@@ -37,12 +37,13 @@ export const faqGroups: FAQGroup[] = [
       },
       {
         q: "How do I pay the deposit?",
-        a: "There are three options — Wise, which is best for international guests, PromptPay for instant transfers within Thailand, or a direct bank transfer to our Krungthai Bank account. Tony will send the correct payment details via WhatsApp once your dates have been confirmed.",
+        a: "Once Tony confirms your dates on WhatsApp, he'll send you a secure Beam payment link. Beam is a Thai licensed payment gateway — the link opens a checkout page on beam.link where you can pay by credit/debit card, PromptPay QR, TrueMoney wallet, or Alipay/WeChat. The link is single-use and expires within 24 hours. Bank transfer (Wise or Krungthai Bank) is still available if you prefer.",
         tags: ["solo", "couples"],
         paymentMethods: [
-          { name: "Wise", desc: "Best for international guests", icon: "transfer" },
-          { name: "PromptPay", desc: "Instant Thai bank transfer", icon: "qr" },
-          { name: "Bank Transfer", desc: "Krungthai Bank", icon: "bank" },
+          { name: "Credit / debit card", desc: "Visa, Mastercard, JCB, AmEx via Beam", icon: "card" },
+          { name: "PromptPay QR", desc: "Instant transfer within Thailand", icon: "qr" },
+          { name: "TrueMoney / Alipay / WeChat", desc: "E-wallets via Beam", icon: "qr" },
+          { name: "Bank Transfer", desc: "Wise or Krungthai Bank, on request", icon: "bank" },
         ],
         hasAntiScam: true,
       },
@@ -52,7 +53,7 @@ export const faqGroups: FAQGroup[] = [
       },
       {
         q: "Do you accept card payment?",
-        a: "Not on-site. Bank transfer or Wise only for the deposit; the remainder can be paid in cash on the day if preferred. We are working on adding a card terminal in 2026.",
+        a: "Yes — we accept Visa, Mastercard, JCB, and American Express through Beam, a Thai licensed payment gateway. After Tony confirms your booking on WhatsApp, he'll send a secure Beam checkout link — you enter your card details on Beam's page (never on ours), and payment is encrypted and PCI-compliant. The remainder can be paid the same way, or in cash on the day if you prefer.",
       },
       {
         q: "Can I pay for everyone in one transaction?",
