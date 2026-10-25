@@ -52,6 +52,10 @@ const year = new Date().getFullYear();
             <span>{site.location.address}</span>
           </li>
           <li class="flex items-center gap-3">
+            <Icon name="phone" size={16} class="text-white/55 shrink-0" />
+            <a href="tel:+66917898226" class="text-white/75 hover:text-white">091 789 8226</a>
+          </li>
+          <li class="flex items-center gap-3">
             <Icon name="whatsapp" size={16} class="text-white/55 shrink-0" />
             <a href={waLink()} target="_blank" rel="noreferrer noopener" class="text-white/75 hover:text-white">{site.whatsapp.display}</a>
           </li>
