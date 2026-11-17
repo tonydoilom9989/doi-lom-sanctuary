@@ -191,7 +191,7 @@ export const tours: Tour[] = [
       { title: "Zipline adventure — 19 platforms and 9 ziplines, including the 5 longest lines (600 m, 650 m, 850 m, 900 m and 1,100 m)" },
       { title: "1 Honeymoon zipline, 1 jungle bridge, 1 abseil, 3 Tarzan stairs and 3 panoramic viewpoints" },
     ],
-    photo: "/img/tours/morning-elephant-care.webp",
+    photo: "/img/tours/half-day-elephant-care-zipline.webp",
     tint: "#b4cfa6",
   },
 
