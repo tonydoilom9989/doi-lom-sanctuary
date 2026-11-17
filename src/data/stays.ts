@@ -46,7 +46,7 @@ export const stays: Stay[] = [
       "Natural Mae Taeng view",
     ],
     includes: ["Breakfast", "Parking"],
-    excludes: ["Tour activities", "Transfer service"],
+    excludes: ["Lunch and dinner", "Tour activities", "Transfer service"],
     policies: [
       { title: "Check-in / Check-out", lines: ["Check-in from 10:00 AM – 12:00 PM", "Check-out by 12:00 PM."] },
     ],
@@ -86,7 +86,7 @@ export const stays: Stay[] = [
       "Natural Mae Taeng view",
     ],
     includes: ["Breakfast", "Parking"],
-    excludes: ["Tour activities", "Transfer service"],
+    excludes: ["Lunch and dinner", "Tour activities", "Transfer service"],
     policies: [
       { title: "Check-in / Check-out", lines: ["Check-in from 10:00 AM – 12:00 PM", "Check-out by 12:00 PM."] },
     ],
