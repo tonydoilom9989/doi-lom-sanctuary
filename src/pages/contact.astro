@@ -7,7 +7,7 @@ import { quickFAQ } from "../data/faq";
 
 <Layout
   title="Contact Tony"
-  description={`Reach Tony at Doi Lom Elephant Rescue — WhatsApp ${site.whatsapp.display}, email ${site.email}, or visit ${site.location.address}. Most messages answered within 30 mins.`}
+  description={`Reach Tony at Doi Lom Elephant Rescue — WhatsApp ${site.whatsapp.display}, email ${site.email}, or visit ${site.location.address}. Most messages answered within 1 hour.`}
   ogImage="/img/hero/about.webp"
 >
   {/* ============ WHATSAPP HERO ============ */}
@@ -24,7 +24,7 @@ import { quickFAQ } from "../data/faq";
               <span class="text-[0.82rem] font-medium text-[var(--color-wa-dark)]">{site.founder} is available now</span>
             </div>
             <h1 class="mt-2 font-display text-[1.8rem] lg:text-[2.2rem] text-[var(--color-ink)] leading-tight">We'd love to hear from you</h1>
-            <p class="mt-2 text-[var(--color-soil)]">Most questions answered within 30 mins via WhatsApp.</p>
+            <p class="mt-2 text-[var(--color-soil)]">Most questions answered within 1 hour via WhatsApp.</p>
           </div>
         </div>
         <div class="text-center lg:text-right">
@@ -32,7 +32,7 @@ import { quickFAQ } from "../data/faq";
             <Icon name="whatsapp" size={18} />
             Chat with Tony
           </a>
-          <p class="mt-2 text-[0.78rem] text-[var(--color-stone)]">Opens WhatsApp · Replies in 30 mins</p>
+          <p class="mt-2 text-[0.78rem] text-[var(--color-stone)]">Opens WhatsApp · Replies within 1 hour · 7:00–22:00</p>
         </div>
       </div>
     </div>
@@ -102,7 +102,7 @@ import { quickFAQ } from "../data/faq";
             <Icon name="whatsapp" size={16} />
             Need faster? Chat on WhatsApp
           </a>
-          <p class="text-[0.78rem] text-[var(--color-stone)] mt-3">Tony replies within 30 mins via WhatsApp</p>
+          <p class="text-[0.78rem] text-[var(--color-stone)] mt-3">Tony replies within 1 hour via WhatsApp</p>
         </div>
       </div>
 
@@ -113,7 +113,7 @@ import { quickFAQ } from "../data/faq";
         {[
           { icon: "pin", title: "Address", value: site.location.address },
           { icon: "phone", title: "Phone", value: "091 789 8226 (+66 91 789 8226)", href: "tel:+66917898226" },
-          { icon: "whatsapp", title: "WhatsApp", value: `${site.whatsapp.display} · Replies within 30 mins` },
+          { icon: "whatsapp", title: "WhatsApp", value: `${site.whatsapp.display} · Replies within 1 hour` },
           { icon: "mail", title: "Email", value: "Click to reveal & email us", href: "#", isEmail: true },
           { icon: "facebook", title: "Facebook", value: site.social.facebookHandle },
         ].map((item) => (

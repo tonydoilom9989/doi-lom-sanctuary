@@ -34,7 +34,7 @@ export const site = {
     raw: "66917898226",
     link: "https://wa.me/66917898226",
     defaultMessage: "Hi Tony, I'd like to know more about Doi Lom Elephant Rescue.",
-    replyTime: "Replies within 30 mins · When Tony wakes up",
+    replyTime: "Replies within 1 hour · 7:00–22:00",
   },
 
   email: "tonydoilom9989@gmail.com",
